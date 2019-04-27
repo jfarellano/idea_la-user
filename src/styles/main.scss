@@ -52,7 +52,12 @@
     .main-container{
         margin-top: 110px;
         .first{
-            height: calc(100vh - 110px);
+            background-image: url("../assets/first-bg.svg");
+            background-repeat: no-repeat;
+            background-size: 50vw;
+            background-position-x: -30%;
+            background-position-y: 90%;
+            margin-bottom: 50px;
             img{
                 margin-bottom: 40px;
                 margin-left: 50px;
@@ -65,7 +70,7 @@
                 margin-bottom: 40px;
                 text-align: center;
                 img{
-                    width: 80%;
+                    width: 50%;
                     margin: 0px;
                 }
             }
@@ -89,6 +94,71 @@
                 font-size: 1.3em;
             }
         }
-
+        .second{
+            margin-top: 70px;
+            padding: 50px;
+            min-height: 100vh;
+            background-color: #ffe01b;
+            color: #4d4d4d;
+            text-align: center;
+            .info{
+                h1{
+                    text-align: left;
+                }
+                p{
+                    text-align: justify;
+                    margin-top: 30px;
+                    font-size: 1.2em;
+                }
+            }
+            img{
+                width: 70%;
+            }
+        }
+        .third{
+            margin-top: 70px;
+            padding: 50px;
+            min-height: 100vh;
+            color: #4d4d4d;
+            text-align: center;
+            .info{
+                h1{
+                    text-align: left;
+                }
+                p{
+                    text-align: justify;
+                    margin-top: 30px;
+                    font-size: 1.2em;
+                }
+            }
+            img{
+                width: 70%;
+            }
+        }
+        .fourth{
+            margin-top: 70px;
+            padding: 50px;
+            min-height: 100vh;
+            background-color: #ffe01b;
+            color: #4d4d4d;
+            text-align: center;
+            .info{
+                h1{
+                    text-align: left;
+                }
+                p{
+                    text-align: justify;
+                    margin-top: 30px;
+                    font-size: 1.2em;
+                }
+            }
+            img{
+                width: 70%;
+            }
+        }
     }
+}
+
+.challegnes{
+    margin-top: 110px;
 }

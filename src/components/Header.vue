@@ -11,7 +11,7 @@
       <b-navbar-nav class="ml-auto">
         <!-- <b-button class="login" rigth>Search</b-button> -->
 
-        <b-nav-item-dropdown text="Juan Arellano" class="title user-drop" right>
+        <b-nav-item-dropdown text="Name Lastname" class="title user-drop" right>
           <b-dropdown-item class="title" href="#">Mi Perfil</b-dropdown-item>
           <b-dropdown-item class="title" href="#">Mis Ideas</b-dropdown-item>
           <b-dropdown-divider></b-dropdown-divider>
