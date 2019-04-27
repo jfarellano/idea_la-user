@@ -54,25 +54,42 @@
         .fieldsContainer{
             max-width: 90% !important;
         }
+        .lineDivider{
+            height: 5px !important;
+            width: 90%;
+            border-bottom: 2px solid #888888;
+            border-left: 0px !important;
+            margin: auto !important;
+            margin-bottom: 15px !important; 
+            margin-top: 15px !important; 
+        }
     }
     .fieldsContainer {
         background-color: white;
         text-align: left;
-        padding: 23px;
+        padding: 25px;
+        padding-left: 30px;
+        padding-right: 30px;
         margin: auto;
-        max-width: 35%;
-        box-shadow: 3px 5px 8px red, 1px 5px 10px 8px #888888;
+        max-width: 65%;
+        box-shadow: 3px 5px 8px #888888, 1px 5px 10px 8px #888888;
     }
     .divSeparator {
         height: 13px;
     }
-    #btnLoginStyle {
-        background-color: grey;
-        border: grey;
-        box-shadow: 0px 5px #FFE01B;
+    #btnRegisterStyle {
+        background-color: #FFE01B;
+        border: #FFE01B;
         border-radius: 0px;
+        color: #4d4d4d;
+        max-width: 50%;
     }
     .inputStyles {
         border-radius: 0px;
+    }
+    .lineDivider {
+        border-left: 2px solid #888888;
+        height: 300px;
+        margin-left: 20px;
     }
 }
