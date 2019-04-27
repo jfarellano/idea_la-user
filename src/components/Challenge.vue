@@ -1,6 +1,7 @@
 <template>
     <div class="challenge-page">
         <Header></Header>
+        <Idea></Idea>
         <div class="main-container container-fluid">
             <div class="row first">
                 <div class="col-md-3 align-self-center">
@@ -114,12 +115,13 @@
         </div>
     </div>
 </template>
-
 <script>
-import Header from './Header.vue'
+import Header from "./Header.vue";
+import Idea from "./addIdea.vue";
 export default {
-    components: {
-        Header
-    }
-}
+  components: {
+		Header,
+		Idea
+  }
+};
 </script>
