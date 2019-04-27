@@ -3,9 +3,6 @@
     <div id="divStyle" class="container-fluid">
       <div id="rowStyle" class="row align-items-center">
         <div class="col align-self-center">
-            <b-modal id="modal-1" title="BootstrapVue">
-                <p class="">Hello from modal!</p>
-            </b-modal>
             <router-link to="/">
                 <img src="../assets/CS_BC.svg" alt="" height="110px" class="iconImage">
             </router-link>
@@ -81,18 +78,84 @@
                     <p class="parag" id="registerStyle">¿Ya tienes una cuenta? <router-link to="/login">Ingresa aquí.</router-link></p>
                 </div>
                 <div class="row justify-content-center">
-                    <b-button type="button" class="btn btn-primary btn-lg btn-block" id="btnRegisterStyle" v-b-modal.modal-1>Registrar</b-button>
+                    <b-button type="button" class="btn btn-primary btn-lg btn-block" id="btnRegisterStyle" v-b-modal.modal-scrollable>Registrar</b-button>
                 </div>
                 
             </div>
         </div>
       </div>
     </div>
+
+    <!-- MODAL -->
+    <b-modal id="modal-scrollable" centered title="Priorización de Retos" cancel-variant="ok" cancel-title="" class="modalStyle">
+        <p class="parag">Por favor priorice según su criterio los siguientes retos de mayor a menor relevancia.</p>
+        <ol>
+            <div v-for="(challenge, index) in challenges" :key="index">
+                    <li class="dropdownItemStyle">
+                        <!-- <b-dropdown id="dropdown-1" text="Dropdown Button" class="m-md-2">
+                            <div v-for="(challenge2, index) in challenges" :key="index">
+                                <b-dropdown-item :value="challenge2.title" @click="challenges = challenge2.title">
+                                    <p class="parag">{{ challenge2.title }}</p>
+                                </b-dropdown-item>
+                            </div>
+                        </b-dropdown> -->
+
+                        <div class="form-group">
+                            <select class="form-control" id="pickerStyle" @change="onChange($event)">
+                                <option v-for="(challenge2, index2) in challengesCopy" :key="index2"> {{ challenge2.title }} </option>
+                            </select>
+                        </div> 
+                    </li>
+            </div>
+        </ol>
+        <div class="row justify-content-center">
+            <b-button type="button" class="btn btn-primary btn-mg btn-block" id="btnRegisterStyle" v-on:click.prevent="sendForm(sendForm)">Aceptar</b-button>
+        </div>
+    </b-modal>
   </div>
 </template>
 
 <script>
 export default {
-
+    data(){
+        return{
+            challenges: [
+                {
+                    id: '1',
+                    title: 'Seguridad'
+                },
+                {
+                    id: '2',
+                    title: 'Medio Ambiente'
+                },
+                {
+                    id: '3',
+                    title: 'Entretenimiento'
+                },
+                {
+                    id: '4',
+                    title: 'Movilidad'
+                },
+                {
+                    id: '5',
+                    title: 'Justicia'
+                }
+            ],
+            challengesCopy: [],
+            pickedChal: ''
+        }
+    },
+    methods: {
+        onChange(event){
+            console.log(event.target.value)
+            console.log(this.challengesCopy.indexOf(event.target.value))
+        },
+        sendForm(){
+            console.log('SEND FORM')
+        }
+    },
+    created(){
+        this.challengesCopy = this.challenges;
+    }
 };
 </script>
