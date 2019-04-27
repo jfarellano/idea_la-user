@@ -10,6 +10,7 @@ import router from './router.js'
 
 //My styles
 import './styles/main.scss'
+import './styles/shells.scss'
 
 Vue.use(BootstrapVue)
 Vue.config.productionTip = false

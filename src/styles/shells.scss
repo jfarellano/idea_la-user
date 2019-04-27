@@ -1,0 +1,78 @@
+.loginComponent {
+    background-color: #ffe01b;
+    height: 100vh;
+    text-align: center;
+    #divStyle {
+        height: 100vh;
+    }
+    #rowStyle {
+        height: 100%;
+    }
+    .iconImage {
+        margin-bottom: 15px;
+    }
+    @media (max-width:800px) {
+        .fieldsContainer{
+            max-width: 90% !important;
+        }
+    }
+    .fieldsContainer {
+        background-color: white;
+        text-align: left;
+        padding: 23px;
+        margin: auto;
+        max-width: 35%;
+        
+    }
+    .divSeparator {
+        height: 13px;
+    }
+    #btnLoginStyle {
+        background-color: grey;
+        border: grey;
+        box-shadow: 0px 5px #FFE01B;
+        border-radius: 0px;
+    }
+    .inputStyles {
+        border-radius: 0px;
+    }
+}
+
+.registerComponent {
+    height: 100vh;
+    text-align: center;
+    #divStyle {
+        height: 100vh;        
+    }
+    #rowStyle {
+        height: 100%;
+    }
+    .iconImage {
+        margin-bottom: 15px;
+    }
+    @media (max-width:800px) {
+        .fieldsContainer{
+            max-width: 90% !important;
+        }
+    }
+    .fieldsContainer {
+        background-color: white;
+        text-align: left;
+        padding: 23px;
+        margin: auto;
+        max-width: 35%;
+        box-shadow: 3px 5px 8px red, 1px 5px 10px 8px #888888;
+    }
+    .divSeparator {
+        height: 13px;
+    }
+    #btnLoginStyle {
+        background-color: grey;
+        border: grey;
+        box-shadow: 0px 5px #FFE01B;
+        border-radius: 0px;
+    }
+    .inputStyles {
+        border-radius: 0px;
+    }
+}
