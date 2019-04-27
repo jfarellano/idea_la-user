@@ -24,7 +24,7 @@
             <h3 class="title">El titulo del reto</h3>
             <p class="parag">Lorem ipsum dolor sit amet, consectetur adipiscing elit...</p>
           </div>
-        </router-link>
+        </router-linkgit >
         <router-link tag="div" to="/reto" class="challenge container-fluid">
           <div class="row image">
             <img
@@ -36,7 +36,7 @@
             <h3 class="title">El titulo del reto</h3>
             <p class="parag">Lorem ipsum dolor sit amet, consectetur adipiscing elit...</p>
           </div>
-        </router-link>
+        </router-linkgit >
         <router-link tag="div" to="/reto" class="challenge container-fluid">
           <div class="row image">
             <img
@@ -48,7 +48,7 @@
             <h3 class="title">El titulo del reto</h3>
             <p class="parag">Lorem ipsum dolor sit amet, consectetur adipiscing elit...</p>
           </div>
-        </router-link>
+        </router-linkgit >
         <router-link tag="div" to="/reto" class="challenge container-fluid">
           <div class="row image">
             <img
@@ -60,7 +60,7 @@
             <h3 class="title">El titulo del reto</h3>
             <p class="parag">Lorem ipsum dolor sit amet, consectetur adipiscing elit...</p>
           </div>
-        </router-link>
+        </router-linkgit >
         <router-link tag="div" to="/reto" class="challenge container-fluid">
           <div class="row image">
             <img
@@ -72,7 +72,7 @@
             <h3 class="title">El titulo del reto</h3>
             <p class="parag">Lorem ipsum dolor sit amet, consectetur adipiscing elit...</p>
           </div>
-        </router-link>
+        </router-linkgit >
         <router-link tag="div" to="/reto" class="challenge container-fluid">
           <div class="row image">
             <img
@@ -84,7 +84,7 @@
             <h3 class="title">El titulo del reto</h3>
             <p class="parag">Lorem ipsum dolor sit amet, consectetur adipiscing elit...</p>
           </div>
-        </router-link>
+        </router-linkgit >
         <router-link tag="div" to="/reto" class="challenge container-fluid">
           <div class="row image">
             <img
@@ -96,7 +96,7 @@
             <h3 class="title">El titulo del reto</h3>
             <p class="parag">Lorem ipsum dolor sit amet, consectetur adipiscing elit...</p>
           </div>
-        </router-link>
+        </router-linkgit >
         <router-link tag="div" to="/reto" class="challenge container-fluid">
           <div class="row image">
             <img
@@ -108,7 +108,7 @@
             <h3 class="title">El titulo del reto</h3>
             <p class="parag">Lorem ipsum dolor sit amet, consectetur adipiscing elit...</p>
           </div>
-        </router-link>
+        </router-linkgit >
         <router-link tag="div" to="/reto" class="challenge container-fluid">
           <div class="row image">
             <img
@@ -120,7 +120,7 @@
             <h3 class="title">El titulo del reto</h3>
             <p class="parag">Lorem ipsum dolor sit amet, consectetur adipiscing elit...</p>
           </div>
-        </router-link>
+        </router-linkgit >
         <router-link tag="div" to="/reto" class="challenge container-fluid">
           <div class="row image">
             <img
@@ -132,7 +132,7 @@
             <h3 class="title">El titulo del reto</h3>
             <p class="parag">Lorem ipsum dolor sit amet, consectetur adipiscing elit...</p>
           </div>
-        </router-link>
+        </router-linkgit >
         <router-link tag="div" to="/reto" class="challenge container-fluid">
           <div class="row image">
             <img
@@ -144,7 +144,7 @@
             <h3 class="title">El titulo del reto</h3>
             <p class="parag">Lorem ipsum dolor sit amet, consectetur adipiscing elit...</p>
           </div>
-        </router-link>
+        </router-linkgit >
         <router-link tag="div" to="/reto" class="challenge container-fluid">
           <div class="row image">
             <img
@@ -156,7 +156,7 @@
             <h3 class="title">El titulo del reto</h3>
             <p class="parag">Lorem ipsum dolor sit amet, consectetur adipiscing elit...</p>
           </div>
-        </router-link>
+        </router-linkgit >
         <router-link tag="div" to="/reto" class="challenge container-fluid">
           <div class="row image">
             <img
@@ -168,12 +168,11 @@
             <h3 class="title">El titulo del reto</h3>
             <p class="parag">Lorem ipsum dolor sit amet, consectetur adipiscing elit...</p>
           </div>
-        </router-link>
+        </router-linkgit >
       </div>
     </div>
   </div>
 </template>
-
 <script>
 import Header from "./Header.vue";
 export default {
