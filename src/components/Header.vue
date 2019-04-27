@@ -1,6 +1,6 @@
 <template>
   <b-navbar toggleable="lg" fixed="top">
-    <b-navbar-brand href="#">
+    <b-navbar-brand href="/">
       <img src="../assets/CS_BC.svg" alt="IdeaLa">
     </b-navbar-brand>
 
