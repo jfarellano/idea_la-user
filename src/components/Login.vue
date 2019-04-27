@@ -4,9 +4,9 @@
       <div id="rowStyle" class="row align-items-center">
         <div class="col align-self-center">
             <router-link to="/">
-                <img src="../assets/CS_BC.svg" alt="" height="140px" class="iconImage">
+                <img src="../assets/CS_BC.svg" alt="" height="140px" class="iconImage" >
             </router-link>
-            <div class="fieldsContainer">
+            <div class="fieldsContainer" data-aos="zoom-in" data-aos-duration="1000" data-aos-delay="10">
                 <h3 class="title">Correo electrónico</h3>
                 <div class="input-group">
                     <input type="email" class="form-control inputStyles" placeholder="ej. example@email.com">

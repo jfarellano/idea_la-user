@@ -3,10 +3,13 @@
     <div id="divStyle" class="container-fluid">
       <div id="rowStyle" class="row align-items-center">
         <div class="col align-self-center">
+            <b-modal id="modal-1" title="BootstrapVue">
+                <p class="">Hello from modal!</p>
+            </b-modal>
             <router-link to="/">
                 <img src="../assets/CS_BC.svg" alt="" height="110px" class="iconImage">
             </router-link>
-            <div class="fieldsContainer">
+            <div class="fieldsContainer" data-aos="zoom-in" data-aos-duration="1000" data-aos-delay="10">
                 <div class="row justify-content-center">
                     <h2 class="title">Registro</h2>
                 </div>
@@ -78,8 +81,9 @@
                     <p class="parag" id="registerStyle">¿Ya tienes una cuenta? <router-link to="/login">Ingresa aquí.</router-link></p>
                 </div>
                 <div class="row justify-content-center">
-                    <button type="button" class="btn btn-primary btn-lg btn-block" id="btnRegisterStyle">Registrar</button>
+                    <b-button type="button" class="btn btn-primary btn-lg btn-block" id="btnRegisterStyle" v-b-modal.modal-1>Registrar</b-button>
                 </div>
+                
             </div>
         </div>
       </div>
