@@ -253,3 +253,19 @@
     -moz-box-shadow: -19px 17px 25px -12px rgba(115,115,115,0.53);
     box-shadow: -19px 17px 25px -12px rgba(115,115,115,0.53);
 }
+
+.idea-show{
+    margin-top: 110px;
+    .main-idea-show{
+        #carousel-1{
+            height: 300px !important;
+            width: 100%;
+            img{
+                margin: auto;
+                height: 300px !important;
+                width:  auto !important;
+                overflow: hidden;
+            }
+        }
+    }
+}

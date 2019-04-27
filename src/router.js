@@ -6,6 +6,7 @@ import Login from './components/Login.vue'
 import Register from './components/Register.vue'
 import Challenges from './components/Challenges.vue'
 import Challenge from './components/Challenge.vue'
+import Idea from './components/Idea.vue'
 
 Vue.use(Router)
 
@@ -35,6 +36,11 @@ export default new Router ({
             path: '/reto',
             name: 'Challenge',
             component: Challenge
+        },
+        {
+            path: '/idea',
+            name: 'Idea',
+            component: Idea
         }
     ]
 })
