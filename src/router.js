@@ -7,6 +7,8 @@ import Register from './components/Register.vue'
 import Challenges from './components/Challenges.vue'
 import Challenge from './components/Challenge.vue'
 import Idea from './components/Idea.vue'
+import MyProfile from './components/MyProfile.vue'
+import CreateEditIdea from './components/CreateEditIdea.vue'
 
 Vue.use(Router)
 
@@ -41,6 +43,16 @@ export default new Router ({
             path: '/idea',
             name: 'Idea',
             component: Idea
-        }
+        },
+        {
+            path: '/miperfil',
+            name: 'MiProfile',
+            component: MyProfile
+        },
+        {
+            path: '/creareditaridea',
+            name: 'CreateEditIdea',
+            component: CreateEditIdea
+        },
     ]
 })

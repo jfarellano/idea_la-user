@@ -92,14 +92,6 @@
         <ol>
             <div v-for="(challenge, index) in challenges" :key="index">
                     <li class="dropdownItemStyle">
-                        <!-- <b-dropdown id="dropdown-1" text="Dropdown Button" class="m-md-2">
-                            <div v-for="(challenge2, index) in challenges" :key="index">
-                                <b-dropdown-item :value="challenge2.title" @click="challenges = challenge2.title">
-                                    <p class="parag">{{ challenge2.title }}</p>
-                                </b-dropdown-item>
-                            </div>
-                        </b-dropdown> -->
-
                         <div class="form-group">
                             <select class="form-control" id="pickerStyle" @change="onChange($event)">
                                 <option v-for="(challenge2, index2) in challengesCopy" :key="index2"> {{ challenge2.title }} </option>
