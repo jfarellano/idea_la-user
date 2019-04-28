@@ -105,8 +105,8 @@
                                 <option v-for="(location, index) in locations" v-bind:value="location.id" :key="index"> {{ location.name }} </option>
                             </select> -->
                             <!--  -->
-                            <select class="form-control" id="pickerStyle" @change="onChangeChallenge($event)">
-                                <option v-for="(challengeItem, index2) in challenges" v-bind:value="{name: challengeItem.title, id: challengeItem.id    }" :key="index2"> {{ challengeItem.title }} </option>
+                            <select class="form-control" id="pickerStyle" v-model="surveyResult[index3]">
+                                <option v-for="(challengeItem, index2) in challenges" :key="index2"> {{ challengeItem.title }} </option>
                             </select>
                         </div> 
                     </li>
@@ -233,6 +233,7 @@ export default {
             // console.log(this.indexChosedChallenge)
         },
         sendForm(){
+            console.log(this.surveyResult)
             console.log('SEND FORM')
         }
     },
