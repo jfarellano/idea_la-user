@@ -10,10 +10,10 @@
         <div class="row">
           <div class="col-sm">
             <b-form-group class="title" label="Título">
-              <b-form-input class="squareInput" type="text"></b-form-input>
+              <b-form-input class="squareInput" type="text" v-model="idea.title"></b-form-input>
             </b-form-group>
             <b-form-group class="title" label="Descripción">
-              <b-form-textarea class="descStyle squareInput" type="text"></b-form-textarea>
+              <b-form-textarea class="descStyle squareInput" type="text" v-model="idea.description"></b-form-textarea>
             </b-form-group>
           </div>
           <div class="col-sm">
@@ -22,94 +22,35 @@
                     class="mb-2 mr-sm-2 mb-sm-0 squareInput"
                     :value="null"
                     id="inline-form-custom-select-pref"
+                    v-model="idea.challenge_id"
                     >
-                    <option slot="first" :value="null" v-for="(challenge, index) in challenges"
-                        :key="index">{{ challenge.title }}</option>
+                    <option slot="first" v-for="(challenge, index) in challenges" v-bind:value="challenge.id" :key="index">{{ challenge.title }}</option>
                 </b-form-select>
             </b-form-group>
             <b-form-group class="title" label="Cargar Imagen">
-              <b-form-file class="squareInput"></b-form-file>
+              <b-form-file class="squareInput" v-model="idea.image"></b-form-file>
             </b-form-group>
             <b-form-group class="title" label="URL de Video">
-              <b-form-input class="squareInput" type="text"></b-form-input>
+              <b-form-input class="squareInput" type="text" v-model="idea.videoLink"></b-form-input>
             </b-form-group>
           </div>
         </div>
         <div class="row">
             <div class="col-sm">
-                <b-button class="ideaButton title">Aceptar</b-button>
+                <b-button class="ideaButton title" v-on:click.prevent="createIdea()">Aceptar</b-button>
             </div>
             <div class="col-sm">
-                <b-button class="ideaButton title">Cancelar</b-button>
+                <b-button class="ideaButton title" v-on:click.prevent="cancelCreateIdea()">Cancelar</b-button>
             </div>
         </div>
       </div>
     </div>
   </div>
-
-  <!-- <div class="containerfluid">
-      <div class="container-fluid">
-        <div class="row align-items-center">
-          <div class="col align-self-center">
-            <div class="row justify-content-center">
-              <br>
-              <h2 class="title">Postular Nueva Idea</h2>
-            </div>
-            <hr>
-
-            <div class="row align-items-center addIdeaCont">
-              <div class="col-sm">
-                <h5 class="title">Título</h5>
-                <div class="input-group">
-                  <input type="text" class="form-control inputStyles">
-                </div>
-                <div class="divSeparator"></div>
-                <h5 class="title">Descripción</h5>
-                <div class="row heightDes">
-                  <div class="input-group">
-                    <textarea class="form-control inputStyles" aria-label="With textarea"></textarea>
-                  </div>
-                </div>
-              </div>
-              <div class="col-sm">
-                <h5 class="title">Seleccionar Reto</h5>
-                <div class="col widthDropdown">
-                  <div class="form-group">
-                    <select class="form-control" id="pickerStyle" @change="onChange($event)">
-                      <option
-                        v-for="(challenge, index) in challenges"
-                        :key="index"
-                      >{{ challenge.title }}</option>
-                    </select>
-                  </div>
-                </div>
-                <div class="divSeparator"></div>
-                <h5 class="title">Cargar Imagen</h5>
-                <div class="input-group">
-                  <input type="text" class="form-control inputStyles">
-                </div>
-                <div class="divSeparator"></div>
-                <h5 class="title">URL de Video</h5>
-                <div class="input-group">
-                  <input type="text" class="form-control inputStyles">
-                </div>
-              </div>
-            </div>
-          </div>
-        </div>
-        <div class="row justify-content-center">
-          <div class="col align-self-center">
-            <b-button>Aceptar</b-button>
-          </div>
-          <div class="col align-self-center">
-            <b-button>Cancelar</b-button>
-          </div>
-        </div>
-      </div>
-  </div>-->
 </template>
 
 <script>
+import {SERVER_URL} from '../variables.js'
+
 import Header from "./Header.vue";
 
 export default {
@@ -118,29 +59,113 @@ export default {
   },
   data() {
     return {
-      challenges: [
-        {
-          id: "1",
-          title: "Seguridad"
-        },
-        {
-          id: "2",
-          title: "Medio Ambiente"
-        },
-        {
-          id: "3",
-          title: "Entretenimiento"
-        },
-        {
-          id: "4",
-          title: "Movilidad"
-        },
-        {
-          id: "5",
-          title: "Justicia"
-        }
-      ],
+      challenges: [],
+      idea: {
+        title: '',
+        description: '',
+        challenge_id: '',
+        videoLink: '',
+        image: null
+      },
+      tokenExists: false,
+      userInfo: {
+        id:'',
+        secret:'',
+        expire_at:'',
+        name:'',
+        lastname:'',
+        fullname:''
+      }
     };
+  },
+  methods: {
+    checkToken(){
+      if (this.$cookie.get('secret') == null){
+          this.tokenExists = false;
+      }else{
+          this.tokenExists = true;
+          console.log("COOKIE: " + this.$cookie.get('secret'));
+          var userInfo = JSON.parse(this.$cookie.get('secret'));
+          this.userInfo.id = userInfo.user_id;
+          this.userInfo.secret = userInfo.secret;
+          this.userInfo.expire_at = userInfo.expire_at;
+          this.userInfo.name = userInfo.name;
+          this.userInfo.lastname = userInfo.lastname;
+      }
+    },
+    getChallenges() {
+      this.$http.get(SERVER_URL + '/challenges').then(function(response){
+          this.challenges = response.data;
+      }),
+      (err) => {
+      console.log("Err", err);
+      };
+      console.log(JSON.stringify(this.challenges.title))
+    },
+    createIdea(){
+      // this.$http.post((SERVER_URL + '/ideas'),{
+        // image: this.idea.image,
+        // title: this.idea.title,
+        // description: this.idea.description,
+        // videLink: this.idea.videLink,
+        // edition: this.idea.edition,
+        // challenge_id: this.idea.challenge_id
+      // }
+      // , {headers: {'Authorization': 'Token token=' + this.secret}})
+      // .then(response => response.json())
+      // .then(function(json){
+      //   console.log(json);
+      //   },
+      //   (err) => {
+      //   console.log("Err", err);
+      //   }
+      // );
+
+
+      // this.$http.post((SERVER_URL + '/ideas'),{
+      //     image: this.idea.image,
+      //     title: this.idea.title,
+      //     description: this.idea.description,
+      //     videLink: this.idea.videLink,
+      //     edition: this.idea.edition,
+      //     challenge_id: this.idea.challenge_id
+      // }
+      // , {headers: {Authorization: 'Token token=' + this.userInfo.secret}})
+      // .then(function(response){
+      //     console.log(response)
+      // },
+      // (err) => {
+      //     console.log("Err", err);
+      // }
+      // );
+
+
+      this.$http.post((SERVER_URL + '/ideas'), {options:{ headers: {Authorization: 'Token token=' + this.userInfo.secret}}},{
+        image: this.idea.image,
+        title: this.idea.title,
+        description: this.idea.description,
+        videLink: this.idea.videLink,
+        edition: this.idea.edition,
+        challenge_id: this.idea.challenge_id
+      }).then(response => response.json())
+        .then(function(json){
+          console.log(json);
+        },
+        (err) => {
+        console.log("Err", err);
+        }
+      );
+
+      // console.log(this.idea)
+      console.log(this.userInfo.secret)
+    },
+    cancelCreateIdea(){
+      this.$router.push('/miperfil');
+    }
+  },
+  created(){
+    this.checkToken();
+    this.getChallenges();
   }
 };
 </script>

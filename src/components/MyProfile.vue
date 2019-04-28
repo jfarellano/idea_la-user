@@ -5,19 +5,19 @@
     <div class="main-container container-fluid">
         <div class="row align-items-center">
             <div class="col centerProfileName align-self-center">
-                <h1 class="title">Name LastName</h1>
+                <h1 class="title">{{userInfo.fullname}}</h1>
                 <hr>
             </div>
         </div>
         <div class="row rowInfoStyle align-items-center">
             <div class="col align-self-center">
-                <h5 class="parag">example@email.com</h5>
+                <h5 class="parag">{{userInfo.email}}</h5>
             </div>
             <div class="col align-self-center">
                 <h4 class="parag">10 Ideas Creadas</h4>
             </div>
             <div class="col align-self-center">
-                <h5 class="parag">CC.: 1234567890</h5>
+                <h5 class="parag">CC.: {{userInfo.cc}}</h5>
             </div>
         </div>
 
@@ -78,6 +78,8 @@
 </template>
 
 <script>
+import {SERVER_URL} from '../variables.js'
+
 import Header from './Header.vue'
 import Idea from "./addIdea.vue";
 
@@ -110,15 +112,61 @@ export default {
                     title: 'Justicia'
                 }
             ],
+            tokenExists: false,
+            userInfo: {
+                id:'',
+                secret:'',
+                expire_at:'',
+                name:'',
+                lastname:'',
+                fullname:''
+            },
+            ideas:[]
         }
     },
     methods:{
+        checkToken(){
+            if (this.$cookie.get('secret') == null) {
+                this.tokenExists = false;
+            } else {
+                this.tokenExists = true;
+                console.log("COOKIE: " + this.$cookie.get('secret'));
+                var userInfo = JSON.parse(this.$cookie.get('secret'));
+                this.userInfo.id = userInfo.user_id;
+                this.userInfo.secret = userInfo.secret;
+                this.userInfo.expire_at = userInfo.expire_at;
+                this.userInfo.name = userInfo.name;
+                this.userInfo.lastname = userInfo.lastname;
+                this.userInfo.email = userInfo.email;
+                this.userInfo.cc = userInfo.cc;
+            }
+        },
+        buildFullName(){
+            const nameCapitalized = this.userInfo.name.charAt(0).toUpperCase() + this.userInfo.name.slice(1)
+            const lastnameCapitalized = this.userInfo.lastname.charAt(0).toUpperCase() + this.userInfo.lastname.slice(1)
+            this.userInfo.fullname = nameCapitalized + " " + lastnameCapitalized
+        },
         editIdea(){
             console.log('Editar Idea')
         },
         deleteIdea(){
             console.log('Eliminar Idea')
         },
+        loadIdeas(){
+            this.$http.get((SERVER_URL + '/users_ideas'), {headers: {'Authorization': 'Token token=' + this.userInfo.secret}})
+            .then(function(response){
+                this.ideas = response.data;
+            }),
+            (err) => {
+            console.log("Err", err);
+            };
+            console.log('IDEAS',JSON.stringify(this.ideas))
+        }
+    },
+    created(){
+        this.checkToken();
+        setTimeout(() => this.buildFullName(), 500);
+        this.loadIdeas();
     }
 }
 </script>

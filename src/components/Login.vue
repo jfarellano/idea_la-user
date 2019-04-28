@@ -14,7 +14,7 @@
                 <div class="divSeparator"></div>
                 <h3 class="title">Contraseña</h3>
                 <div class="input-group">
-                    <input type="password" class="form-control inputStyles" placeholder="********" v-model="userCredentials.password">
+                    <input type="password" class="form-control inputStyles" v-model="userCredentials.password">
                 </div>
                 <div class="divSeparator"></div>
                 <p class="parag" id="registerStyle">¿No tienes una cuenta todavía? <router-link to="/register">Registrate aquí.</router-link></p>

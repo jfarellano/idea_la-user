@@ -35,7 +35,7 @@ export default new Router ({
             component: Challenges
         },
         {
-            path: '/reto',
+            path: '/reto/:cId',
             name: 'Challenge',
             component: Challenge
         },

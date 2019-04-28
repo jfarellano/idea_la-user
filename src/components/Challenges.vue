@@ -14,19 +14,23 @@
         </div>
       </div>
       <!-- INICIO DE CHALLENGES -->
-      <div class="row second justify-content-around">
-
-        <router-link tag="div" to="/reto" class="challenge container-fluid" v-for="(challenge, index) in challenges" :key="index">
-          <div class="row image">
-            <img v-bind:src="challenge.picture.url" alt="Imagen de reto">
+      <div v-if="challenges != ''" class="row second justify-content-around">
+          <div v-for="(challenge, index) in challenges" :key="index">
+            <router-link tag="div" :to="{name: 'Challenge', params: { cId: challenge.id } }" class="challenge container-fluid">
+              <div class="row image">
+                <img v-bind:src="challenge.picture.url" alt="Imagen de reto">
+              </div>
+              <div class="row data">
+                <h3 class="title">{{challenge.title}}</h3>
+                <p class="parag">{{challenge.description}}</p>
+              </div>
+            </router-link>
           </div>
-          <div class="row data">
-            <h3 class="title">{{challenge.title}}</h3>
-            <p class="parag">{{challenge.description}}</p>
-          </div>
-        </router-link>
 
-      </div>
+        </div>
+        <div v-else>
+          <h2 class="title">No se han encontrado retos</h2>
+        </div>
     </div>
   </div>
 </template>
@@ -50,7 +54,6 @@ export default {
     loadChallenges(){
         this.$http.get(SERVER_URL + '/challenges').then(function(response){
             this.challenges = response.data;
-            // this.challenges = response.data.slice().reverse();
         })
     },
   },
