@@ -49,6 +49,7 @@
 </template>
 
 <script>
+import {SERVER_URL} from '../variables.js'
 import Header from './Header.vue'
 export default {
     components: {
@@ -63,6 +64,9 @@ export default {
         userLogout(){
             this.$router.push('/retos');
         }
+    },
+    created(){
+        console.log(SERVER_URL)
     }
 }
 </script>

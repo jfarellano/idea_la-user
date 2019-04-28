@@ -1,0 +1,1 @@
+export const SERVER_URL = 'http://ec2-18-222-177-88.us-east-2.compute.amazonaws.com:3000';
