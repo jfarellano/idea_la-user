@@ -255,16 +255,65 @@
 }
 
 .idea-show{
-    margin-top: 110px;
-    .main-idea-show{
-        #carousel-1{
-            height: 300px !important;
-            width: 100%;
+    .main-container{
+        margin-top: 110px;
+        .first{  
+            background-color: #e6e6e6;
+            height: 300px;
+            text-align: center;
             img{
+                height: 300px;
                 margin: auto;
-                height: 300px !important;
-                width:  auto !important;
-                overflow: hidden;
+            }
+        }
+        .second{
+            padding: 50px;
+        }
+        .third{
+            padding: 0px 50px;
+        }
+        .fourth{
+            margin-top: 40px;
+            height: 200px;
+        }
+        .fifth{
+            padding: 50px;
+            button{
+                width: 100%;
+                border: 2px solid #4d4d4d;
+                background-color: #ffe01b;
+                color: #4d4d4d;
+                border-radius: 0px;
+                font-size: 2em;
+            }
+        }
+        .sixth{
+            padding: 0px 50px 50px 50px;
+            .w-comment{
+                width: 100%;
+                color: #4d4d4d;
+                legend{
+                    font-family: 'Roboto Slab', serif;
+                    font-size: 1.2em;
+                }
+                textarea{
+                    border: 2px solid #4d4d4d;
+                    border-radius: 0px;
+                }
+            }
+            button{
+                border: 2px solid #4d4d4d;
+                color: #4d4d4d;
+                border-radius: 0px;
+                font-size: 1em;
+                background-color: transparent;
+            }
+        }
+        .comments{
+            .comment{
+                padding: 10px 50px;
+                margin-bottom: 20px;
+                border-bottom: 0.5px solid #e6e6e6;
             }
         }
     }

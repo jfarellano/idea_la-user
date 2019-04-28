@@ -1,44 +1,58 @@
 <template>
   <div class="idea-show">
     <Header></Header>
-    <Idea></Idea>
-
-    <div class="main-idea-show container-fluid">
-      <div class="row carousell">
-        <b-carousel
-          id="carousel-1"
-          v-model="slide"
-          :interval="4000"
-          controls
-          indicators
-          background="#ababab"
-          @sliding-start="onSlideStart"
-          @sliding-end="onSlideEnd"
-        >
-          <!-- Text slides with image -->
-          <b-carousel-slide img-src="https://picsum.photos/1024/480/?image=52"></b-carousel-slide>
-        </b-carousel>
+    <div class="main-container container-fluid">
+      <div class="row first">
+        <div class="col">
+          <img
+            src="https://ep01.epimg.net/internacional/imagenes/2018/07/23/billete_a_macondo/1532310440_143390_1532310884_noticia_normal.jpg"
+          >
+        </div>
       </div>
-      <div class="row title">
-        <h1>Titulo de la idea</h1>
+      <div class="row second">
+        <h1 class="title">El nombre de la idea</h1>
       </div>
-      <div class="row parag">
-        <p>Lorem ipsum dolor sit amet consectetur adipisicing elit. Alias consequuntur, fugiat placeat est incidunt quam mollitia quae id minus maiores, repellendus molestias quidem sequi dolor accusamus esse, sit earum impedit?</p>
+      <div class="row third">
+        <p
+          class="parag"
+        >Lorem ipsum dolor sit, amet consectetur adipisicing elit. Ea, repellendus repudiandae debitis id numquam, quibusdam placeat sit necessitatibus non libero, quo veritatis error velit est labore voluptatibus nobis assumenda alias!</p>
       </div>
-      <div class="row vote">
-        <b-button>Votar por este proyecto</b-button>
+      <div class="row fourth justify-content-center">
+        <iframe
+          src="https://www.youtube.com/embed/JVRY5z7-MpM"
+          frameborder="0"
+          allow="accelerometer; autoplay; encrypted-media; gyroscope; picture-in-picture"
+          allowfullscreen
+        ></iframe>
       </div>
+      <div class="row fifth">
+        <b-button class="title">Votar por esta idea</b-button>
+      </div>
+      <div class="row sixth">
+        <b-form-group class="w-comment" label="Cuentanos que tal te parecio esta idea">
+          <b-form-textarea placeholder="Comentario"></b-form-textarea>
+        </b-form-group>
+				<b-button>Enviar</b-button>
+      </div>
+			<div class="row comments">
+				<div class="comment container-fluid">
+					<div class="row">
+						<div class="col">
+							<h4 class="title">Nombre</h4>
+							<p class="parag">Lorem ipsum dolor sit amet consectetur adipisicing elit. Ducimus quam tempore placeat dicta illum fugit non culpa minus sint, odio perferendis praesentium voluptas rerum dolorum hic repudiandae, ullam inventore! At.</p>
+						</div>
+					</div>
+				</div>
+			</div>
     </div>
   </div>
 </template>
 
 <script>
 import Header from "./Header.vue";
-import Idea from "./addIdea.vue";
 export default {
   components: {
-    Header,
-    Idea
+    Header
   }
 };
 </script>
