@@ -6,6 +6,8 @@ import BootstrapVue from 'bootstrap-vue'
 import 'bootstrap/dist/css/bootstrap.css'
 import 'bootstrap-vue/dist/bootstrap-vue.css'
 import AOS from 'aos';
+// Vue Resource dependencies
+import VueResource from 'vue-resource'
 
 import 'aos/dist/aos.css';
 import router from './router.js'
@@ -14,6 +16,7 @@ import router from './router.js'
 import './styles/main.scss'
 import './styles/shells.scss'
 
+Vue.use(VueResource);
 Vue.use(BootstrapVue)
 Vue.config.productionTip = false
 
