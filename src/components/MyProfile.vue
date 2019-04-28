@@ -1,10 +1,12 @@
 <template>
     <div class="myPorfileComponent">
         <Header></Header>
+        <Idea></Idea>
     <div class="main-container container-fluid">
         <div class="row align-items-center">
             <div class="col centerProfileName align-self-center">
                 <h1 class="title">Name LastName</h1>
+                <hr>
             </div>
         </div>
         <div class="row rowInfoStyle align-items-center">
@@ -77,10 +79,12 @@
 
 <script>
 import Header from './Header.vue'
+import Idea from "./addIdea.vue";
 
 export default {
     components: {
-        Header
+        Header,
+        Idea
     },
     data(){
         return{

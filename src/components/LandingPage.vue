@@ -11,7 +11,7 @@
                         <img src="../assets/aduana.svg">
                         <p class="parag">Idéala es una iniciativa liderada por la Cámara de Comercio de Barranquilla en alianza con distintos actores locales con el fin de trabajar en el fomento y fortalecimiento de la ciudadanía activa de tal modo que sean los propios ciudadanos quienes prioricen los grandes desafíos que afronta nuestro territorio frente a los Objetivos del Desarrollo Sostenible de frente a las elecciones locales.</p>
                         <div class="over-border">
-                            <b-button class="option title">Conoce las ideas</b-button>
+                            <b-button class="option title" v-on:click.prevent="userLogout">Conoce las ideas</b-button>
                         </div>
                     </div>
                 </div>
@@ -53,6 +53,16 @@ import Header from './Header.vue'
 export default {
     components: {
         Header
+    },
+    data(){
+        return{
+
+        }
+    },
+    methods: {
+        userLogout(){
+            this.$router.push('/retos');
+        }
     }
 }
 </script>
