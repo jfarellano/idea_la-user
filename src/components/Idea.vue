@@ -45,18 +45,24 @@
       <div class="row fifth">
         <b-button class="title" v-on:click.prevent="voteForIdea()">Votar por esta idea</b-button>
       </div>
-      <div class="row sixth">
-        <b-form-group class="w-comment" label="Cuentanos que tal te parecio esta idea">
-          <b-form-textarea placeholder="Comentario"></b-form-textarea>
-        </b-form-group>
-				<b-button>Enviar</b-button>
+
+      <div v-if="tokenExists == true">
+        <div class="row sixth">
+          <b-form-group class="w-comment" label="Cuéntanos que tal te pareció esta idea">
+            <b-form-textarea placeholder="Comentario" v-model="newComment"></b-form-textarea>
+          </b-form-group>
+          <b-button v-on:click.prevent="commentIdea()">Enviar</b-button>
+        </div>
       </div>
+
 			<div class="row comments">
 				<div class="comment container-fluid">
-					<div class="row">
+          <h3 class="title">Comentarios</h3>
+          <br>
+					<div class="row" v-for="(comment, index) in comments" :key="index">
 						<div class="col">
-							<h4 class="title">Nombre</h4>
-							<p class="parag">Lorem ipsum dolor sit amet consectetur adipisicing elit. Ducimus quam tempore placeat dicta illum fugit non culpa minus sint, odio perferendis praesentium voluptas rerum dolorum hic repudiandae, ullam inventore! At.</p>
+							<p class="parag">{{comment.description}}</p>
+              <hr>
 						</div>
 					</div>
 				</div>
@@ -91,7 +97,9 @@ export default {
         name:'',
         lastname:'',
         fullname:''
-      }
+      },
+      comments:[],
+      newComment: ''
     }
   },
   methods: {
@@ -118,19 +126,43 @@ export default {
       })
     },
     voteForIdea(){
-      this.$http.post((SERVER_URL + '/ideas/' + this.id + '/votes')
-      , { headers: {Authorization: 'Token token="' + this.userInfo.secret + '"'}}).then(response => response.json())
+      if (this.tokenExists == false) {
+        this.$router.push('/register');
+      } else {
+        this.$http.post((SERVER_URL + '/ideas/' + this.id + '/votes')
+        , { headers: {Authorization: 'Token token="' + this.userInfo.secret + '"'}}).then(response => response.json())
+          .then(function(json){
+            console.log(json);
+            // this.$bvModal.show("modalPopover");
+            this.$bvModal.show("modalPopover voted");
+            console.log('ENTRA CORRECTO')
+          },
+          (err) => {
+            console.log("Err", err);
+            console.log('ENTRA ERROR')
+            // this.$bvModal.show("modalPopover voted");
+            this.$bvModal.show("modalPopover");
+          }
+        );
+      }
+    },
+    loadComments(){
+      this.$http.get(SERVER_URL + '/ideas/' + this.id + '/comments').then(function(response){
+        this.comments = response.data;
+      })
+    },
+    commentIdea(){
+      this.$http.post((SERVER_URL + '/ideas/' + this.id + '/comments'),{
+        title: 'Comentario',
+        description: this.newComment
+      }, { headers: {Authorization: 'Token token="' + this.userInfo.secret + '"'}}).then(response => response.json())
         .then(function(json){
           console.log(json);
-          // this.$bvModal.show("modalPopover");
-          this.$bvModal.show("modalPopover voted");
-          console.log('ENTRA CORRECTO')
+          // this.$router.push('/idea');
+          location.reload();
         },
         (err) => {
           console.log("Err", err);
-          console.log('ENTRA ERROR')
-          // this.$bvModal.show("modalPopover voted");
-          this.$bvModal.show("modalPopover");
         }
       );
     }
@@ -138,6 +170,7 @@ export default {
   created(){
     this.loadIdeaInfo();
     this.checkToken();
+    this.loadComments();
   }
 };
 </script>

@@ -149,7 +149,26 @@ export default {
             indexChosedHood: '',
             locationAuto: '',
             indexChosedChallenge: '',
-            surveyResult: []
+            surveyResult: [],
+            
+            userCookie: {
+                user_id:'',
+                secret:'',
+                expire_at:'',
+
+                email:'',
+                password:'',
+                cc:'',
+                phone:'',
+                name:'',
+                lastname:'',
+                age:'',
+                gender:''
+            },
+            userCredentials: {
+                email:'',
+                password:''
+            }
         }
     },
     methods: {
@@ -196,7 +215,7 @@ export default {
             console.log("Err", err);
             }
             );
-            setTimeout(() => this.$router.push('/login'), 500);
+            // setTimeout(() => this.$router.push('/login'), 500);
         },
         getLocations(){
             this.$http.get(SERVER_URL + '/locations').then(function(response){
@@ -214,18 +233,29 @@ export default {
             // console.log(this.indexChosedChallenge)
         },
         sendForm(){
-            this.$http.post(SERVER_URL + '/surveys',{
+            this.$http.post((SERVER_URL + '/multiple_surveys'),{
                 array: this.surveyResult
-            }).then(response => response.json())
-            .then(function(json){
-            if (json.id != "0"){
-                //   console.log("Usuario creado con exito");
-            }
-            },
-            (err) => {
-            console.log("Err", err);
-            }
+            }, { headers: {Authorization: 'Token token="' + this.userInfo.secret + '"'}}).then(response => response.json())
+                .then(function(json){
+                    console.log(json);
+                    setTimeout(() => this.$router.push('/login'), 500);
+                },
+                (err) => {
+                    console.log("Err", err);
+                }
             );
+
+
+            // this.$http.post(SERVER_URL + '/surveys',{
+            //     array: this.surveyResult
+            // }).then(response => response.json())
+            // .then(function(json){
+            //     setTimeout(() => this.$router.push('/login'), 500);
+            // },
+            // (err) => {
+            // console.log("Err", err);
+            // }
+            // );
         }
     },
     created(){

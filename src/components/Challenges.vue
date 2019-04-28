@@ -22,7 +22,7 @@
               </div>
               <div class="row data">
                 <h3 class="title">{{challenge.title}}</h3>
-                <p class="parag">{{challenge.description}}</p>
+                <p class="parag">{{challenge.description.slice(0,40)}}</p>
               </div>
             </router-link>
           </div>
@@ -53,15 +53,8 @@ export default {
   methods: {
     loadChallenges(){
         this.$http.get(SERVER_URL + '/challenges').then(function(response){
-            this.challenges = response.data;
-            
+            this.challenges = response.data;  
         })
-        setTimeout(() => this.spliceDescription(), 500);
-    },
-    spliceDescription(){
-      for (desc in this.challenges) {
-        desc.description = desc.description.description.splice(0,50);
-      }
     }
   },
   created(){
