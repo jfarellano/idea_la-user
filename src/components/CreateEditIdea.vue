@@ -139,20 +139,21 @@ export default {
       // }
       // );
 
-
-      this.$http.post((SERVER_URL + '/ideas'), {options:{ headers: {Authorization: 'Token token=' + this.userInfo.secret}}},{
+      this.$http.post((SERVER_URL + '/ideas'),{
         image: this.idea.image,
         title: this.idea.title,
         description: this.idea.description,
         videLink: this.idea.videLink,
         edition: this.idea.edition,
         challenge_id: this.idea.challenge_id
-      }).then(response => response.json())
+      }, { headers: {Authorization: 'Token token="' + this.userInfo.secret + '"'}}).then(response => response.json())
         .then(function(json){
           console.log(json);
+          this.$router.push('/miperfil');
         },
         (err) => {
-        console.log("Err", err);
+          console.log("Err", err);
+          this.$router.push('/miperfil');
         }
       );
 
