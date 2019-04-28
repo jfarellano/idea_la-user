@@ -53,7 +53,7 @@
                         <b-form-select
                             class="mb-2 mr-sm-2 mb-sm-0 squareInput"
                             :value="null"
-                            :options="{ '1': 'Masculino', '2': 'Femenino'}"
+                            :options="{ 'male': 'Masculino', 'female': 'Femenino'}"
                             id="inline-form-custom-select-pref"
                              v-model="userData.gender"
                             >
@@ -106,7 +106,7 @@
                             </select> -->
                             <!--  -->
                             <select class="form-control" id="pickerStyle" v-model="surveyResult[index3]">
-                                <option v-for="(challengeItem, index2) in challenges" :key="index2"> {{ challengeItem.title }} </option>
+                                <option v-for="(challengeItem, index2) in challenges" :key="index2" v-bind:value="challengeItem.id"> {{ challengeItem.title }} </option>
                             </select>
                         </div> 
                     </li>
@@ -130,28 +130,6 @@ export default {
     data(){
         return{
             challenges:[],
-            // challenges: [
-            //     {
-            //         id: '1',
-            //         title: 'Seguridad'
-            //     },
-            //     {
-            //         id: '2',
-            //         title: 'Medio Ambiente'
-            //     },
-            //     {
-            //         id: '3',
-            //         title: 'Entretenimiento'
-            //     },
-            //     {
-            //         id: '4',
-            //         title: 'Movilidad'
-            //     },
-            //     {
-            //         id: '5',
-            //         title: 'Justicia'
-            //     }
-            // ],
             challengesCopy: [],
             pickedChal: '',
             userData: {
@@ -164,7 +142,7 @@ export default {
                 age: '',
                 gender: '',
                 picture: '',
-                location: ''
+                location_id: ''
             },
             locations: [],
             chosedHood: '',
@@ -193,7 +171,9 @@ export default {
                 this.$http.get(SERVER_URL + '/challenges').then(function(response){
                     this.challenges = response.data;
                 })
+                this.userRegister();
                 setTimeout(() => this.$bvModal.show("modal-scrollable"), 500);
+                // console.log(JSON.stringify(this.userData))
             }
         },
         userRegister(){
@@ -206,7 +186,36 @@ export default {
                 lastname: this.userData.lastname,
                 age: this.userData.age,
                 gender: this.userData.gender,
-                picture: this.userData.picture
+                picture: this.userData.picture,
+                location_id: this.indexChosedHood
+            }).then(response => response.json())
+            .then(function(json){
+                console.log(json)
+            },
+            (err) => {
+            console.log("Err", err);
+            }
+            );
+            setTimeout(() => this.$router.push('/login'), 500);
+        },
+        getLocations(){
+            this.$http.get(SERVER_URL + '/locations').then(function(response){
+            this.locations = response.data;
+        })
+        },
+        switchView(event){
+            var i = this.indexChosedHood
+            this.userData.location_id = this.indexChosedHood
+            this.locationAuto = this.locations[i].hood
+            // console.log('indexChosedHood', this.indexChosedHood)
+        },
+        onChangeChallenge(event){
+            console.log(JSON.stringify(event.target))
+            // console.log(this.indexChosedChallenge)
+        },
+        sendForm(){
+            this.$http.post(SERVER_URL + '/surveys',{
+                array: this.surveyResult
             }).then(response => response.json())
             .then(function(json){
             if (json.id != "0"){
@@ -217,24 +226,6 @@ export default {
             console.log("Err", err);
             }
             );
-            setTimeout(() => this.$router.push('/'), 500);
-        },
-        getLocations(){
-            this.$http.get(SERVER_URL + '/locations').then(function(response){
-            this.locations = response.data;
-        })
-        },
-        switchView(event){
-            var i = this.indexChosedHood
-            this.locationAuto = this.locations[i].hood
-        },
-        onChangeChallenge(event){
-            console.log(JSON.stringify(event.target))
-            // console.log(this.indexChosedChallenge)
-        },
-        sendForm(){
-            console.log(this.surveyResult)
-            console.log('SEND FORM')
         }
     },
     created(){

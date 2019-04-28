@@ -57,16 +57,37 @@ export default {
     },
     data(){
         return{
-
+            userCookie: {
+                id: '',
+                secret: '',
+                expire_at: '',
+                name: ''
+            },
         }
     },
     methods: {
+        checkToken(){
+            if (this.$cookie.get('secret') == null){
+                this.tokenExists = false;
+            }else{
+                this.tokenExists = true;
+                console.log("COOKIE: " + this.$cookie.get('secret'));
+                var userInfo = JSON.parse(this.$cookie.get('secret'));
+                this.userCookie.id = userInfo.user_id;
+                this.userCookie.secret = userInfo.secret;
+                this.userCookie.expire_at = userInfo.expire_at;
+                this.userCookie.name = userInfo.name
+
+                this.nameOfUser = userInfo.name;
+            }
+        },
         userLogout(){
+            this.$cookie.delete('secret');
             this.$router.push('/retos');
         }
     },
     created(){
-        console.log(SERVER_URL)
+        this.checkToken();
     }
 }
 </script>

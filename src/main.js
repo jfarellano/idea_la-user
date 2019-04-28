@@ -8,6 +8,8 @@ import 'bootstrap-vue/dist/bootstrap-vue.css'
 import AOS from 'aos';
 // Vue Resource dependencies
 import VueResource from 'vue-resource'
+// Vue Cookie dependencies
+import VueCookie from 'vue-cookie'
 
 import 'aos/dist/aos.css';
 import router from './router.js'
@@ -16,6 +18,7 @@ import router from './router.js'
 import './styles/main.scss'
 import './styles/shells.scss'
 
+Vue.use(VueCookie);
 Vue.use(VueResource);
 Vue.use(BootstrapVue)
 Vue.config.productionTip = false
