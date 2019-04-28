@@ -103,42 +103,6 @@ export default {
       console.log(JSON.stringify(this.challenges.title))
     },
     createIdea(){
-      // this.$http.post((SERVER_URL + '/ideas'),{
-        // image: this.idea.image,
-        // title: this.idea.title,
-        // description: this.idea.description,
-        // videLink: this.idea.videLink,
-        // edition: this.idea.edition,
-        // challenge_id: this.idea.challenge_id
-      // }
-      // , {headers: {'Authorization': 'Token token=' + this.secret}})
-      // .then(response => response.json())
-      // .then(function(json){
-      //   console.log(json);
-      //   },
-      //   (err) => {
-      //   console.log("Err", err);
-      //   }
-      // );
-
-
-      // this.$http.post((SERVER_URL + '/ideas'),{
-      //     image: this.idea.image,
-      //     title: this.idea.title,
-      //     description: this.idea.description,
-      //     videLink: this.idea.videLink,
-      //     edition: this.idea.edition,
-      //     challenge_id: this.idea.challenge_id
-      // }
-      // , {headers: {Authorization: 'Token token=' + this.userInfo.secret}})
-      // .then(function(response){
-      //     console.log(response)
-      // },
-      // (err) => {
-      //     console.log("Err", err);
-      // }
-      // );
-
       this.$http.post((SERVER_URL + '/ideas'),{
         image: this.idea.image,
         title: this.idea.title,

@@ -40,7 +40,7 @@ export default new Router ({
             component: Challenge
         },
         {
-            path: '/idea',
+            path: '/idea/:iId',
             name: 'Idea',
             component: Idea
         },

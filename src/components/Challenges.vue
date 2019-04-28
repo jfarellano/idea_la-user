@@ -54,8 +54,15 @@ export default {
     loadChallenges(){
         this.$http.get(SERVER_URL + '/challenges').then(function(response){
             this.challenges = response.data;
+            
         })
+        setTimeout(() => this.spliceDescription(), 500);
     },
+    spliceDescription(){
+      for (desc in this.challenges) {
+        desc.description = desc.description.description.splice(0,50);
+      }
+    }
   },
   created(){
     this.loadChallenges();
