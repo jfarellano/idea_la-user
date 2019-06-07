@@ -1,4 +1,7 @@
-D
+A
 
-javascriptS878"Remove use of this comma operator. 2
-˜˜ 	
+javascriptS1442 Remove this usage of alert(...). 288
+ &A
+
+javascriptS1442 Remove this usage of alert(...). 2<<
+ .

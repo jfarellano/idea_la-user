@@ -1,323 +1,58 @@
-.title {
-    font-family: 'Roboto Slab', serif;
-}
-.parag {
-    font-family: 'Montserrat', sans-serif;
-}
-.navbar{
-    height: 110px;
-    background-color: #ffe01b;
-    color: #4d4d4d;
-    .navbar-brand{
-        img{
-            height: 80px;
-            margin-left: 40px;
-        }
-    }
-    .login{
-        padding: 5px 20px;
-        color: #4d4d4d;
-        font-size: 1.3em;
-        border-style: solid !important;
-        border: 2px;
-        border-color: #4d4d4d;
-        margin-right: 40px;
-        background-color: transparent;
-        border-radius: 0px;
-    }
-    .user-drop{
-        padding: 5px 20px;
-        border-style: solid !important;
-        border: 2px;
-        border-color: #4d4d4d;
-        margin-right: 40px;
-        span{
-            color: #4d4d4d;
-            font-size: 1.3em;
-        }
-        .signout{
-            background-color: #4d4d4d;
-            a{
-                color: #ffe01b;
-            }
-            & :hover{
-                background-color: #5d5d5d;
-            }
-        }
-        
-    }
-}
+import Vue from 'vue'
+import Router from 'vue-router'
 
-.landing{
-    .main-container{
-        margin-top: 110px;
-        .first{
-            background-image: url("../assets/first-bg.svg");
-            background-repeat: no-repeat;
-            background-size: 50vw;
-            background-position-x: -30%;
-            background-position-y: 90%;
-            margin-bottom: 50px;
-            img{
-                margin-bottom: 40px;
-                margin-left: 50px;
-            }
-            p{
-                text-align: justify;
-                padding: 50px;
-            }
-            .left-cont{
-                margin-bottom: 40px;
-                text-align: center;
-                img{
-                    width: 50%;
-                    margin: 0px;
-                }
-            }
-            .over-border{
-                padding-right: 2px;
-                padding-bottom: 2px;
-                border-right: 2px solid #ffe01b;
-                border-bottom: 2px solid #ffe01b;
-                margin: 0px 50px;
-            }
-            .option{
-                padding: 5px 20px;
-                border-style: solid !important;
-                border: 2px;
-                width: 100%;
-                border-color: #4d4d4d;
-                border-radius: 0px;
-                margin: 0px;
-                background-color: transparent;
-                color: #4d4d4d;
-                font-size: 1.3em;
-            }
-        }
-        .second{
-            margin-top: 70px;
-            padding: 50px;
-            min-height: 100vh;
-            background-color: #ffe01b;
-            color: #4d4d4d;
-            text-align: center;
-            .info{
-                h1{
-                    text-align: left;
-                }
-                p{
-                    text-align: justify;
-                    margin-top: 30px;
-                    font-size: 1.2em;
-                }
-            }
-            img{
-                width: 70%;
-            }
-        }
-        .third{
-            margin-top: 70px;
-            padding: 50px;
-            min-height: 100vh;
-            color: #4d4d4d;
-            text-align: center;
-            .info{
-                h1{
-                    text-align: left;
-                }
-                p{
-                    text-align: justify;
-                    margin-top: 30px;
-                    font-size: 1.2em;
-                }
-            }
-            img{
-                width: 70%;
-            }
-        }
-        .fourth{
-            margin-top: 70px;
-            padding: 50px;
-            min-height: 100vh;
-            background-color: #ffe01b;
-            color: #4d4d4d;
-            text-align: center;
-            .info{
-                h1{
-                    text-align: left;
-                }
-                p{
-                    text-align: justify;
-                    margin-top: 30px;
-                    font-size: 1.2em;
-                }
-            }
-            img{
-                width: 70%;
-            }
-        }
-    }
-}
+import LandingPage from './components/LandingPage.vue'
+import Login from './components/Login.vue'
+import Register from './components/Register.vue'
+import Challenges from './components/Challenges.vue'
+import Challenge from './components/Challenge.vue'
+import Idea from './components/Idea.vue'
+import MyProfile from './components/MyProfile.vue'
+import CreateEditIdea from './components/CreateEditIdea.vue'
 
-.challenges{
-    .main-container{
-        margin-top: 110px;
-        .first{
-            padding: 50px;
-        }
-        .second{
-            padding: 50px;
-            background-color: #e6e6e6;
+Vue.use(Router)
 
-            .challenge{
-                margin: 10px;
-                background-color: white;
-                width: 300px;
-                height: 350px;
-                cursor: pointer;
-                .image{
-                    height: 200px;
-                    background-color: #ffe01b;
-                    img{
-                        overflow: hidden;
-                        height: 200px;
-                        margin: auto;
-                    }
-                }
-                .data{
-                    padding: 20px;
-                    h3{
-                        border-bottom: 4px solid #ffe01b;
-                        padding-bottom: 0.5px;
-                    }
-                    p{
-                        margin-top: 10px;
-                        text-align: justify;
-                    }
-                }
-            }
-        }
-    }
-}
-
-.challenge-page{
-    .main-container{
-        margin-top: 110px;
-        .first{
-            padding: 50px;
-        }
-        .second{
-            padding: 50px;
-            background-color: #e6e6e6;
-
-            .idea{
-                margin: 10px;
-                background-color: white;
-                color: #6d6d6d;
-                width: 300px;
-                height: 350px;
-                cursor: pointer;
-                .image{
-                    height: 150px;
-                    background-color: #ffe01b;
-                    img{
-                        overflow: hidden;
-                        height: 150px;
-                        margin: auto;
-                    }
-                }
-                .data{
-                    padding: 20px;
-                    h3{
-                        border-bottom: 4px solid #ffe01b;
-                        padding-bottom: 0.5px;
-                    }
-                    p{
-                        margin-top: 10px;
-                        text-align: justify;
-                    }
-                }
-            }
-        }
-    }
-}
-
-.add-button{
-    position: fixed;
-    padding: 20px;
-    z-index: 1000;
-    border: none;
-    background-color: #ffe01b;
-    color: #4d4d4d;
-    border-radius: 0px;
-    right: 0px;
-    bottom: 70px;
-    -webkit-box-shadow: -19px 17px 25px -12px rgba(115,115,115,0.53);
-    -moz-box-shadow: -19px 17px 25px -12px rgba(115,115,115,0.53);
-    box-shadow: -19px 17px 25px -12px rgba(115,115,115,0.53);
-}
-
-.idea-show{
-    .main-container{
-        margin-top: 110px;
-        .first{  
-            background-color: #e6e6e6;
-            height: 300px;
-            text-align: center;
-            img{
-                height: 300px;
-                margin: auto;
-            }
-        }
-        .second{
-            padding: 50px;
-        }
-        .third{
-            padding: 0px 50px;
-        }
-        .fourth{
-            margin-top: 40px;
-            height: 200px;
-        }
-        .fifth{
-            padding: 50px;
-            button{
-                width: 100%;
-                border: 2px solid #4d4d4d;
-                background-color: #ffe01b;
-                color: #4d4d4d;
-                border-radius: 0px;
-                font-size: 2em;
-            }
-        }
-        .sixth{
-            padding: 0px 50px 50px 50px;
-            .w-comment{
-                width: 100%;
-                color: #4d4d4d;
-                legend{
-                    font-family: 'Roboto Slab', serif;
-                    font-size: 1.2em;
-                }
-                textarea{
-                    border: 2px solid #4d4d4d;
-                    border-radius: 0px;
-                }
-            }
-            button{
-                border: 2px solid #4d4d4d;
-                color: #4d4d4d;
-                border-radius: 0px;
-                font-size: 1em;
-                background-color: transparent;
-            }
-        }
-        .comments{
-            .comment{
-                padding: 10px 50px;
-                margin-bottom: 20px;
-                border-bottom: 0.5px solid #e6e6e6;
-            }
-        }
-    }
-}
+export default new Router ({
+    routes: [
+        {
+            path: '/',
+            name: 'LandingPage',
+            component: LandingPage
+        },
+        {
+            path: '/login',
+            name: 'Login',
+            component: Login
+        },
+        {
+            path: '/register',
+            name: 'Register',
+            component: Register
+        },
+        {
+            path: '/retos',
+            name: 'Challenges',
+            component: Challenges
+        },
+        {
+            path: '/reto/:cId',
+            name: 'Challenge',
+            component: Challenge
+        },
+        {
+            path: '/idea/:iId',
+            name: 'Idea',
+            component: Idea
+        },
+        {
+            path: '/miperfil',
+            name: 'MiProfile',
+            component: MyProfile
+        },
+        {
+            path: '/creareditaridea',
+            name: 'CreateEditIdea',
+            component: CreateEditIdea
+        },
+    ]
+})

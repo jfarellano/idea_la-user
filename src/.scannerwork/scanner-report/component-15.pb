@@ -1,1 +1,1 @@
-components/Challenge.vue 2jsX[h
+components/Challenge.vue 2jsX•h

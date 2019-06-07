@@ -1,94 +1,281 @@
 <template>
-  <div class="landing">
+  <section>
     <Header></Header>
     <div class="main-container container-fluid">
-      <div class="first row">
-        <div class="col-md-6 align-self-end">
-          <img src="../assets/FS_FC.svg">
-        </div>
-        <div class="col-md-6 align-self-end">
-          <div class="left-cont">
-            <img src="../assets/aduana.svg">
-            <p class="parag">Idéala es una iniciativa liderada por la Cámara de Comercio de Barranquilla en alianza con distintos actores locales con el fin de trabajar en el fomento y fortalecimiento de la ciudadanía activa de tal modo que sean los propios ciudadanos quienes prioricen los grandes desafíos que afronta nuestro territorio frente a los Objetivos del Desarrollo Sostenible de frente a las elecciones locales.</p>
-            <div class="over-border">
-              <b-button class="option title" v-on:click.prevent="goToChallenges">Conoce las ideas</b-button>
-            </div>
+      <div class="row first">
+        <div class="col">
+          <div v-if="idea.picture == null">
+            <img
+              src="https://ep01.epimg.net/internacional/imagenes/2018/07/23/billete_a_macondo/1532310440_143390_1532310884_noticia_normal.jpg"
+            >
+          </div>
+          <div v-else>
+            <img v-bind:src="idea.picture.url">
           </div>
         </div>
       </div>
       <div class="row second">
-        <div class="col-md-8 align-self-center info">
-          <h1 class="title">Comprometidos con los ODS</h1>
-          <p class="parag">Estamos convencidos de que la participación ciudadana es pieza fundamental para emprender un nuevo camino en el que se focalice el mejoramiento de la vida de todos, sin dejar a nadie atrás. Tomando como base la necesidad de cumplir los Objetivos del Desarrollo Sostenible como modelo para alcanzar un mejor y sostenible futuro para todos.</p>
-        </div>
-
-        <div class="col-md-4 align-self-center">
-          <img src="../assets/ODS.svg" alt="ODS">
-        </div>
+        <h1 class="title">{{idea.title}}</h1>
       </div>
       <div class="row third">
-        <div class="col-md-4 align-self-center">
-          <img src="../assets/miss.svg" alt="Miss">
+        <p class="parag">{{idea.description}}</p>
+      </div>
+      <div class="row fourth justify-content-center">
+        <div v-if="idea.videoLink == ''">
+          <iframe
+            v-bind:src="idea.videoLink"
+            frameborder="0"
+            allow="accelerometer; autoplay; encrypted-media; gyroscope; picture-in-picture"
+            allowfullscreen
+          ></iframe>
         </div>
-        <div class="col-md-8 align-self-center info">
-          <h1 class="title">Avanzamos a pasos agigantados</h1>
-          <p class="parag">La ciudad avanza a pasos agigantados, cada uno de los ciudadanos tenemos mucho que aportar y así hacer de Barranquilla una mejor y sostenible ciudad para todos. Todos podemos convertirnos en protagonistas de ciudad, imaginando nuevas ideas de ciudad y realizando acciones de ciudad.</p>
+        <div v-else>
+          <iframe
+            src="https://www.youtube.com/embed/JVRY5z7-MpM"
+            frameborder="0"
+            allow="accelerometer; autoplay; encrypted-media; gyroscope; picture-in-picture"
+            allowfullscreen
+          ></iframe>
         </div>
       </div>
-      <div class="row fourth">
-        <div class="col-md-4 align-self-center">
-          <img src="../assets/dream.svg" alt="Dream">
+      <div class="row fifth">
+        <b-button class="title" v-on:click.prevent="voteForIdea()">Votar por esta idea</b-button>
+      </div>
+
+      <div v-if="tokenExists == true">
+        <div class="row sixth">
+          <b-form-group class="w-comment" label="Cuéntanos que tal te pareció esta idea">
+            <b-form-textarea placeholder="Comentario" v-model="newComment"></b-form-textarea>
+          </b-form-group>
+          <b-button v-on:click.prevent="commentIdea()">Enviar</b-button>
         </div>
-        <div class="col-md-8 align-self-center info">
-          <h1 class="title">Podemos hacer un sueño realidad</h1>
-          <p class="parag">Este es un espacio para que juntos construyamos una mejor ciudad con el apoyo de nuestros ciudadanos motivados por su desarrollo que nos brinden su mirada al futuro para que todos creemos la Barranquilla que soñamos.</p>
+      </div>
+
+      <div class="row comments">
+        <div class="comment container-fluid">
+          <h3 class="title">Comentarios</h3>
+          <br>
+          <div class="row" v-for="(comment, index) in comments" :key="index">
+            <div class="col">
+              <p class="parag">{{comment.description}}</p>
+              <hr>
+            </div>
+          </div>
         </div>
       </div>
     </div>
-  </div>
+    <b-modal id="modalPopover" title="Felicitaciones" ok-only>
+      <p class="parag">Tu voto se ha realizado exitosamente.</p>
+    </b-modal>
+    <b-modal id="modalPopover voted" title="Error" ok-only>
+      <p class="parag">Ya has votado por ésta idea.</p>
+    </b-modal>
+  </section>
 </template>
 
 <script>
+import api from "../requests.js";
 
-import Header from './Header.vue'
-
+import Header from "./Header.vue";
 export default {
   components: {
     Header
   },
-  data(){
-    return{
+  data() {
+    return {
+      ideaID: "",
+      idea: "",
       tokenExists: false,
-      userCookie: {
-        id: '',
-        secret: '',
-        expire_at: '',
-        name: ''
-      },
-    }
+      userInfo: {},
+      comments: [],
+      newComment: ""
+    };
   },
   methods: {
-    checkToken(){
-      if (this.$cookie.get('secret') == null){
+    checkToken() {
+      if (this.$cookie.get("secret") == null) {
         this.tokenExists = false;
-      }else{
+      } else {
         this.tokenExists = true;
-        console.log("COOKIE: " + this.$cookie.get('secret'));
-        var userInfo = JSON.parse(this.$cookie.get('secret'));
-        this.userCookie.id = userInfo.user_id;
-        this.userCookie.secret = userInfo.secret;
-        this.userCookie.expire_at = userInfo.expire_at;
-        this.userCookie.name = userInfo.name
-
-        this.nameOfUser = userInfo.name;
+        console.log("COOKIE: " + this.$cookie.get("secret"));
+        var userInfo = JSON.parse(this.$cookie.get("secret"));
+        this.userInfo.id = userInfo.user_id;
+        this.userInfo.secret = userInfo.secret;
+        this.userInfo.expire_at = userInfo.expire_at;
+        this.userInfo.name = userInfo.name;
+        this.userInfo.lastname = userInfo.lastname;
       }
     },
-    goToChallenges(){
-      this.$router.push('/retos')
+    loadIdeaInfo() {
+      this.ideaID = this.$route.params.iId;
+      api.idea
+        .getInfo(this.ideaID)
+        .then(response => {
+          this.idea = response.data;
+        })
+        .catch(err => {
+          console.log(err.data);
+        });
+
+      // this.$http.get(SERVER_URL + "/ideas/" + this.id).then(function(response) {
+      //   this.idea = response.data;
+      //   console.log("RESPONSE: " + JSON.stringify(this.idea));
+      // });
+    },
+    voteForIdea() {
+      if (this.tokenExists == false) {
+        this.$router.push("/register");
+      } else {
+        api.idea
+          .vote(this.ideaID)
+          .then(response => {
+            this.$bvModal.show("modalPopover voted");
+          })
+          .catch(err => {
+            console.log(err.data);
+            this.$bvModal.show("modalPopover");
+          });
+
+        // this.$http
+        //   .post(SERVER_URL + "/ideas/" + this.id + "/votes", {
+        //     headers: {
+        //       Authorization: 'Token token="' + this.userInfo.secret + '"'
+        //     }
+        //   })
+        //   .then(response => response.json())
+        //   .then(
+        //     function(json) {
+        //       console.log(json);
+        //       this.$bvModal.show("modalPopover voted");
+        //     },
+        //     err => {
+        //       console.log("Err", err);
+        //       this.$bvModal.show("modalPopover");
+        //     }
+        //   );
+      }
+    },
+    loadComments() {
+      api.idea
+        .getComments(this.ideaID)
+        .then(response => {
+          this.comments = response.data;
+        })
+        .catch(err => {
+          console.log(err.data);
+        });
+
+      // this.$http
+      //   .get(SERVER_URL + "/ideas/" + this.id + "/comments")
+      //   .then(function(response) {
+      //     this.comments = response.data;
+      //   });
+    },
+    commentIdea() {
+      api.idea
+        .postComment(this.ideaID)
+        .then(response => {
+          location.reload();
+        })
+        .catch(err => {
+          console.log(err.data);
+        });
+
+      // this.$http
+      //   .post(
+      //     SERVER_URL + "/ideas/" + this.id + "/comments",
+      //     {
+      //       title: "Comentario",
+      //       description: this.newComment
+      //     },
+      //     {
+      //       headers: {
+      //         Authorization: 'Token token="' + this.userInfo.secret + '"'
+      //       }
+      //     }
+      //   )
+      //   .then(response => response.json())
+      //   .then(
+      //     function(json) {
+      //       console.log(json);
+      //       // this.$router.push('/idea');
+      //       location.reload();
+      //     },
+      //     err => {
+      //       console.log("Err", err);
+      //     }
+      //   );
     }
   },
-  created(){
+  created() {
+    this.loadIdeaInfo();
     this.checkToken();
+    this.loadComments();
+  }
+};
+</script>
+
+<style lang="scss" scoped>
+.main-container {
+  margin-top: 110px;
+  .first {
+    background-color: #e6e6e6;
+    height: 300px;
+    text-align: center;
+    img {
+      height: 300px;
+      margin: auto;
+    }
+  }
+  .second {
+    padding: 50px;
+  }
+  .third {
+    padding: 0px 50px;
+  }
+  .fourth {
+    margin-top: 40px;
+    height: 200px;
+  }
+  .fifth {
+    padding: 50px;
+    button {
+      width: 100%;
+      border: 2px solid #4d4d4d;
+      background-color: #ffe01b;
+      color: #4d4d4d;
+      border-radius: 0px;
+      font-size: 2em;
+    }
+  }
+  .sixth {
+    padding: 0px 50px 50px 50px;
+    .w-comment {
+      width: 100%;
+      color: #4d4d4d;
+      legend {
+        font-family: "Roboto Slab", serif;
+        font-size: 1.2em;
+      }
+      textarea {
+        border: 2px solid #4d4d4d;
+        border-radius: 0px;
+      }
+    }
+    button {
+      border: 2px solid #4d4d4d;
+      color: #4d4d4d;
+      border-radius: 0px;
+      font-size: 1em;
+      background-color: transparent;
+    }
+  }
+  .comments {
+    .comment {
+      padding: 10px 50px;
+      margin-bottom: 20px;
+      border-bottom: 0.5px solid #e6e6e6;
+    }
   }
 }
-</script>
+</style>

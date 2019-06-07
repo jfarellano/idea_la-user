@@ -1,1 +1,1 @@
-components/LandingPage.vue 2jsX^h
+components/Idea.vue 2jsXšh

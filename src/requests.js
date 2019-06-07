@@ -52,5 +52,10 @@ export default {
     postComment: function(ideaID, body) {
       return r.post(SERVER_URL + '/ideas/' + ideaID + '/comments', body, getHeaders)
     }
+  },
+  myProfile: {
+    getIdeas: function() {
+      return r.get(SERVER_URL + '/users_ideas', getHeaders)
+    }
   }
 }

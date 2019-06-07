@@ -14,10 +14,6 @@ import VueCookie from 'vue-cookie'
 import 'aos/dist/aos.css';
 import router from './router.js'
 
-//My styles
-import './styles/main.scss'
-import './styles/shells.scss'
-
 Vue.use(VueCookie);
 Vue.use(VueResource);
 Vue.use(BootstrapVue)
