@@ -10,9 +10,7 @@
             >
           </div>
           <div v-else>
-            <img
-              v-bind:src="idea.picture.url"
-            >
+            <img v-bind:src="idea.picture.url">
           </div>
         </div>
       </div>
@@ -20,9 +18,7 @@
         <h1 class="title">{{idea.title}}</h1>
       </div>
       <div class="row third">
-        <p
-          class="parag"
-        >{{idea.description}}</p>
+        <p class="parag">{{idea.description}}</p>
       </div>
       <div class="row fourth justify-content-center">
         <div v-if="idea.videoLink == ''">
@@ -55,119 +51,153 @@
         </div>
       </div>
 
-			<div class="row comments">
-				<div class="comment container-fluid">
+      <div class="row comments">
+        <div class="comment container-fluid">
           <h3 class="title">Comentarios</h3>
           <br>
-					<div class="row" v-for="(comment, index) in comments" :key="index">
-						<div class="col">
-							<p class="parag">{{comment.description}}</p>
+          <div class="row" v-for="(comment, index) in comments" :key="index">
+            <div class="col">
+              <p class="parag">{{comment.description}}</p>
               <hr>
-						</div>
-					</div>
-				</div>
-			</div>
+            </div>
+          </div>
+        </div>
+      </div>
     </div>
     <b-modal id="modalPopover" title="Felicitaciones" ok-only>
-        <p class="parag">Tu voto se ha realizado de manera exitosa.</p>
+      <p class="parag">Tu voto se ha realizado exitosamente.</p>
     </b-modal>
     <b-modal id="modalPopover voted" title="Error" ok-only>
-        <p class="parag">Ya has realizado tu voto para esta idea.</p>
+      <p class="parag">Ya has votado por ésta idea.</p>
     </b-modal>
   </div>
 </template>
 
 <script>
-import {SERVER_URL} from '../variables.js'
+import api from "../requests.js";
 
 import Header from "./Header.vue";
 export default {
   components: {
     Header
   },
-  data(){
-    return{
-      id: '',
-      idea:'',
+  data() {
+    return {
+      ideaID: "",
+      idea: "",
       tokenExists: false,
-      userInfo: {
-        id:'',
-        secret:'',
-        expire_at:'',
-        name:'',
-        lastname:'',
-        fullname:''
-      },
-      comments:[],
-      newComment: ''
-    }
+      userInfo: {},
+      comments: [],
+      newComment: ""
+    };
   },
   methods: {
-    checkToken(){
-      if (this.$cookie.get('secret') == null){
-          this.tokenExists = false;
-      }else{
-          this.tokenExists = true;
-          console.log("COOKIE: " + this.$cookie.get('secret'));
-          var userInfo = JSON.parse(this.$cookie.get('secret'));
-          this.userInfo.id = userInfo.user_id;
-          this.userInfo.secret = userInfo.secret;
-          this.userInfo.expire_at = userInfo.expire_at;
-          this.userInfo.name = userInfo.name;
-          this.userInfo.lastname = userInfo.lastname;
-      }
-    },
-    loadIdeaInfo(){
-      this.id = this.$route.params.iId;
-      this.$http.get(SERVER_URL + '/ideas/' + this.id).then(function(response){
-          this.idea = response.data;
-          // console.log('RESPONSE: ' + this.idea);
-          console.log('RESPONSE: ' + JSON.stringify(this.idea));
-      })
-    },
-    voteForIdea(){
-      if (this.tokenExists == false) {
-        this.$router.push('/register');
+    checkToken() {
+      if (this.$cookie.get("secret") == null) {
+        this.tokenExists = false;
       } else {
-        this.$http.post((SERVER_URL + '/ideas/' + this.id + '/votes')
-        , { headers: {Authorization: 'Token token="' + this.userInfo.secret + '"'}}).then(response => response.json())
-          .then(function(json){
-            console.log(json);
-            // this.$bvModal.show("modalPopover");
-            this.$bvModal.show("modalPopover voted");
-            console.log('ENTRA CORRECTO')
-          },
-          (err) => {
-            console.log("Err", err);
-            console.log('ENTRA ERROR')
-            // this.$bvModal.show("modalPopover voted");
-            this.$bvModal.show("modalPopover");
-          }
-        );
+        this.tokenExists = true;
+        console.log("COOKIE: " + this.$cookie.get("secret"));
+        var userInfo = JSON.parse(this.$cookie.get("secret"));
+        this.userInfo.id = userInfo.user_id;
+        this.userInfo.secret = userInfo.secret;
+        this.userInfo.expire_at = userInfo.expire_at;
+        this.userInfo.name = userInfo.name;
+        this.userInfo.lastname = userInfo.lastname;
       }
     },
-    loadComments(){
-      this.$http.get(SERVER_URL + '/ideas/' + this.id + '/comments').then(function(response){
-        this.comments = response.data;
+    loadIdeaInfo() {
+      this.ideaID = this.$route.params.iId;
+      api.idea.getInfo(this.ideaID).then((response) => {
+        this.idea = response.data
+      }).catch((err) => {
+        console.log(err.data)
       })
+
+      
+      // this.$http.get(SERVER_URL + "/ideas/" + this.id).then(function(response) {
+      //   this.idea = response.data;
+      //   console.log("RESPONSE: " + JSON.stringify(this.idea));
+      // });
     },
-    commentIdea(){
-      this.$http.post((SERVER_URL + '/ideas/' + this.id + '/comments'),{
-        title: 'Comentario',
-        description: this.newComment
-      }, { headers: {Authorization: 'Token token="' + this.userInfo.secret + '"'}}).then(response => response.json())
-        .then(function(json){
-          console.log(json);
-          // this.$router.push('/idea');
-          location.reload();
-        },
-        (err) => {
-          console.log("Err", err);
-        }
-      );
+    voteForIdea() {
+      if (this.tokenExists == false) {
+        this.$router.push("/register");
+      } else {
+        api.idea.vote(this.ideaID).then((response) => {
+          this.$bvModal.show("modalPopover voted");
+        }).catch((err) => {
+          console.log(err.data)
+          this.$bvModal.show("modalPopover");
+        })
+
+        // this.$http
+        //   .post(SERVER_URL + "/ideas/" + this.id + "/votes", {
+        //     headers: {
+        //       Authorization: 'Token token="' + this.userInfo.secret + '"'
+        //     }
+        //   })
+        //   .then(response => response.json())
+        //   .then(
+        //     function(json) {
+        //       console.log(json);
+        //       this.$bvModal.show("modalPopover voted");
+        //     },
+        //     err => {
+        //       console.log("Err", err);
+        //       this.$bvModal.show("modalPopover");
+        //     }
+        //   );
+      }
+    },
+    loadComments() {
+      api.idea.getComments(this.ideaID).then((response) => {
+        this.comments = response.data
+      }).catch((err) => {
+        console.log(err.data)
+      })
+
+      // this.$http
+      //   .get(SERVER_URL + "/ideas/" + this.id + "/comments")
+      //   .then(function(response) {
+      //     this.comments = response.data;
+      //   });
+    },
+    commentIdea() {
+      api.idea.postComment(this.ideaID).then((response) => {
+        location.reload();
+      }).catch((err) => {
+        console.log(err.data)
+      })
+
+
+      // this.$http
+      //   .post(
+      //     SERVER_URL + "/ideas/" + this.id + "/comments",
+      //     {
+      //       title: "Comentario",
+      //       description: this.newComment
+      //     },
+      //     {
+      //       headers: {
+      //         Authorization: 'Token token="' + this.userInfo.secret + '"'
+      //       }
+      //     }
+      //   )
+      //   .then(response => response.json())
+      //   .then(
+      //     function(json) {
+      //       console.log(json);
+      //       // this.$router.push('/idea');
+      //       location.reload();
+      //     },
+      //     err => {
+      //       console.log("Err", err);
+      //     }
+      //   );
     }
   },
-  created(){
+  created() {
     this.loadIdeaInfo();
     this.checkToken();
     this.loadComments();

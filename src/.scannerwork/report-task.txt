@@ -1,0 +1,6 @@
+projectKey=CCB
+serverUrl=http://sonarqube.nativapps.com
+serverVersion=6.7.1.35068
+dashboardUrl=http://sonarqube.nativapps.com/dashboard/index/CCB
+ceTaskId=AWsykWrwq5RC5nxkLJ8A
+ceTaskUrl=http://sonarqube.nativapps.com/api/ce/task?id=AWsykWrwq5RC5nxkLJ8A

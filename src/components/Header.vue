@@ -25,67 +25,71 @@
 </template>
 
 <script>
-import {SERVER_URL} from '../variables.js'
+import {SERVER_URL} from "../variables.js";
 
 export default {
-  data(){
-    return{
+  data() {
+    return {
       tokenExists: false,
       userInfo: {
-        id:'',
-        secret:'',
-        expire_at:'',
-        name:'',
-        lastname:'',
-        fullname:''
+        name: "",
+        lastname: "",
+        fullname: ""
       }
-    }
+    };
   },
   methods: {
-    checkToken(){
-      if (this.$cookie.get('secret') == null){
-          this.tokenExists = false;
-      }else{
-          this.tokenExists = true;
-          console.log("COOKIE: " + this.$cookie.get('secret'));
-          var userInfo = JSON.parse(this.$cookie.get('secret'));
-          this.userInfo.id = userInfo.user_id;
-          this.userInfo.secret = userInfo.secret;
-          this.userInfo.expire_at = userInfo.expire_at;
-          this.userInfo.name = userInfo.name;
-          this.userInfo.lastname = userInfo.lastname;
+    checkToken() {
+      if (this.$cookie.get("secret") == null) {
+        this.tokenExists = false;
+      } else {
+        this.tokenExists = true;
+        console.log("COOKIE: " + this.$cookie.get("secret"));
+        var userInfo = JSON.parse(this.$cookie.get("secret"));
+        this.userInfo.id = userInfo.user_id;
+        this.userInfo.secret = userInfo.secret;
+        this.userInfo.expire_at = userInfo.expire_at;
+        this.userInfo.name = userInfo.name;
+        this.userInfo.lastname = userInfo.lastname;
       }
     },
-    userLogout(){
-        this.$cookie.delete('secret');
-        this.$http.delete((SERVER_URL + '/sessions'), {headers: {'Authorization': 'Token token=' + this.userInfo.secret}})
-        .then((response) => {
+    userLogout() {
+      this.$cookie.delete("secret");
+      this.$http
+        .delete(SERVER_URL + "/sessions", {
+          headers: { Authorization: "Token token=" + this.userInfo.secret }
+        })
+        .then(
+          response => {
             console.log(response);
-        },
-        (err) => {
+          },
+          err => {
             console.log("Err", err);
-        });
-        console.log('LOOGED OUT');
-        setTimeout(() => this.$router.push('/'), 500);
-        // this.$router.push('/');
-        // location.reload();
+          }
+        );
+      console.log("LOOGED OUT");
+      setTimeout(() => this.$router.push("/"), 500);
+      // this.$router.push('/');
+      // location.reload();
     },
-    goToLogin(){
-      this.$router.push('/login')
+    goToLogin() {
+      this.$router.push("/login");
     },
-    buildFullName(){
-      const nameCapitalized = this.userInfo.name.charAt(0).toUpperCase() + this.userInfo.name.slice(1)
-      const lastnameCapitalized = this.userInfo.lastname.charAt(0).toUpperCase() + this.userInfo.lastname.slice(1)
-      this.userInfo.fullname = nameCapitalized + " " + lastnameCapitalized
+    buildFullName() {
+      const nameCapitalized = this.userInfo.name.charAt(0).toUpperCase() + this.userInfo.name.slice(1);
+      const lastnameCapitalized = this.userInfo.lastname.charAt(0).toUpperCase() + this.userInfo.lastname.slice(1);
+      this.userInfo.fullname = nameCapitalized + " " + lastnameCapitalized;
     },
-    gotoProfile(){
-      this.$router.push('/miperfil');
+    gotoProfile() {
+      this.$router.push("/miperfil");
     }
   },
-  created(){
+  created() {
     this.checkToken();
     console.log(this.tokenExists);
     setTimeout(() => this.buildFullName(), 500);
+
+    console.log('this.userInfo.lastname', this.userInfo.lastname)
   }
 };
 </script>

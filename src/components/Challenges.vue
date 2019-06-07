@@ -35,10 +35,10 @@
   </div>
 </template>
 <script>
-import {SERVER_URL} from '../variables.js'
+import api from '../requests.js'
 
 import Header from "./Header.vue";
-import Idea from "./addIdea.vue";
+import Idea from "./AddIdea.vue";
 
 export default {
   components: {
@@ -51,14 +51,16 @@ export default {
     }
   },
   methods: {
-    loadChallenges(){
-        this.$http.get(SERVER_URL + '/challenges').then(function(response){
-            this.challenges = response.data;  
-        })
-    }
+    getChallenges(){
+      api.challenges.index().then((response)=>{
+          this.challenges = response.data
+      }).catch((err) => {
+        console.log(err.data)
+      })
+    },
   },
   created(){
-    this.loadChallenges();
+    this.getChallenges();
   }
 };
 </script>

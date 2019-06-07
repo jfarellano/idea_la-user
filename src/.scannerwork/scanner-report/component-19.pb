@@ -1,0 +1,1 @@
+components/Idea.vue 2jsXÎh
