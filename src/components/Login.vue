@@ -1,7 +1,7 @@
 <template>
   <div class="loginComponent">
-  <div id="divStyle" class="container-fluid">
-    <div id="rowStyle" class="row align-items-center">
+  <div class="container-fluid divStyle">
+    <div class="row align-items-center rowStyle">
     <div class="col align-self-center">
       <router-link to="/">
         <img src="../assets/CS_BC.svg" alt="" height="140px" class="iconImage" >
@@ -91,3 +91,45 @@ export default {
   }
 };
 </script>
+
+<style scoped style lang="scss">
+.loginComponent {
+  background-color: #ffe01b;
+  height: 100vh;
+  text-align: center;
+  .divStyle {
+    height: 100vh;
+  }
+  .rowStyle {
+    height: 100%;
+  }
+  .iconImage {
+    margin-bottom: 15px;
+  }
+  @media (max-width:800px) {
+    .fieldsContainer{
+      max-width: 90% !important;
+    }
+  }
+  .fieldsContainer {
+    background-color: white;
+    text-align: left;
+    padding: 23px;
+    margin: auto;
+    max-width: 35%;
+    
+  }
+  .divSeparator {
+    height: 13px;
+  }
+  #btnLoginStyle {
+    background-color: grey;
+    border: grey;
+    box-shadow: 0px 5px #FFE01B;
+    border-radius: 0px;
+  }
+  .inputStyles {
+    border-radius: 0px;
+  }
+}
+</style>

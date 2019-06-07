@@ -138,3 +138,32 @@ export default {
   }
 };
 </script>
+
+<style scoped style lang="scss">
+.createEditIdeaComponent {
+  .titleStyle {
+    margin-bottom: 30px;
+  }
+  .idea-create {
+    margin-top: 130px;
+  }
+   .ideaButton{
+     width: 100%;
+     border: 2px solid #4d4d4d;
+     color: #4d4d4d;
+     background-color: transparent;
+     border-radius: 0px;
+     font-size: 1.3em;
+     margin-bottom: 10px;
+   }
+   .form{
+     width: 85%;
+   }
+   .descStyle {
+     height: 130px;
+   }
+   .squareInput {
+     border-radius: 0px;
+   }
+}
+</style>
