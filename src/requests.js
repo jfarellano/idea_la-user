@@ -3,9 +3,10 @@
 // servicio para el manejo de variables como se muestra en este ejemplo
 const r = require('axios');
 const SERVER_URL = 'http://ec2-18-222-177-88.us-east-2.compute.amazonaws.com:5005'
+import auth from './authentication.js'
 
 function getHeaders() {
-  return {headers: {"Authorization": 'Token token=' + document.cookie.split('%22%3A%22')[1].split('%22%2C%22')[0]}}
+  return {headers: {"Authorization": 'Token token=' + auth.storage.get('secret')}}
 }   
 
 export default {
