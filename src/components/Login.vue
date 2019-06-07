@@ -1,28 +1,35 @@
 <template>
   <div class="loginComponent">
-  <div class="container-fluid divStyle">
-    <div class="row align-items-center rowStyle">
-    <div class="col align-self-center">
-      <router-link to="/">
-        <img src="../assets/CS_BC.svg" alt="" height="140px" class="iconImage" >
-      </router-link>
-      <div class="fieldsContainer" data-aos="zoom-in" data-aos-duration="1000" data-aos-delay="10">
-        <h3 class="title">Correo electrónico</h3>
-        <div class="input-group">
-          <input type="email" class="form-control inputStyles" placeholder="ej. example@email.com" v-model="userCredentials.email">
+    <div class="container-fluid divStyle">
+      <div class="row align-items-center rowStyle">
+      <div class="col align-self-center">
+        <router-link to="/">
+          <img src="../assets/CS_BC.svg" alt="" height="140px" class="iconImage" >
+        </router-link>
+        <div class="fieldsContainer" data-aos="zoom-in" data-aos-duration="1000" data-aos-delay="10">
+          <h3 class="title">Correo electrónico</h3>
+          <div class="input-group">
+            <input type="email" class="form-control inputStyles" placeholder="ej. example@email.com" v-model="userCredentials.email">
+          </div>
+          <div class="divSeparator"></div>
+          <h3 class="title">Contraseña</h3>
+          <div class="input-group">
+            <input type="password" class="form-control inputStyles" v-model="userCredentials.password">
+          </div>
+          <div class="divSeparator"></div>
+          <p class="parag" id="registerStyle">¿No tienes una cuenta todavía? <router-link to="/register">Registrate aquí.</router-link></p>
+          <button type="button" class="btn btn-primary btn-lg btn-block" id="btnLoginStyle" v-on:click.prevent="userLogin()">Ingresar</button>
         </div>
-        <div class="divSeparator"></div>
-        <h3 class="title">Contraseña</h3>
-        <div class="input-group">
-          <input type="password" class="form-control inputStyles" v-model="userCredentials.password">
-        </div>
-        <div class="divSeparator"></div>
-        <p class="parag" id="registerStyle">¿No tienes una cuenta todavía? <router-link to="/register">Registrate aquí.</router-link></p>
-        <button type="button" class="btn btn-primary btn-lg btn-block" id="btnLoginStyle" v-on:click.prevent="userLogin()">Ingresar</button>
+      </div>
       </div>
     </div>
-    </div>
-  </div>
+    <b-modal id="modalPopover credentials" title="Atención" ok-only>
+      <p class="parag">Credenciales Inválidas.</p>
+    </b-modal>
+    <b-modal id="modalPopover blocked" title="Atención" ok-only>
+      <p class="parag">Usuario bloqueado.</p>
+    </b-modal>
+    <vue-snotify></vue-snotify>
   </div>
 </template>
 
@@ -53,11 +60,23 @@ export default {
         console.log("Err", err.body.single_authentication);
         console.log("Err", err);
         if (err.body.single_authentication == 'invalid credentials') {
-          alert("Invalid Credentials");
+          // ALERT NOTIFICATION INVALID
+          // this.$bvModal.show("modalPopover credentials");
+
+          this.$snotify.error('Credenciales inválidas.', 'Atención', {
+            timeout: 2000,
+            showProgressBar: false,
+            closeOnClick: true,
+            pauseOnHover: true,
+            position: "rightCenter"
+          });
+
+
           this.userCredentials.username = '';
           this.userCredentials.password = '';
         } else if (err.body.single_authentication == 'user is blocked') {
-          alert("This user has been blocked.");
+          // ALERT NOTIFICATION USER BLOCKED
+          this.$bvModal.show("modalPopover blocked");
           this.userCredentials.username = '';
           this.userCredentials.password = '';
         } else {

@@ -145,21 +145,25 @@ export default {
     deleteIdea(){
       console.log('Eliminar Idea')
     },
-    loadIdeas(){
-      this.$http.get((SERVER_URL + '/users_ideas'), {headers: {'Authorization': 'Token token=' + this.userInfo.secret}})
-      .then(function(response){
-        this.ideas = response.data;
-      }),
-      (err) => {
-      console.log("Err", err);
-      };
-      console.log('IDEAS',JSON.stringify(this.ideas))
+    getIdeas(){
+      api.myProfile.getIdeas().then(response => {
+        this.ideas = response.data
+      }).catch(err => {
+        console.log(err.data)
+      })
+
+      // this.$http.get((SERVER_URL + '/users_ideas'), {headers: {'Authorization': 'Token token=' + this.userInfo.secret}})
+      // .then(function(response){
+      //   this.ideas = response.data;
+      // }).catch(err => {
+      //   console.log(err.data)
+      // })
     }
   },
   created(){
     this.checkToken();
     setTimeout(() => this.buildFullName(), 500);
-    this.loadIdeas();
+    this.getIdeas();
   }
 }
 </script>

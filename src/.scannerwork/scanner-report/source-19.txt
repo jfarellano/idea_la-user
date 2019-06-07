@@ -1,206 +1,169 @@
 <template>
-  <div class="idea-show">
-    <Header></Header>
-    <div class="main-container container-fluid">
-      <div class="row first">
-        <div class="col">
-          <div v-if="idea.picture == null">
-            <img
-              src="https://ep01.epimg.net/internacional/imagenes/2018/07/23/billete_a_macondo/1532310440_143390_1532310884_noticia_normal.jpg"
-            >
-          </div>
-          <div v-else>
-            <img v-bind:src="idea.picture.url">
-          </div>
-        </div>
-      </div>
-      <div class="row second">
-        <h1 class="title">{{idea.title}}</h1>
-      </div>
-      <div class="row third">
-        <p class="parag">{{idea.description}}</p>
-      </div>
-      <div class="row fourth justify-content-center">
-        <div v-if="idea.videoLink == ''">
-          <iframe
-            v-bind:src="idea.videoLink"
-            frameborder="0"
-            allow="accelerometer; autoplay; encrypted-media; gyroscope; picture-in-picture"
-            allowfullscreen
-          ></iframe>
-        </div>
-        <div v-else>
-          <iframe
-            src="https://www.youtube.com/embed/JVRY5z7-MpM"
-            frameborder="0"
-            allow="accelerometer; autoplay; encrypted-media; gyroscope; picture-in-picture"
-            allowfullscreen
-          ></iframe>
-        </div>
-      </div>
-      <div class="row fifth">
-        <b-button class="title" v-on:click.prevent="voteForIdea()">Votar por esta idea</b-button>
-      </div>
+  <div class="createEditIdeaComponent">
+  <Header></Header>
 
-      <div v-if="tokenExists == true">
-        <div class="row sixth">
-          <b-form-group class="w-comment" label="Cuéntanos que tal te pareció esta idea">
-            <b-form-textarea placeholder="Comentario" v-model="newComment"></b-form-textarea>
-          </b-form-group>
-          <b-button v-on:click.prevent="commentIdea()">Enviar</b-button>
-        </div>
+  <div class="container-fluid idea-create">
+    <div class="row justify-content-center">
+    <h1 class="title titleStyle">Postula tu idea</h1>
+    </div>
+    <div class="container-fluid form">
+    <div class="row">
+      <div class="col-sm">
+      <b-form-group class="title" label="Título">
+        <b-form-input class="squareInput" type="text" v-model="idea.title"></b-form-input>
+      </b-form-group>
+      <b-form-group class="title" label="Descripción">
+        <b-form-textarea class="descStyle squareInput" type="text" v-model="idea.description"></b-form-textarea>
+      </b-form-group>
       </div>
-
-      <div class="row comments">
-        <div class="comment container-fluid">
-          <h3 class="title">Comentarios</h3>
-          <br>
-          <div class="row" v-for="(comment, index) in comments" :key="index">
-            <div class="col">
-              <p class="parag">{{comment.description}}</p>
-              <hr>
-            </div>
-          </div>
-        </div>
+      <div class="col-sm">
+      <b-form-group class="title" label="Seleccionar Reto">
+        <b-form-select
+          class="mb-2 mr-sm-2 mb-sm-0 squareInput"
+          :value="null"
+          id="inline-form-custom-select-pref"
+          v-model="idea.challenge_id"
+          >
+          <option slot="first" v-for="(challenge, index) in challenges" v-bind:value="challenge.id" :key="index">{{ challenge.title }}</option>
+        </b-form-select>
+      </b-form-group>
+      <b-form-group class="title" label="Cargar Imagen">
+        <b-form-file class="squareInput" v-model="idea.image"></b-form-file>
+      </b-form-group>
+      <b-form-group class="title" label="URL de Video">
+        <b-form-input class="squareInput" type="text" v-model="idea.videoLink"></b-form-input>
+      </b-form-group>
       </div>
     </div>
-    <b-modal id="modalPopover" title="Felicitaciones" ok-only>
-      <p class="parag">Tu voto se ha realizado exitosamente.</p>
-    </b-modal>
-    <b-modal id="modalPopover voted" title="Error" ok-only>
-      <p class="parag">Ya has votado por ésta idea.</p>
-    </b-modal>
+    <div class="row">
+      <div class="col-sm">
+        <b-button class="ideaButton title" v-on:click.prevent="createIdea()">Aceptar</b-button>
+      </div>
+      <div class="col-sm">
+        <b-button class="ideaButton title" v-on:click.prevent="cancelCreateIdea()">Cancelar</b-button>
+      </div>
+    </div>
+    </div>
+  </div>
   </div>
 </template>
 
 <script>
-import api from "../requests.js";
+import api from '../requests.js'
 
 import Header from "./Header.vue";
+
 export default {
   components: {
-    Header
+  Header
   },
   data() {
     return {
-      ideaID: "",
-      idea: "",
+      challenges: [],
+      idea: {},
       tokenExists: false,
       userInfo: {},
-      comments: [],
-      newComment: ""
+      misc: {}
     };
   },
   methods: {
-    checkToken() {
-      if (this.$cookie.get("secret") == null) {
-        this.tokenExists = false;
-      } else {
-        this.tokenExists = true;
-        console.log("COOKIE: " + this.$cookie.get("secret"));
-        var userInfo = JSON.parse(this.$cookie.get("secret"));
-        this.userInfo.id = userInfo.user_id;
-        this.userInfo.secret = userInfo.secret;
-        this.userInfo.expire_at = userInfo.expire_at;
-        this.userInfo.name = userInfo.name;
-        this.userInfo.lastname = userInfo.lastname;
-      }
-    },
-    loadIdeaInfo() {
-      this.ideaID = this.$route.params.iId;
-      api.idea.getInfo(this.ideaID).then((response) => {
-        this.idea = response.data
-      }).catch((err) => {
-        console.log(err.data)
-      })
-
-      
-      // this.$http.get(SERVER_URL + "/ideas/" + this.id).then(function(response) {
-      //   this.idea = response.data;
-      //   console.log("RESPONSE: " + JSON.stringify(this.idea));
-      // });
-    },
-    voteForIdea() {
-      if (this.tokenExists == false) {
-        this.$router.push("/register");
-      } else {
-        api.idea.vote(this.ideaID).then((response) => {
-          this.$bvModal.show("modalPopover voted");
-        }).catch((err) => {
-          console.log(err.data)
-          this.$bvModal.show("modalPopover");
-        })
-
-        // this.$http
-        //   .post(SERVER_URL + "/ideas/" + this.id + "/votes", {
-        //     headers: {
-        //       Authorization: 'Token token="' + this.userInfo.secret + '"'
-        //     }
-        //   })
-        //   .then(response => response.json())
-        //   .then(
-        //     function(json) {
-        //       console.log(json);
-        //       this.$bvModal.show("modalPopover voted");
-        //     },
-        //     err => {
-        //       console.log("Err", err);
-        //       this.$bvModal.show("modalPopover");
-        //     }
-        //   );
-      }
-    },
-    loadComments() {
-      api.idea.getComments(this.ideaID).then((response) => {
-        this.comments = response.data
-      }).catch((err) => {
-        console.log(err.data)
-      })
-
-      // this.$http
-      //   .get(SERVER_URL + "/ideas/" + this.id + "/comments")
-      //   .then(function(response) {
-      //     this.comments = response.data;
-      //   });
-    },
-    commentIdea() {
-      api.idea.postComment(this.ideaID).then((response) => {
-        location.reload();
-      }).catch((err) => {
-        console.log(err.data)
-      })
-
-
-      // this.$http
-      //   .post(
-      //     SERVER_URL + "/ideas/" + this.id + "/comments",
-      //     {
-      //       title: "Comentario",
-      //       description: this.newComment
-      //     },
-      //     {
-      //       headers: {
-      //         Authorization: 'Token token="' + this.userInfo.secret + '"'
-      //       }
-      //     }
-      //   )
-      //   .then(response => response.json())
-      //   .then(
-      //     function(json) {
-      //       console.log(json);
-      //       // this.$router.push('/idea');
-      //       location.reload();
-      //     },
-      //     err => {
-      //       console.log("Err", err);
-      //     }
-      //   );
+  checkToken(){
+    if (this.$cookie.get('secret') == null){
+      this.tokenExists = false;
+    }else{
+      this.tokenExists = true;
+      console.log("COOKIE: " + this.$cookie.get('secret'));
+      var userInfo = JSON.parse(this.$cookie.get('secret'));
+      this.userInfo.id = userInfo.user_id;
+      this.userInfo.secret = userInfo.secret;
+      this.userInfo.expire_at = userInfo.expire_at;
+      this.userInfo.name = userInfo.name;
+      this.userInfo.lastname = userInfo.lastname;
     }
   },
-  created() {
-    this.loadIdeaInfo();
+  getChallenges() {
+    api.challenges.index().then((response)=>{
+      this.challenges = response.data
+    }).catch((err) => {
+      console.log(err.data)
+    })
+
+    // this.$http.get(SERVER_URL + '/challenges').then(function(response){
+    //   this.challenges = response.data;
+    // }),
+    // (err) => {
+    // console.log("Err", err);
+    // };
+    // console.log(JSON.stringify(this.challenges.title))
+  },
+  createIdea(){
+    api.createEditIdea.createIdea({
+      image: this.idea.image,
+      title: this.idea.title,
+      description: this.idea.description,
+      videLink: this.idea.videLink,
+      edition: this.idea.edition,
+      challenge_id: this.idea.challenge_id
+    }).then((response) => {
+      this.misc = response.data
+    }).catch((err) => {
+      console.log(err.data)
+    })
+
+    // this.$http.post((SERVER_URL + '/ideas'),{
+    //   image: this.idea.image,
+    //   title: this.idea.title,
+    //   description: this.idea.description,
+    //   videLink: this.idea.videLink,
+    //   edition: this.idea.edition,
+    //   challenge_id: this.idea.challenge_id
+    // }, { headers: {Authorization: 'Token token="' + this.userInfo.secret + '"'}}).then(response => response.json())
+    //   .then(function(json){
+    //   console.log(json);
+    //   this.$router.push('/miperfil');
+    //   },
+    //   (err) => {
+    //   console.log("Err", err);
+    //   this.$router.push('/miperfil');
+    //   }
+    // );
+  },
+  cancelCreateIdea(){
+    this.$router.push('/miperfil');
+    }
+  },
+  created(){
     this.checkToken();
-    this.loadComments();
+    this.getChallenges();
   }
 };
 </script>
+
+<style scoped style lang="scss">
+.createEditIdeaComponent {
+  .titleStyle {
+    margin-bottom: 30px;
+  }
+  .idea-create {
+    margin-top: 130px;
+  }
+   .ideaButton{
+     width: 100%;
+     border: 2px solid #4d4d4d;
+     color: #4d4d4d;
+     background-color: transparent;
+     border-radius: 0px;
+     font-size: 1.3em;
+     margin-bottom: 10px;
+   }
+   .form{
+     width: 85%;
+   }
+   .descStyle {
+     height: 130px;
+   }
+   .squareInput {
+     border-radius: 0px;
+   }
+}
+</style>
