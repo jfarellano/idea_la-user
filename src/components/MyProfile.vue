@@ -1,5 +1,5 @@
 <template>
-  <div class="myPorfileComponent">
+  <div class="myProfileComponent">
     <Header></Header>
     <Idea></Idea>
   <div class="main-container container-fluid">
@@ -23,7 +23,7 @@
 
     <div class="row second justify-content-around">
     <div class="col align-self-center">
-      <div class="ideasTabs">
+      <div>
         <b-card no-body>
           <b-tabs card>
             <!-- <b-tab v-bind:title="challenge.title" active v-for="(challenge, index) in challenges" :key="index">  -->
@@ -163,3 +163,69 @@ export default {
   }
 }
 </script>
+
+
+<style scoped style lang="scss">
+.myProfileComponent {
+  .main-container {
+    margin-top: 110px;
+    .centerProfileName {
+      text-align: center;
+      margin: 20px;
+    }
+    .rowInfoStyle {
+      text-align: center;
+      margin-top: 15px;
+      margin-bottom: 15px;
+    }
+    .first{
+      padding: 50px;
+    }
+    .second{
+      padding: 50px;
+      background-color: #e6e6e6;
+
+      .idea{
+        margin: 5px;
+        background-color: white;
+        width: 300px;
+        height: 400px;
+        border: 1px solid #e6e6e6;
+        .image{
+          height: 150px;
+          background-color: #ffe01b;
+          img{
+            overflow: hidden;
+            height: 150px;
+            margin: auto;
+          }
+        }
+        .data{
+          padding: 20px;
+          h3{
+            border-bottom: 4px solid #ffe01b;
+            padding-bottom: 0.5px;
+          }
+          p{
+            margin-top: 10px;
+            text-align: justify;
+          }
+        }
+      }
+    }
+  }
+  .editImage {
+    margin: 5px;
+    margin-left: 45px;
+    cursor: pointer;
+  }
+  .deleteImage {
+    margin: 5px;
+    cursor: pointer;
+  }
+  .rowStyle {
+    width: 100%;
+    margin: auto;
+  }
+}
+</style>

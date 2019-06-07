@@ -21,7 +21,7 @@
             <div class="divSeparator"></div>
             <h5 class="title">Contraseña</h5>
             <div class="input-group">
-              <input type="password" class="form-control inputStyles" placeholder="********" v-model="userData.password">
+              <input type="password" class="form-control inputStyles" v-model="userData.password">
             </div>
           </div>
           <div class="col-sm-1">
@@ -53,7 +53,7 @@
             <b-form-select
               class="mb-2 mr-sm-2 mb-sm-0 squareInput"
               :value="null"
-              :options="{ 'male': 'Masculino', 'female': 'Femenino'}"
+              :options="{ 'male': 'Masculino', 'female': 'Femenino', 'other': 'Otro'}"
               id="inline-form-custom-select-pref"
                v-model="userData.gender"
               >
@@ -265,3 +265,72 @@ export default {
   }
 };
 </script>
+
+<style scoped style lang="scss">
+.registerComponent {
+  height: 100vh;
+  text-align: center;
+  #divStyle {
+    height: 100vh;    
+  }
+  #rowStyle {
+    height: 100%;
+  }
+  .iconImage {
+    margin-bottom: 15px;
+  }
+  @media (max-width:800px) {
+    .fieldsContainer{
+      max-width: 90% !important;
+    }
+    .lineDivider{
+      height: 5px !important;
+      width: 90%;
+      border-bottom: 2px solid #888888;
+      border-left: 0px !important;
+      margin: auto !important;
+      margin-bottom: 15px !important; 
+      margin-top: 15px !important; 
+    }
+    .dropdownItemStyle {
+      margin-bottom: 13px;
+      margin-right: 13px;
+    }
+  }
+  .fieldsContainer {
+    background-color: white;
+    text-align: left;
+    padding: 25px;
+    padding-left: 30px;
+    padding-right: 30px;
+    margin: auto;
+    max-width: 65%;
+    box-shadow: 3px 5px 8px #888888, 1px 5px 10px 8px #888888;
+  }
+  .divSeparator {
+    height: 13px;
+  }
+  #btnRegisterStyle {
+    background-color: #FFE01B;
+    border: #FFE01B;
+    border-radius: 0px;
+    color: #4d4d4d;
+    max-width: 50%;
+  }
+  .inputStyles {
+    border-radius: 0px;
+  }
+  .lineDivider {
+    border-left: 2px solid #888888;
+    height: 300px;
+    margin-left: 20px;
+  }
+  .modalStyle {
+    text-align: left;
+  }
+  #pickerStyle {
+    max-width: 350px;
+    margin-left: 15px;
+  }
+}
+</style>
