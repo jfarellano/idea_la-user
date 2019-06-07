@@ -1,1 +1,1 @@
-components/MyProfile.vue 2jsXçh
+main.js 2jsX h

@@ -1,1 +1,1 @@
-components/CreateEditIdea.vue 2jsX©h
+components/AddIdea.vue 2jsX@h

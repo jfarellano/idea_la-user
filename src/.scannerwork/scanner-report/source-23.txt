@@ -1,135 +1,212 @@
 <template>
-  <div class="loginComponent">
-  <div class="container-fluid divStyle">
-    <div class="row align-items-center rowStyle">
-    <div class="col align-self-center">
-      <router-link to="/">
-        <img src="../assets/CS_BC.svg" alt="" height="140px" class="iconImage" >
-      </router-link>
-      <div class="fieldsContainer" data-aos="zoom-in" data-aos-duration="1000" data-aos-delay="10">
-        <h3 class="title">Correo electrónico</h3>
-        <div class="input-group">
-          <input type="email" class="form-control inputStyles" placeholder="ej. example@email.com" v-model="userCredentials.email">
+  <section>
+    <Header></Header>
+    <div class="main-container container-fluid">
+      <div class="first row">
+        <div class="col-md-6 align-self-end">
+          <img src="../assets/FS_FC.svg">
         </div>
-        <div class="divSeparator"></div>
-        <h3 class="title">Contraseña</h3>
-        <div class="input-group">
-          <input type="password" class="form-control inputStyles" v-model="userCredentials.password">
+        <div class="col-md-6 align-self-end">
+          <div class="left-cont">
+            <img src="../assets/aduana.svg">
+            <p
+              class="parag"
+            >Idéala es una iniciativa liderada por la Cámara de Comercio de Barranquilla en alianza con distintos actores locales con el fin de trabajar en el fomento y fortalecimiento de la ciudadanía activa de tal modo que sean los propios ciudadanos quienes prioricen los grandes desafíos que afronta nuestro territorio frente a los Objetivos del Desarrollo Sostenible de frente a las elecciones locales.</p>
+            <div class="over-border">
+              <b-button class="option title" v-on:click.prevent="goToChallenges">Conoce las ideas</b-button>
+            </div>
+          </div>
         </div>
-        <div class="divSeparator"></div>
-        <p class="parag" id="registerStyle">¿No tienes una cuenta todavía? <router-link to="/register">Registrate aquí.</router-link></p>
-        <button type="button" class="btn btn-primary btn-lg btn-block" id="btnLoginStyle" v-on:click.prevent="userLogin()">Ingresar</button>
+      </div>
+      <div class="row second">
+        <div class="col-md-8 align-self-center info">
+          <h1 class="title">Comprometidos con los ODS</h1>
+          <p
+            class="parag"
+          >Estamos convencidos de que la participación ciudadana es pieza fundamental para emprender un nuevo camino en el que se focalice el mejoramiento de la vida de todos, sin dejar a nadie atrás. Tomando como base la necesidad de cumplir los Objetivos del Desarrollo Sostenible como modelo para alcanzar un mejor y sostenible futuro para todos.</p>
+        </div>
+
+        <div class="col-md-4 align-self-center">
+          <img src="../assets/ODS.svg" alt="ODS">
+        </div>
+      </div>
+      <div class="row third">
+        <div class="col-md-4 align-self-center">
+          <img src="../assets/miss.svg" alt="Miss">
+        </div>
+        <div class="col-md-8 align-self-center info">
+          <h1 class="title">Avanzamos a pasos agigantados</h1>
+          <p
+            class="parag"
+          >La ciudad avanza a pasos agigantados, cada uno de los ciudadanos tenemos mucho que aportar y así hacer de Barranquilla una mejor y sostenible ciudad para todos. Todos podemos convertirnos en protagonistas de ciudad, imaginando nuevas ideas de ciudad y realizando acciones de ciudad.</p>
+        </div>
+      </div>
+      <div class="row fourth">
+        <div class="col-md-4 align-self-center">
+          <img src="../assets/dream.svg" alt="Dream">
+        </div>
+        <div class="col-md-8 align-self-center info">
+          <h1 class="title">Podemos hacer un sueño realidad</h1>
+          <p
+            class="parag"
+          >Este es un espacio para que juntos construyamos una mejor ciudad con el apoyo de nuestros ciudadanos motivados por su desarrollo que nos brinden su mirada al futuro para que todos creemos la Barranquilla que soñamos.</p>
+        </div>
       </div>
     </div>
-    </div>
-  </div>
-  </div>
+  </section>
 </template>
 
 <script>
-import {SERVER_URL} from '../variables.js'
+import Header from "./Header.vue";
 
 export default {
-  data(){
-    return{
-      userCookie: {},
-      userCredentials: {}
-    }
+  components: {
+    Header
+  },
+  data() {
+    return {
+      tokenExists: false,
+      userCookie: {
+        id: "",
+        secret: "",
+        expire_at: "",
+        name: ""
+      }
+    };
   },
   methods: {
-    userLogin() {
-      this.$http.post((SERVER_URL + '/sessions'),{
-        email: this.userCredentials.email,
-        password: this.userCredentials.password
-        }).then(response => response.json())
-        .then(function(json){
-        // console.log('USER LOGIN' + JSON.stringify(json));
-        this.userCookie.user_id = json.user_id;
-        this.userCookie.secret = json.secret;
-        this.userCookie.expire_at = json.expire_at;
-        this.extraData(json.user_id);
-        setTimeout(() => this.$router.push('/'), 500);
-      },(err) => {
-        console.log("Err", err.body.single_authentication);
-        console.log("Err", err);
-        if (err.body.single_authentication == 'invalid credentials') {
-          alert("Invalid Credentials");
-          this.userCredentials.username = '';
-          this.userCredentials.password = '';
-        } else if (err.body.single_authentication == 'user is blocked') {
-          alert("This user has been blocked.");
-          this.userCredentials.username = '';
-          this.userCredentials.password = '';
-        } else {
-          setTimeout(() => this.$router.push('/'), 500);
-        }
-      });
-    },
-    extraData(user_id){
-      // PETICIONES DE DATOS EXTRA DEL USUARIO PARA GUARDAR EN COOKIE
-      this.$http.get(SERVER_URL + '/users/' + user_id)
-      .then(response => response.json())
-      .then(function(json){
-      console.log('EXTRA DATA' + JSON.stringify(json));
-      this.userCookie.email = json.email;
-      this.userCookie.cc = json.cc;
-      this.userCookie.phone = json.phone;
-      this.userCookie.name = json.name;
-      this.userCookie.lastname = json.lastname;
-      this.userCookie.age = json.age;
-      this.userCookie.gender = json.gender;
+    checkToken() {
+      if (this.$cookie.get("secret") == null) {
+        this.tokenExists = false;
+      } else {
+        this.tokenExists = true;
+        console.log("COOKIE: " + this.$cookie.get("secret"));
+        var userInfo = JSON.parse(this.$cookie.get("secret"));
+        this.userCookie.id = userInfo.user_id;
+        this.userCookie.secret = userInfo.secret;
+        this.userCookie.expire_at = userInfo.expire_at;
+        this.userCookie.name = userInfo.name;
 
-      this.userCookie.password = this.userCredentials.password
-      
-      this.$cookie.set('secret', JSON.stringify(this.userCookie), 1);
-      console.log('COOKIE SECRET: ' + this.$cookie.get('secret'));
-      })    
+        this.nameOfUser = userInfo.name;
+      }
     },
+    goToChallenges() {
+      this.$router.push("/retos");
+    }
   },
   created() {
-    console.log('SERVER_URL: ', SERVER_URL)
+    this.checkToken();
   }
 };
 </script>
 
-<style scoped style lang="scss">
-.loginComponent {
-  background-color: #ffe01b;
-  height: 100vh;
-  text-align: center;
-  .divStyle {
-    height: 100vh;
-  }
-  .rowStyle {
-    height: 100%;
-  }
-  .iconImage {
-    margin-bottom: 15px;
-  }
-  @media (max-width:800px) {
-    .fieldsContainer{
-      max-width: 90% !important;
+<style lang="scss" scoped>
+.main-container {
+  margin-top: 110px;
+  .first {
+    background-image: url("../assets/first-bg.svg");
+    background-repeat: no-repeat;
+    background-size: 50vw;
+    background-position-x: -30%;
+    background-position-y: 90%;
+    margin-bottom: 50px;
+    img {
+      margin-bottom: 40px;
+      margin-left: 50px;
+    }
+    p {
+      text-align: justify;
+      padding: 50px;
+    }
+    .left-cont {
+      margin-bottom: 40px;
+      text-align: center;
+      img {
+        width: 50%;
+        margin: 0px;
+      }
+    }
+    .over-border {
+      padding-right: 2px;
+      padding-bottom: 2px;
+      border-right: 2px solid #ffe01b;
+      border-bottom: 2px solid #ffe01b;
+      margin: 0px 50px;
+    }
+    .option {
+      padding: 5px 20px;
+      border-style: solid !important;
+      border: 2px;
+      width: 100%;
+      border-color: #4d4d4d;
+      border-radius: 0px;
+      margin: 0px;
+      background-color: transparent;
+      color: #4d4d4d;
+      font-size: 1.3em;
     }
   }
-  .fieldsContainer {
-    background-color: white;
-    text-align: left;
-    padding: 23px;
-    margin: auto;
-    max-width: 35%;
-    
+  .second {
+    margin-top: 70px;
+    padding: 50px;
+    min-height: 100vh;
+    background-color: #ffe01b;
+    color: #4d4d4d;
+    text-align: center;
+    .info {
+      h1 {
+        text-align: left;
+      }
+      p {
+        text-align: justify;
+        margin-top: 30px;
+        font-size: 1.2em;
+      }
+    }
+    img {
+      width: 70%;
+    }
   }
-  .divSeparator {
-    height: 13px;
+  .third {
+    margin-top: 70px;
+    padding: 50px;
+    min-height: 100vh;
+    color: #4d4d4d;
+    text-align: center;
+    .info {
+      h1 {
+        text-align: left;
+      }
+      p {
+        text-align: justify;
+        margin-top: 30px;
+        font-size: 1.2em;
+      }
+    }
+    img {
+      width: 70%;
+    }
   }
-  #btnLoginStyle {
-    background-color: grey;
-    border: grey;
-    box-shadow: 0px 5px #FFE01B;
-    border-radius: 0px;
-  }
-  .inputStyles {
-    border-radius: 0px;
+  .fourth {
+    margin-top: 70px;
+    padding: 50px;
+    min-height: 100vh;
+    background-color: #ffe01b;
+    color: #4d4d4d;
+    text-align: center;
+    .info {
+      h1 {
+        text-align: left;
+      }
+      p {
+        text-align: justify;
+        margin-top: 30px;
+        font-size: 1.2em;
+      }
+    }
+    img {
+      width: 70%;
+    }
   }
 }
 </style>

@@ -1,148 +1,169 @@
 <template>
-  <b-navbar toggleable="lg" fixed="top">
-    <b-navbar-brand href="/">
-      <img src="../assets/CS_BC.svg" alt="IdeaLa">
-    </b-navbar-brand>
+  <div class="createEditIdeaComponent">
+  <Header></Header>
 
-    <b-navbar-toggle target="nav-collapse"></b-navbar-toggle>
-
-    <b-collapse id="nav-collapse" is-nav>
-      <b-navbar-nav class="ml-auto">
-        <div v-if="tokenExists == false">
-          <b-button class="login" right v-on:click.prevent="goToLogin()">Ingresar</b-button>
-        </div>
-        <div v-else>
-          <b-nav-item-dropdown v-bind:text="userInfo.fullname" class="title user-drop" right>
-            <b-dropdown-item class="title" href="#" v-on:click.prevent="gotoProfile()">Mi Perfil</b-dropdown-item>
-            <!-- <b-dropdown-item class="title" href="#">Mis Ideas</b-dropdown-item> -->
-            <b-dropdown-divider></b-dropdown-divider>
-            <b-dropdown-item
-              class="title signout"
-              href="#"
-              v-on:click.prevent="userLogout()"
-            >Cerrar sesión</b-dropdown-item>
-          </b-nav-item-dropdown>
-        </div>
-      </b-navbar-nav>
-    </b-collapse>
-  </b-navbar>
+  <div class="container-fluid idea-create">
+    <div class="row justify-content-center">
+    <h1 class="title titleStyle">Postula tu idea</h1>
+    </div>
+    <div class="container-fluid form">
+    <div class="row">
+      <div class="col-sm">
+      <b-form-group class="title" label="Título">
+        <b-form-input class="squareInput" type="text" v-model="idea.title"></b-form-input>
+      </b-form-group>
+      <b-form-group class="title" label="Descripción">
+        <b-form-textarea class="descStyle squareInput" type="text" v-model="idea.description"></b-form-textarea>
+      </b-form-group>
+      </div>
+      <div class="col-sm">
+      <b-form-group class="title" label="Seleccionar Reto">
+        <b-form-select
+          class="mb-2 mr-sm-2 mb-sm-0 squareInput"
+          :value="null"
+          id="inline-form-custom-select-pref"
+          v-model="idea.challenge_id"
+          >
+          <option slot="first" v-for="(challenge, index) in challenges" v-bind:value="challenge.id" :key="index">{{ challenge.title }}</option>
+        </b-form-select>
+      </b-form-group>
+      <b-form-group class="title" label="Cargar Imagen">
+        <b-form-file class="squareInput" v-model="idea.image"></b-form-file>
+      </b-form-group>
+      <b-form-group class="title" label="URL de Video">
+        <b-form-input class="squareInput" type="text" v-model="idea.videoLink"></b-form-input>
+      </b-form-group>
+      </div>
+    </div>
+    <div class="row">
+      <div class="col-sm">
+        <b-button class="ideaButton title" v-on:click.prevent="createIdea()">Aceptar</b-button>
+      </div>
+      <div class="col-sm">
+        <b-button class="ideaButton title" v-on:click.prevent="cancelCreateIdea()">Cancelar</b-button>
+      </div>
+    </div>
+    </div>
+  </div>
+  </div>
 </template>
 
 <script>
-import { SERVER_URL } from "../variables.js";
+import api from '../requests.js'
+
+import Header from "./Header.vue";
 
 export default {
+  components: {
+  Header
+  },
   data() {
     return {
+      challenges: [],
+      idea: {},
       tokenExists: false,
-      userInfo: {
-        name: "",
-        lastname: "",
-        fullname: ""
-      }
+      userInfo: {},
+      misc: {}
     };
   },
   methods: {
-    checkToken() {
-      if (this.$cookie.get("secret") == null) {
-        this.tokenExists = false;
-      } else {
-        this.tokenExists = true;
-        console.log("COOKIE: " + this.$cookie.get("secret"));
-        var userInfo = JSON.parse(this.$cookie.get("secret"));
-        this.userInfo.id = userInfo.user_id;
-        this.userInfo.secret = userInfo.secret;
-        this.userInfo.expire_at = userInfo.expire_at;
-        this.userInfo.name = userInfo.name;
-        this.userInfo.lastname = userInfo.lastname;
-      }
-    },
-    userLogout() {
-      this.$cookie.delete("secret");
-      this.$http
-        .delete(SERVER_URL + "/sessions", {
-          headers: { Authorization: "Token token=" + this.userInfo.secret }
-        })
-        .then(
-          response => {
-            console.log(response);
-          },
-          err => {
-            console.log("Err", err);
-          }
-        );
-      console.log("LOOGED OUT");
-      setTimeout(() => this.$router.push("/"), 500);
-      // this.$router.push('/');
-      // location.reload();
-    },
-    goToLogin() {
-      this.$router.push("/login");
-    },
-    buildFullName() {
-      const nameCapitalized =
-        this.userInfo.name.charAt(0).toUpperCase() +
-        this.userInfo.name.slice(1);
-      const lastnameCapitalized =
-        this.userInfo.lastname.charAt(0).toUpperCase() +
-        this.userInfo.lastname.slice(1);
-      this.userInfo.fullname = nameCapitalized + " " + lastnameCapitalized;
-    },
-    gotoProfile() {
-      this.$router.push("/miperfil");
+  checkToken(){
+    if (this.$cookie.get('secret') == null){
+      this.tokenExists = false;
+    }else{
+      this.tokenExists = true;
+      console.log("COOKIE: " + this.$cookie.get('secret'));
+      var userInfo = JSON.parse(this.$cookie.get('secret'));
+      this.userInfo.id = userInfo.user_id;
+      this.userInfo.secret = userInfo.secret;
+      this.userInfo.expire_at = userInfo.expire_at;
+      this.userInfo.name = userInfo.name;
+      this.userInfo.lastname = userInfo.lastname;
     }
   },
-  created() {
-    this.checkToken();
-    console.log(this.tokenExists);
-    setTimeout(() => this.buildFullName(), 500);
+  getChallenges() {
+    api.challenges.index().then((response)=>{
+      this.challenges = response.data
+    }).catch((err) => {
+      console.log(err.data)
+    })
 
-    console.log("this.userInfo.lastname", this.userInfo.lastname);
+    // this.$http.get(SERVER_URL + '/challenges').then(function(response){
+    //   this.challenges = response.data;
+    // }),
+    // (err) => {
+    // console.log("Err", err);
+    // };
+    // console.log(JSON.stringify(this.challenges.title))
+  },
+  createIdea(){
+    api.createEditIdea.createIdea({
+      image: this.idea.image,
+      title: this.idea.title,
+      description: this.idea.description,
+      videLink: this.idea.videLink,
+      edition: this.idea.edition,
+      challenge_id: this.idea.challenge_id
+    }).then((response) => {
+      this.misc = response.data
+    }).catch((err) => {
+      console.log(err.data)
+    })
+
+    // this.$http.post((SERVER_URL + '/ideas'),{
+    //   image: this.idea.image,
+    //   title: this.idea.title,
+    //   description: this.idea.description,
+    //   videLink: this.idea.videLink,
+    //   edition: this.idea.edition,
+    //   challenge_id: this.idea.challenge_id
+    // }, { headers: {Authorization: 'Token token="' + this.userInfo.secret + '"'}}).then(response => response.json())
+    //   .then(function(json){
+    //   console.log(json);
+    //   this.$router.push('/miperfil');
+    //   },
+    //   (err) => {
+    //   console.log("Err", err);
+    //   this.$router.push('/miperfil');
+    //   }
+    // );
+  },
+  cancelCreateIdea(){
+    this.$router.push('/miperfil');
+    }
+  },
+  created(){
+    this.checkToken();
+    this.getChallenges();
   }
 };
 </script>
 
-<style lang="scss" scoped>
-.navbar {
-  height: 110px;
-  background-color: #ffe01b;
-  color: #4d4d4d;
-  .navbar-brand {
-    img {
-      height: 80px;
-      margin-left: 40px;
-    }
+<style scoped style lang="scss">
+.createEditIdeaComponent {
+  .titleStyle {
+    margin-bottom: 30px;
   }
-  .login {
-    padding: 5px 20px;
-    color: #4d4d4d;
-    font-size: 1.3em;
-    border-style: solid !important;
-    border: 2px;
-    border-color: #4d4d4d;
-    margin-right: 40px;
-    background-color: transparent;
-    border-radius: 0px;
+  .idea-create {
+    margin-top: 130px;
   }
-  .user-drop {
-    padding: 5px 20px;
-    border-style: solid !important;
-    border: 2px;
-    border-color: #4d4d4d;
-    margin-right: 40px;
-    span {
-      color: #4d4d4d;
-      font-size: 1.3em;
-    }
-    .signout {
-      background-color: #4d4d4d;
-      a {
-        color: #ffe01b;
-      }
-      & :hover {
-        background-color: #5d5d5d;
-      }
-    }
-  }
+   .ideaButton{
+     width: 100%;
+     border: 2px solid #4d4d4d;
+     color: #4d4d4d;
+     background-color: transparent;
+     border-radius: 0px;
+     font-size: 1.3em;
+     margin-bottom: 10px;
+   }
+   .form{
+     width: 85%;
+   }
+   .descStyle {
+     height: 130px;
+   }
+   .squareInput {
+     border-radius: 0px;
+   }
 }
 </style>

@@ -78,7 +78,7 @@
 </template>
 
 <script>
-import {SERVER_URL} from '../variables.js'
+import api from '../requests.js'
 
 import Header from './Header.vue'
 import Idea from "./AddIdea.vue";
@@ -151,13 +151,6 @@ export default {
       }).catch(err => {
         console.log(err.data)
       })
-
-      // this.$http.get((SERVER_URL + '/users_ideas'), {headers: {'Authorization': 'Token token=' + this.userInfo.secret}})
-      // .then(function(response){
-      //   this.ideas = response.data;
-      // }).catch(err => {
-      //   console.log(err.data)
-      // })
     }
   },
   created(){

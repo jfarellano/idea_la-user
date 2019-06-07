@@ -1,1 +1,1 @@
-components/Challenge.vue 2jsX•h
+authentication.js 2jsX5h
