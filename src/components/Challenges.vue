@@ -1,7 +1,7 @@
 <template>
-  <div class="challenges">
+  <section>
     <Header></Header>
-		<Idea></Idea>
+    <Idea></Idea>
     <div class="main-container container-fluid">
       <div class="row first">
         <div class="col-md-3 align-self-center">
@@ -15,52 +15,99 @@
       </div>
       <!-- INICIO DE CHALLENGES -->
       <div v-if="challenges != ''" class="row second justify-content-around">
-          <div v-for="(challenge, index) in challenges" :key="index">
-            <router-link tag="div" :to="{name: 'Challenge', params: { cId: challenge.id } }" class="challenge container-fluid">
-              <div class="row image">
-                <img v-bind:src="challenge.picture.url" alt="Imagen de reto">
-              </div>
-              <div class="row data">
-                <h3 class="title">{{challenge.title}}</h3>
-                <p class="parag">{{challenge.description.slice(0,40)}}</p>
-              </div>
-            </router-link>
-          </div>
-
+        <div v-for="(challenge, index) in challenges" :key="index">
+          <router-link
+            tag="div"
+            :to="{name: 'Challenge', params: { cId: challenge.id } }"
+            class="challenge container-fluid"
+          >
+            <div class="row image">
+              <img v-bind:src="challenge.picture.url" alt="Imagen de reto">
+            </div>
+            <div class="row data">
+              <h3 class="title">{{challenge.title}}</h3>
+              <p class="parag">{{challenge.description.slice(0,40)}}</p>
+            </div>
+          </router-link>
         </div>
-        <div v-else>
-          <h2 class="title">No se han encontrado retos</h2>
-        </div>
+      </div>
+      <div v-else>
+        <h2 class="title">No se han encontrado retos</h2>
+      </div>
     </div>
-  </div>
+  </section>
 </template>
 <script>
-import api from '../requests.js'
+import api from "../requests.js";
 
 import Header from "./Header.vue";
 import Idea from "./AddIdea.vue";
 
 export default {
   components: {
-		Header,
-		Idea
+    Header,
+    Idea
   },
-  data(){
-    return{
+  data() {
+    return {
       challenges: []
-    }
+    };
   },
   methods: {
-    getChallenges(){
-      api.challenges.index().then((response)=>{
-          this.challenges = response.data
-      }).catch((err) => {
-        console.log(err.data)
-      })
-    },
+    getChallenges() {
+      api.challenges
+        .index()
+        .then(response => {
+          this.challenges = response.data;
+        })
+        .catch(err => {
+          console.log(err.data);
+        });
+    }
   },
-  created(){
+  created() {
     this.getChallenges();
   }
 };
 </script>
+
+<style lang="scss" scoped>
+.main-container {
+  margin-top: 110px;
+  .first {
+    padding: 50px;
+  }
+  .second {
+    padding: 50px;
+    background-color: #e6e6e6;
+
+    .challenge {
+      margin: 10px;
+      background-color: white;
+      width: 300px;
+      height: 350px;
+      cursor: pointer;
+      .image {
+        height: 200px;
+        background-color: #ffe01b;
+        img {
+          overflow: hidden;
+          height: 200px;
+          margin: auto;
+        }
+      }
+      .data {
+        padding: 20px;
+        h3 {
+          border-bottom: 4px solid #ffe01b;
+          padding-bottom: 0.5px;
+        }
+        p {
+          margin-top: 10px;
+          text-align: justify;
+        }
+      }
+    }
+  }
+}
+</style>

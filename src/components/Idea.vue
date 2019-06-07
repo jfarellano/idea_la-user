@@ -1,5 +1,5 @@
 <template>
-  <div class="idea-show">
+  <section>
     <Header></Header>
     <div class="main-container container-fluid">
       <div class="row first">
@@ -70,7 +70,7 @@
     <b-modal id="modalPopover voted" title="Error" ok-only>
       <p class="parag">Ya has votado por ésta idea.</p>
     </b-modal>
-  </div>
+  </section>
 </template>
 
 <script>
@@ -108,13 +108,15 @@ export default {
     },
     loadIdeaInfo() {
       this.ideaID = this.$route.params.iId;
-      api.idea.getInfo(this.ideaID).then((response) => {
-        this.idea = response.data
-      }).catch((err) => {
-        console.log(err.data)
-      })
+      api.idea
+        .getInfo(this.ideaID)
+        .then(response => {
+          this.idea = response.data;
+        })
+        .catch(err => {
+          console.log(err.data);
+        });
 
-      
       // this.$http.get(SERVER_URL + "/ideas/" + this.id).then(function(response) {
       //   this.idea = response.data;
       //   console.log("RESPONSE: " + JSON.stringify(this.idea));
@@ -124,12 +126,15 @@ export default {
       if (this.tokenExists == false) {
         this.$router.push("/register");
       } else {
-        api.idea.vote(this.ideaID).then((response) => {
-          this.$bvModal.show("modalPopover voted");
-        }).catch((err) => {
-          console.log(err.data)
-          this.$bvModal.show("modalPopover");
-        })
+        api.idea
+          .vote(this.ideaID)
+          .then(response => {
+            this.$bvModal.show("modalPopover voted");
+          })
+          .catch(err => {
+            console.log(err.data);
+            this.$bvModal.show("modalPopover");
+          });
 
         // this.$http
         //   .post(SERVER_URL + "/ideas/" + this.id + "/votes", {
@@ -151,11 +156,14 @@ export default {
       }
     },
     loadComments() {
-      api.idea.getComments(this.ideaID).then((response) => {
-        this.comments = response.data
-      }).catch((err) => {
-        console.log(err.data)
-      })
+      api.idea
+        .getComments(this.ideaID)
+        .then(response => {
+          this.comments = response.data;
+        })
+        .catch(err => {
+          console.log(err.data);
+        });
 
       // this.$http
       //   .get(SERVER_URL + "/ideas/" + this.id + "/comments")
@@ -164,12 +172,14 @@ export default {
       //   });
     },
     commentIdea() {
-      api.idea.postComment(this.ideaID).then((response) => {
-        location.reload();
-      }).catch((err) => {
-        console.log(err.data)
-      })
-
+      api.idea
+        .postComment(this.ideaID)
+        .then(response => {
+          location.reload();
+        })
+        .catch(err => {
+          console.log(err.data);
+        });
 
       // this.$http
       //   .post(
@@ -204,3 +214,68 @@ export default {
   }
 };
 </script>
+
+<style lang="scss" scoped>
+.main-container {
+  margin-top: 110px;
+  .first {
+    background-color: #e6e6e6;
+    height: 300px;
+    text-align: center;
+    img {
+      height: 300px;
+      margin: auto;
+    }
+  }
+  .second {
+    padding: 50px;
+  }
+  .third {
+    padding: 0px 50px;
+  }
+  .fourth {
+    margin-top: 40px;
+    height: 200px;
+  }
+  .fifth {
+    padding: 50px;
+    button {
+      width: 100%;
+      border: 2px solid #4d4d4d;
+      background-color: #ffe01b;
+      color: #4d4d4d;
+      border-radius: 0px;
+      font-size: 2em;
+    }
+  }
+  .sixth {
+    padding: 0px 50px 50px 50px;
+    .w-comment {
+      width: 100%;
+      color: #4d4d4d;
+      legend {
+        font-family: "Roboto Slab", serif;
+        font-size: 1.2em;
+      }
+      textarea {
+        border: 2px solid #4d4d4d;
+        border-radius: 0px;
+      }
+    }
+    button {
+      border: 2px solid #4d4d4d;
+      color: #4d4d4d;
+      border-radius: 0px;
+      font-size: 1em;
+      background-color: transparent;
+    }
+  }
+  .comments {
+    .comment {
+      padding: 10px 50px;
+      margin-bottom: 20px;
+      border-bottom: 0.5px solid #e6e6e6;
+    }
+  }
+}
+</style>

@@ -26,7 +26,7 @@ export default {
     }
   },
   challenge: {
-    getInfo: function (challengeID) {
+    getInfo: function(challengeID) {
       return r.get(SERVER_URL + '/challenges/' + challengeID)
     },
     getIdeas: function(challengeID) {

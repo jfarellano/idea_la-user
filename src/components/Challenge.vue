@@ -1,5 +1,5 @@
 <template>
-  <div class="challenge-page">
+  <section>
     <Header></Header>
     <Idea></Idea>
     <div class="main-container container-fluid">
@@ -12,79 +12,137 @@
         </div>
       </div>
       <div class="row second justify-content-around" v-if="ideas != ''">
-          <router-link class="idea container-fluid" v-for="(idea, index) in ideas" :key="index" :to="{name: 'Idea', params: { iId: idea.id } }">
-            <div v-if="idea.picture != null">
-              <div class="row image">
-                <img v-bind:src="idea.picture.url">
-              </div>
+        <router-link
+          class="idea container-fluid"
+          v-for="(idea, index) in ideas"
+          :key="index"
+          :to="{name: 'Idea', params: { iId: idea.id } }"
+        >
+          <div v-if="idea.picture != null">
+            <div class="row image">
+              <img v-bind:src="idea.picture.url">
             </div>
-            <div v-else>
-              <div class="row image">
-                <img src="https://ep01.epimg.net/internacional/imagenes/2018/07/23/billete_a_macondo/1532310440_143390_1532310884_noticia_normal.jpg">
-              </div>
+          </div>
+          <div v-else>
+            <div class="row image">
+              <img
+                src="https://ep01.epimg.net/internacional/imagenes/2018/07/23/billete_a_macondo/1532310440_143390_1532310884_noticia_normal.jpg"
+              >
             </div>
-            <div class="row data">
-              <h3 class="title">{{idea.title}}</h3>
-              <p class="parag">{{idea.description}}</p>
-            </div>
-          </router-link>
+          </div>
+          <div class="row data">
+            <h3 class="title">{{idea.title}}</h3>
+            <p class="parag">{{idea.description}}</p>
+          </div>
+        </router-link>
       </div>
-        <div v-else>
-          <h2 class="title">No se han encontrado ideas</h2>
-        </div>
+      <div v-else>
+        <h2 class="title">No se han encontrado ideas</h2>
+      </div>
     </div>
-  </div>
+  </section>
 </template>
 
 <script>
-import api from '../requests.js'
+import api from "../requests.js";
 
 import Header from "./Header.vue";
 import Idea from "./AddIdea.vue";
 
 export default {
   components: {
-		Header,
-		Idea
+    Header,
+    Idea
   },
-  data(){
-    return{
-      challengeID:'',
-      challenge: '',
+  data() {
+    return {
+      challenge: {},
       ideas: []
-    }
+    };
   },
   methods: {
-    gotoIdea(){
-      this.$router.push('/idea')
+    gotoIdea() {
+      this.$router.push("/idea");
     },
-    getChallengeInfo(){
-      this.challengeID = this.$route.params.cId
-      api.challenge.getInfo(this.challengeID).then((response) => {
-        this.challenge = reponse.data
-      }).catch((err) => {
-        console.log(err.data)
-      })
-    
-    // this.$http.get(SERVER_URL + '/challenges/' + this.id).then(function(response){
-    //   this.challenge = response.data;
-    // })
-    },
-    getIdeas(){
-      api.challenge.getIdeas(this.challengeID).then((response) => {
-        this.ideas = response.data
-      }).catch((err) => {
+    getChallengeInfo() {
+      var challengeID = this.$route.params.cId;
+
+      api.challenge.getInfo(challengeID).then(response => {
+        this.challenge = response.data
+      }).catch(err => {
         console.log(err)
       })
-      
-    // this.$http.get(SERVER_URL + '/challenges/' + this.challengeID + '/ideas').then(function(response){
-    //   this.ideas = response.data;
-    // })
+
+      // api.challenge.getInfo(challengeID).then(response => {
+      //   this.challenge = response.data
+      // }).catch(err => {
+      //   console.log(err)
+      // })
+      // this.$http.get(SERVER_URL + '/challenges/' + this.id).then(function(response){
+      //   this.challenge = response.data;
+      // })
+    },
+    getIdeas() {
+      var challengeID = this.$route.params.cId;
+      api.challenge.getIdeas(challengeID)
+        .then(response => {
+          this.ideas = response.data;
+        })
+        .catch(err => {
+          console.log(err);
+        });
+
+      // this.$http.get(SERVER_URL + '/challenges/' + this.challengeID + '/ideas').then(function(response){
+      //   this.ideas = response.data;
+      // })
     }
   },
-  created(){
+  created() {
     this.getChallengeInfo();
     this.getIdeas();
   }
 };
 </script>
+
+<style lang="scss" scoped>
+.main-container {
+  margin-top: 110px;
+  .first {
+    padding: 50px;
+  }
+  .second {
+    padding: 50px;
+    background-color: #e6e6e6;
+
+    .idea {
+      margin: 10px;
+      background-color: white;
+      color: #6d6d6d;
+      width: 300px;
+      height: 350px;
+      cursor: pointer;
+      .image {
+        height: 150px;
+        background-color: #ffe01b;
+        img {
+          overflow: hidden;
+          height: 150px;
+          margin: auto;
+        }
+      }
+      .data {
+        padding: 20px;
+        h3 {
+          border-bottom: 4px solid #ffe01b;
+          padding-bottom: 0.5px;
+        }
+        p {
+          margin-top: 10px;
+          text-align: justify;
+        }
+      }
+    }
+  }
+}
+</style>
+

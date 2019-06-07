@@ -16,7 +16,11 @@
             <b-dropdown-item class="title" href="#" v-on:click.prevent="gotoProfile()">Mi Perfil</b-dropdown-item>
             <!-- <b-dropdown-item class="title" href="#">Mis Ideas</b-dropdown-item> -->
             <b-dropdown-divider></b-dropdown-divider>
-            <b-dropdown-item class="title signout" href="#" v-on:click.prevent="userLogout()">Cerrar sesión</b-dropdown-item>
+            <b-dropdown-item
+              class="title signout"
+              href="#"
+              v-on:click.prevent="userLogout()"
+            >Cerrar sesión</b-dropdown-item>
           </b-nav-item-dropdown>
         </div>
       </b-navbar-nav>
@@ -25,7 +29,7 @@
 </template>
 
 <script>
-import {SERVER_URL} from "../variables.js";
+import { SERVER_URL } from "../variables.js";
 
 export default {
   data() {
@@ -76,8 +80,12 @@ export default {
       this.$router.push("/login");
     },
     buildFullName() {
-      const nameCapitalized = this.userInfo.name.charAt(0).toUpperCase() + this.userInfo.name.slice(1);
-      const lastnameCapitalized = this.userInfo.lastname.charAt(0).toUpperCase() + this.userInfo.lastname.slice(1);
+      const nameCapitalized =
+        this.userInfo.name.charAt(0).toUpperCase() +
+        this.userInfo.name.slice(1);
+      const lastnameCapitalized =
+        this.userInfo.lastname.charAt(0).toUpperCase() +
+        this.userInfo.lastname.slice(1);
       this.userInfo.fullname = nameCapitalized + " " + lastnameCapitalized;
     },
     gotoProfile() {
@@ -89,8 +97,52 @@ export default {
     console.log(this.tokenExists);
     setTimeout(() => this.buildFullName(), 500);
 
-    console.log('this.userInfo.lastname', this.userInfo.lastname)
+    console.log("this.userInfo.lastname", this.userInfo.lastname);
   }
 };
 </script>
 
+<style lang="scss" scoped>
+.navbar {
+  height: 110px;
+  background-color: #ffe01b;
+  color: #4d4d4d;
+  .navbar-brand {
+    img {
+      height: 80px;
+      margin-left: 40px;
+    }
+  }
+  .login {
+    padding: 5px 20px;
+    color: #4d4d4d;
+    font-size: 1.3em;
+    border-style: solid !important;
+    border: 2px;
+    border-color: #4d4d4d;
+    margin-right: 40px;
+    background-color: transparent;
+    border-radius: 0px;
+  }
+  .user-drop {
+    padding: 5px 20px;
+    border-style: solid !important;
+    border: 2px;
+    border-color: #4d4d4d;
+    margin-right: 40px;
+    span {
+      color: #4d4d4d;
+      font-size: 1.3em;
+    }
+    .signout {
+      background-color: #4d4d4d;
+      a {
+        color: #ffe01b;
+      }
+      & :hover {
+        background-color: #5d5d5d;
+      }
+    }
+  }
+}
+</style>
