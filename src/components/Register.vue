@@ -124,7 +124,8 @@
 </template>
 
 <script>
-import {SERVER_URL} from '../variables.js'
+import auth from '../authentication.js'
+import api from '../requests.js'
 
 export default {
   data(){
@@ -132,43 +133,15 @@ export default {
       challenges:[],
       challengesCopy: [],
       pickedChal: '',
-      userData: {
-        email: '',
-        password: '',
-        cc: '',
-        phone: '',
-        name: '',
-        lastname: '',
-        age: '',
-        gender: '',
-        picture: '',
-        location_id: ''
-      },
+      userData: {},
       locations: [],
       chosedHood: '',
       indexChosedHood: '',
       locationAuto: '',
       indexChosedChallenge: '',
       surveyResult: [],
-
-      userCookie: {
-        user_id:'',
-        secret:'',
-        expire_at:'',
-
-        email:'',
-        password:'',
-        cc:'',
-        phone:'',
-        name:'',
-        lastname:'',
-        age:'',
-        gender:''
-      },
-      userCredentials: {
-        email:'',
-        password:''
-      }
+      userCookie: {},
+      userCredentials: {}
     }
   },
   methods: {
@@ -187,16 +160,17 @@ export default {
       ageField == '' || genderField== '' ){
         this.$bvModal.show("modalPopover");
       } else {
-        this.$http.get(SERVER_URL + '/challenges').then(function(response){
+        api.challenges.index().then(response => {
           this.challenges = response.data;
+          this.userRegister();
+          setTimeout(() => this.$bvModal.show("modal-scrollable"), 500);
+        }).catch(err => {
+          console.log(err)
         })
-        this.userRegister();
-        setTimeout(() => this.$bvModal.show("modal-scrollable"), 500);
-        // console.log(JSON.stringify(this.userData))
       }
     },
     userRegister(){
-      this.$http.post(SERVER_URL + '/users',{
+      api.user.create({
         email: this.userData.email,
         password: this.userData.password,
         cc: this.userData.cc,
@@ -207,56 +181,27 @@ export default {
         gender: this.userData.gender,
         picture: this.userData.picture,
         location_id: this.indexChosedHood
-      }).then(response => response.json())
-      .then(function(json){
-        console.log(json)
-      },
-      (err) => {
-      console.log("Err", err);
-      }
-      );
-      // setTimeout(() => this.$router.push('/login'), 500);
+      }).then(response => {
+        console.log('Exito')
+      }).catch(err => {
+
+      })
     },
     getLocations(){
-      this.$http.get(SERVER_URL + '/locations').then(function(response){
-      this.locations = response.data;
-    })
+      api.variable.locations().then(response => {
+        this.locations = response.data
+      })
     },
     switchView(event){
       var i = this.indexChosedHood
       this.userData.location_id = this.indexChosedHood
       this.locationAuto = this.locations[i].hood
-      // console.log('indexChosedHood', this.indexChosedHood)
     },
     onChangeChallenge(event){
       console.log(JSON.stringify(event.target))
-      // console.log(this.indexChosedChallenge)
     },
     sendForm(){
-      // this.$http.post((SERVER_URL + '/multiple_surveys'),{
-      //   array: this.surveyResult
-      // }, { headers: {Authorization: 'Token token="' + this.userInfo.secret + '"'}}).then(response => response.json())
-      //   .then(function(json){
-      //     console.log(json);
-      //     setTimeout(() => this.$router.push('/login'), 500);
-      //   },
-      //   (err) => {
-      //     console.log("Err", err);
-      //   }
-      // );
       setTimeout(() => this.$router.push('/login'), 500);
-
-
-      // this.$http.post(SERVER_URL + '/surveys',{
-      //   array: this.surveyResult
-      // }).then(response => response.json())
-      // .then(function(json){
-      //   setTimeout(() => this.$router.push('/login'), 500);
-      // },
-      // (err) => {
-      // console.log("Err", err);
-      // }
-      // );
     },
 
   },

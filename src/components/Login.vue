@@ -2,25 +2,47 @@
   <div class="loginComponent">
     <div class="container-fluid divStyle">
       <div class="row align-items-center rowStyle">
-      <div class="col align-self-center">
-        <router-link to="/">
-          <img src="../assets/CS_BC.svg" alt="" height="140px" class="iconImage" >
-        </router-link>
-        <div class="fieldsContainer" data-aos="zoom-in" data-aos-duration="1000" data-aos-delay="10">
-          <h3 class="title">Correo electrónico</h3>
-          <div class="input-group">
-            <input type="email" class="form-control inputStyles" placeholder="ej. example@email.com" v-model="userCredentials.email">
+        <div class="col align-self-center">
+          <router-link to="/">
+            <img src="../assets/CS_BC.svg" alt height="140px" class="iconImage">
+          </router-link>
+          <div
+            class="fieldsContainer"
+            data-aos="zoom-in"
+            data-aos-duration="1000"
+            data-aos-delay="10"
+          >
+            <h3 class="title">Correo electrónico</h3>
+            <div class="input-group">
+              <input
+                type="email"
+                class="form-control inputStyles"
+                placeholder="ej. example@email.com"
+                v-model="userCredentials.email"
+              >
+            </div>
+            <div class="divSeparator"></div>
+            <h3 class="title">Contraseña</h3>
+            <div class="input-group">
+              <input
+                type="password"
+                class="form-control inputStyles"
+                v-model="userCredentials.password"
+              >
+            </div>
+            <div class="divSeparator"></div>
+            <p class="parag" id="registerStyle">
+              ¿No tienes una cuenta todavía?
+              <router-link to="/register">Registrate aquí.</router-link>
+            </p>
+            <button
+              type="button"
+              class="btn btn-primary btn-lg btn-block"
+              id="btnLoginStyle"
+              v-on:click.prevent="userLogin()"
+            >Ingresar</button>
           </div>
-          <div class="divSeparator"></div>
-          <h3 class="title">Contraseña</h3>
-          <div class="input-group">
-            <input type="password" class="form-control inputStyles" v-model="userCredentials.password">
-          </div>
-          <div class="divSeparator"></div>
-          <p class="parag" id="registerStyle">¿No tienes una cuenta todavía? <router-link to="/register">Registrate aquí.</router-link></p>
-          <button type="button" class="btn btn-primary btn-lg btn-block" id="btnLoginStyle" v-on:click.prevent="userLogin()">Ingresar</button>
         </div>
-      </div>
       </div>
     </div>
     <b-modal id="modalPopover credentials" title="Atención" ok-only>
@@ -34,79 +56,74 @@
 </template>
 
 <script>
-import {SERVER_URL} from '../variables.js'
+import auth from "../authentication.js";
 
 export default {
-  data(){
-    return{
-      userCookie: {},
+  data() {
+    return {
       userCredentials: {}
-    }
+    };
   },
   methods: {
     userLogin() {
-      this.$http.post((SERVER_URL + '/sessions'),{
-        email: this.userCredentials.email,
-        password: this.userCredentials.password
-        }).then(response => response.json())
-        .then(function(json){
-        // console.log('USER LOGIN' + JSON.stringify(json));
-        this.userCookie.user_id = json.user_id;
-        this.userCookie.secret = json.secret;
-        this.userCookie.expire_at = json.expire_at;
-        this.extraData(json.user_id);
-        setTimeout(() => this.$router.push('/'), 500);
-      },(err) => {
-        console.log("Err", err.body.single_authentication);
-        console.log("Err", err);
-        if (err.body.single_authentication == 'invalid credentials') {
-          // ALERT NOTIFICATION INVALID
-          // this.$bvModal.show("modalPopover credentials");
 
-          this.$snotify.error('Credenciales inválidas.', 'Atención', {
-            timeout: 2000,
-            showProgressBar: false,
-            closeOnClick: true,
-            pauseOnHover: true,
-            position: "rightCenter"
-          });
-
-
-          this.userCredentials.username = '';
-          this.userCredentials.password = '';
-        } else if (err.body.single_authentication == 'user is blocked') {
-          // ALERT NOTIFICATION USER BLOCKED
-          this.$bvModal.show("modalPopover blocked");
-          this.userCredentials.username = '';
-          this.userCredentials.password = '';
-        } else {
-          setTimeout(() => this.$router.push('/'), 500);
-        }
-      });
+      auth.session
+        .login({
+          email: this.userCredentials.email,
+          password: this.userCredentials.password
+        })
+        .then(response => {
+          auth.storage.set(
+            response.data.user_id,
+            response.data.secret,
+            response.data.expire_at
+          )
+          this.extraData(response.data.user_id)
+        })
+        .catch(err => {
+          if (err.response.data.single_authentication == "invalid credentials") {
+            this.$snotify.error("Credenciales inválidas.", "Atención", {
+              timeout: 2000,
+              showProgressBar: false,
+              closeOnClick: true,
+              pauseOnHover: true
+            });
+          } else if (err.response.data.single_authentication == "user is blocked") {
+            // ALERT NOTIFICATION USER BLOCKED
+            this.$snotify.error("Usuario bloqueado", "Atención", {
+              timeout: 2000,
+              showProgressBar: false,
+              closeOnClick: true,
+              pauseOnHover: true
+            });
+            this.userCredentials.username = "";
+            this.userCredentials.password = "";
+          } else {
+            setTimeout(() => this.$router.push("/"), 500);
+          }
+        });
     },
-    extraData(user_id){
-      // PETICIONES DE DATOS EXTRA DEL USUARIO PARA GUARDAR EN COOKIE
-      this.$http.get(SERVER_URL + '/users/' + user_id)
-      .then(response => response.json())
-      .then(function(json){
-      console.log('EXTRA DATA' + JSON.stringify(json));
-      this.userCookie.email = json.email;
-      this.userCookie.cc = json.cc;
-      this.userCookie.phone = json.phone;
-      this.userCookie.name = json.name;
-      this.userCookie.lastname = json.lastname;
-      this.userCookie.age = json.age;
-      this.userCookie.gender = json.gender;
 
-      this.userCookie.password = this.userCredentials.password
-      
-      this.$cookie.set('secret', JSON.stringify(this.userCookie), 1);
-      console.log('COOKIE SECRET: ' + this.$cookie.get('secret'));
-      })    
-    },
-  },
-  created() {
-    console.log('SERVER_URL: ', SERVER_URL)
+    extraData(user_id) {
+      auth.session
+        .user_info(user_id)
+        .then(response => {
+          auth.storage.set_name(response.data.name, response.data.lastname);
+          this.$router.push("/");
+        })
+        .catch(err => {
+          this.$snotify.error(
+            "Error obteniendo informacion del usuario",
+            "Atención",
+            {
+              timeout: 2000,
+              showProgressBar: false,
+              closeOnClick: true,
+              pauseOnHover: true
+            }
+          );
+        });
+    }
   }
 };
 </script>
@@ -125,8 +142,8 @@ export default {
   .iconImage {
     margin-bottom: 15px;
   }
-  @media (max-width:800px) {
-    .fieldsContainer{
+  @media (max-width: 800px) {
+    .fieldsContainer {
       max-width: 90% !important;
     }
   }
@@ -136,7 +153,6 @@ export default {
     padding: 23px;
     margin: auto;
     max-width: 35%;
-    
   }
   .divSeparator {
     height: 13px;
@@ -144,7 +160,7 @@ export default {
   #btnLoginStyle {
     background-color: grey;
     border: grey;
-    box-shadow: 0px 5px #FFE01B;
+    box-shadow: 0px 5px #ffe01b;
     border-radius: 0px;
   }
   .inputStyles {

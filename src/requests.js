@@ -11,7 +11,10 @@ function getHeaders() {
 
 export default {
   variable: {
-    URL: SERVER_URL
+    URL: SERVER_URL,
+    locations: function(){
+      return r.get(SERVER_URL + '/locations')
+    }
   },
   challenges: {
     index: function () {
@@ -56,6 +59,11 @@ export default {
   myProfile: {
     getIdeas: function() {
       return r.get(SERVER_URL + '/users_ideas', getHeaders)
+    }
+  },
+  user: {
+    create: function(body){
+      return r.post(SERVER_URL + '/users', body)
     }
   }
 }

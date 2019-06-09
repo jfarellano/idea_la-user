@@ -12,7 +12,7 @@
           <b-button class="login" right v-on:click.prevent="goToLogin()">Ingresar</b-button>
         </div>
         <div v-else>
-          <b-nav-item-dropdown v-bind:text="userInfo.fullname" class="title user-drop" right>
+          <b-nav-item-dropdown :text="fullname" class="title user-drop" right>
             <b-dropdown-item class="title" href="#" v-on:click.prevent="gotoProfile()">Mi Perfil</b-dropdown-item>
             <!-- <b-dropdown-item class="title" href="#">Mis Ideas</b-dropdown-item> -->
             <b-dropdown-divider></b-dropdown-divider>
@@ -25,79 +25,48 @@
         </div>
       </b-navbar-nav>
     </b-collapse>
+    <vue-snotify></vue-snotify>
   </b-navbar>
 </template>
 
 <script>
-import { SERVER_URL } from "../variables.js";
+import auth from "../authentication.js";
 
 export default {
   data() {
     return {
       tokenExists: false,
-      userInfo: {
-        name: "",
-        lastname: "",
-        fullname: ""
-      }
+      fullname: ""
     };
   },
   methods: {
-    checkToken() {
-      if (this.$cookie.get("secret") == null) {
-        this.tokenExists = false;
-      } else {
-        this.tokenExists = true;
-        console.log("COOKIE: " + this.$cookie.get("secret"));
-        var userInfo = JSON.parse(this.$cookie.get("secret"));
-        this.userInfo.id = userInfo.user_id;
-        this.userInfo.secret = userInfo.secret;
-        this.userInfo.expire_at = userInfo.expire_at;
-        this.userInfo.name = userInfo.name;
-        this.userInfo.lastname = userInfo.lastname;
-      }
-    },
     userLogout() {
-      this.$cookie.delete("secret");
-      this.$http
-        .delete(SERVER_URL + "/sessions", {
-          headers: { Authorization: "Token token=" + this.userInfo.secret }
+      auth.session
+        .logout()
+        .then(response => {
+          auth.storage.clear();
+          location.reload()
         })
-        .then(
-          response => {
-            console.log(response);
-          },
-          err => {
-            console.log("Err", err);
-          }
-        );
-      console.log("LOOGED OUT");
-      setTimeout(() => this.$router.push("/"), 500);
-      // this.$router.push('/');
-      // location.reload();
+        .catch(err => {
+          this.$snotify.error("Usuario bloqueado", "Atención", {
+            timeout: 2000,
+            showProgressBar: false,
+            closeOnClick: true,
+            pauseOnHover: true
+          });
+        });
     },
     goToLogin() {
       this.$router.push("/login");
-    },
-    buildFullName() {
-      const nameCapitalized =
-        this.userInfo.name.charAt(0).toUpperCase() +
-        this.userInfo.name.slice(1);
-      const lastnameCapitalized =
-        this.userInfo.lastname.charAt(0).toUpperCase() +
-        this.userInfo.lastname.slice(1);
-      this.userInfo.fullname = nameCapitalized + " " + lastnameCapitalized;
     },
     gotoProfile() {
       this.$router.push("/miperfil");
     }
   },
   created() {
-    this.checkToken();
-    console.log(this.tokenExists);
-    setTimeout(() => this.buildFullName(), 500);
-
-    console.log("this.userInfo.lastname", this.userInfo.lastname);
+    this.tokenExists = auth.storage.loged()
+    console.log(auth.storage.get('name'))
+    this.fullname = auth.storage.get('name')
   }
 };
 </script>
