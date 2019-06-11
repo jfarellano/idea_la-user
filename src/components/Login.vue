@@ -3,44 +3,80 @@
     <div class="container-fluid divStyle">
       <div class="row align-items-center rowStyle">
         <div class="col align-self-center">
-          <router-link to="/">
-            <img src="../assets/CS_BC.svg" alt height="140px" class="iconImage">
-          </router-link>
           <div
             class="fieldsContainer"
             data-aos="zoom-in"
             data-aos-duration="1000"
             data-aos-delay="10"
           >
-            <h3 class="title">Correo electrónico</h3>
+            <router-link to="/">
+            <img src="../assets/CamaraBaq-Blue.svg" alt height="54px" class="iconImage">
+            </router-link>
+
+            <p class="iniciar-sesion">Iniciar Sesión</p>
+
+            <h3 class="input-title">Correo electrónico</h3>
             <div class="input-group">
               <input
                 type="email"
                 class="form-control inputStyles"
                 placeholder="ej. example@email.com"
                 v-model="userCredentials.email"
+                v-validate="'required|email'"
+                :class="{'has-error': errors.has('email_invalid')}"
+                name="email"
               >
             </div>
-            <div class="divSeparator"></div>
-            <h3 class="title">Contraseña</h3>
+            <p v-if="errors.has('email')" class="incorrectInput">
+              El correo ingresado no es válido.
+            </p>
+
+            <h3 class="input-title">Contraseña</h3>
             <div class="input-group">
               <input
                 type="password"
                 class="form-control inputStyles"
                 v-model="userCredentials.password"
+                v-validate="'required'"
+                :class="{'has-error': errors.has('password_invalid')}"
+                name="password"
               >
             </div>
-            <div class="divSeparator"></div>
-            <p class="parag" id="registerStyle">
-              ¿No tienes una cuenta todavía?
-              <router-link to="/register">Registrate aquí.</router-link>
+            <p v-if="errors.has('password')" class="incorrectInput">
+              Este campo es obligatorio.
             </p>
             <button
               type="button"
-              class="btn btn-primary btn-lg btn-block"
-              id="btnLoginStyle"
+              class="btn btn-primary btn-lg btn-block btnLoginStyle"
               v-on:click.prevent="userLogin()"
-            >Ingresar</button>
+            >Iniciar Sesión</button>
+            <p class="parag" id="registerStyle">
+              ¿No tienes cuenta?
+              <router-link to="/register">Registrate aquí.</router-link>
+            </p>
+
+            <b-row>
+              <b-col>
+                <hr>
+              </b-col>
+              <b-col cols="1" class="orSocialMedia">
+                <p>o</p>
+              </b-col>
+              <b-col>
+                <hr>
+              </b-col>
+            </b-row>
+            <b-row>
+              <b-col>
+                <b-button v-on:click.prevent="oauthSocial('facebook')">Facebook</b-button>
+              </b-col>
+              <b-col>
+                <b-button v-on:click.prevent="oauthSocial('google')">Google</b-button>
+              </b-col>
+              <b-col>
+                <b-button v-on:click.prevent="oauthSocial('twitter')">Twitter</b-button>
+              </b-col>
+            </b-row>
           </div>
         </div>
       </div>
@@ -61,12 +97,18 @@ import auth from "../authentication.js";
 export default {
   data() {
     return {
-      userCredentials: {}
+      userCredentials: {
+        email: "",
+        password: ""
+      },
+      userCredentials2: {
+        email: "",
+        password: ""
+      }
     };
   },
   methods: {
     userLogin() {
-
       auth.session
         .login({
           email: this.userCredentials.email,
@@ -123,6 +165,10 @@ export default {
             }
           );
         });
+    },
+
+    oauthSocial(provider){
+      console.log(provider);
     }
   }
 };
@@ -130,7 +176,7 @@ export default {
 
 <style scoped style lang="scss">
 .loginComponent {
-  background-color: #ffe01b;
+  background-color: #0E2469;
   height: 100vh;
   text-align: center;
   .divStyle {
@@ -141,6 +187,7 @@ export default {
   }
   .iconImage {
     margin-bottom: 15px;
+    fill:#0E2469;
   }
   @media (max-width: 800px) {
     .fieldsContainer {
@@ -148,23 +195,85 @@ export default {
     }
   }
   .fieldsContainer {
-    background-color: white;
+    // background-color: white;
     text-align: left;
     padding: 23px;
     margin: auto;
-    max-width: 35%;
+    margin-top: 20px !important;
+    // max-width: 35%;
+    // max-height: 80%;
+
+    padding: 60px;
+
+    height: 708px;
+    width: 521px;
+
+    border-radius: 6px;
+    background-color: #FFFFFF;
+    box-shadow: 0 0 14px 0 rgba(20,20,20,0.3);
   }
   .divSeparator {
     height: 13px;
   }
-  #btnLoginStyle {
-    background-color: grey;
-    border: grey;
-    box-shadow: 0px 5px #ffe01b;
-    border-radius: 0px;
+  @media (max-width: 328px) {
+    .btnLoginStyle {
+      height: 75px !important;
+    }
+  }
+  .btnLoginStyle {
+    // background-color: grey;
+    // border: grey;
+    // box-shadow: 0px 5px #ffe01b;
+    // border-radius: 0px;
+    // margin-top: 17px;
+    // margin-bottom: 17px;
+
+    height: 50px;
+    width: 100%;
+    border-radius: 5px;
+    border-color: #0E2469;
+    background-color: #0E2469;
+    margin-top: 17px;
+    margin-bottom: 17px;
   }
   .inputStyles {
-    border-radius: 0px;
+    border: 1px solid #0E2469;
+    border-radius: 5px;
+    box-shadow: 0 0 2px 0 #ffffff;
+    // width: 27.85%;
+    height: 50px;
+    font-size: 21px;
+    color: #0E2469;
+    &:focus {
+      border: 2px solid #0E2469;
+    }
+  }
+  
+  .incorrectInput {
+    color: #ED1D24;
+  }
+  .iniciar-sesion {
+    height: 44px;
+    width: 213px;
+    color: #0E2469;
+    font-family: "Circular Std";
+    font-size: 35px;
+    font-weight: bold;
+    line-height: 44px;
+  }
+  .input-title {
+    height: 27px;
+    width: 175px;
+    color: #6A6A6A;
+    font-family: "Circular Std";
+    font-size: 21px;
+    font-weight: 300;
+    line-height: 27px;
+    margin-top: 17px;
+  }
+  .orSocialMedia {
+    margin-left: -20px;
+    margin-right: -17px;
   }
 }
 </style>
