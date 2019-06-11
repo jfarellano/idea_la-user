@@ -1,42 +1,65 @@
 <template>
-  <b-navbar toggleable="lg" fixed="top">
+  <b-navbar toggleable="sm" type="dark" fixed="top">
     <b-navbar-brand href="/">
-      <img src="../assets/CS_BC.svg" alt="IdeaLa">
+      <img src="../assets/CamaraBaq-24.svg" alt="Ciudá">
     </b-navbar-brand>
+    <button
+      class="navbar-toggler ml-auto"
+      type="button"
+      data-toggle="collapse"
+      data-target="#nav-collapse"
+      aria-controls="navbarSupportedContent"
+      :aria-expanded="show"
+      @click="collapse()"
+    >
+      <span class="navbar-toggler-icon"></span>
+    </button>
 
-    <b-navbar-toggle target="nav-collapse"></b-navbar-toggle>
-
-    <b-collapse id="nav-collapse" is-nav>
+    <div :class="collapseClass()" id="nav-collapse">
       <b-navbar-nav class="ml-auto">
         <div v-if="tokenExists == false">
-          <b-button class="login" right v-on:click.prevent="goToLogin()">Ingresar</b-button>
+          <b-button class="login" right @click.prevent="goToLogin()">Ingresar</b-button>
         </div>
         <div v-else>
-          <b-nav-item-dropdown :text="fullname" class="title user-drop" right>
-            <b-dropdown-item class="title" href="#" v-on:click.prevent="gotoProfile()">Mi Perfil</b-dropdown-item>
-            <!-- <b-dropdown-item class="title" href="#">Mis Ideas</b-dropdown-item> -->
-            <b-dropdown-divider></b-dropdown-divider>
-            <b-dropdown-item
-              class="title signout"
-              href="#"
-              v-on:click.prevent="userLogout()"
-            >Cerrar sesión</b-dropdown-item>
-          </b-nav-item-dropdown>
+          <ul class="nav navbar-nav navbar-right">
+            <li>
+              <a href="/login" class="nav-link">Retos</a>
+            </li>
+            <li :class="dropClass('nav-item user-drop dropdown')" v-click-outside="close">
+              <a class="user-drop nav-link dropdown-toggle" href="#" @click="toggleDropdown()">
+                <span>{{fullname}}</span>
+                <b-img
+                  rounded="circle"
+                  class="avatar img-responsive"
+                  src="http://placehold.it/30x30"
+                  alt="Circle image"
+                ></b-img>
+              </a>
+              <div :class="dropClass('dropdown-menu')" aria-labelledby="navbarDropdownMenuLink">
+                <a class="dropdown-item" href="#">Mis Ideas</a>
+                <a class="dropdown-item" href="#">Mi Perfil</a>
+                <a class="dropdown-item logout" @click="userLogout()">Cerrar sesión</a>
+              </div>
+            </li>
+          </ul>
         </div>
       </b-navbar-nav>
-    </b-collapse>
+    </div>
     <vue-snotify></vue-snotify>
   </b-navbar>
 </template>
 
 <script>
 import auth from "../authentication.js";
+import { setTimeout } from "timers";
 
 export default {
   data() {
     return {
       tokenExists: false,
-      fullname: ""
+      fullname: "",
+      expanded: false,
+      show: false
     };
   },
   methods: {
@@ -45,7 +68,7 @@ export default {
         .logout()
         .then(response => {
           auth.storage.clear();
-          location.reload()
+          location.reload();
         })
         .catch(err => {
           this.$snotify.error("Usuario bloqueado", "Atención", {
@@ -61,57 +84,114 @@ export default {
     },
     gotoProfile() {
       this.$router.push("/miperfil");
+    },
+    toggleDropdown() {
+      this.expanded = !this.expanded;
+    },
+    dropClass(ref) {
+      if (this.expanded) return ref + " show";
+      else return ref;
+    },
+    close() {
+      if (this.expanded) {
+        this.expanded = false;
+      }
+    },
+    collapse() {
+      this.show = !this.show;
+    },
+    collapseClass() {
+      if (this.show) return "navbar-collapse collapse show";
+      else return "navbar-collapse collapse";
     }
   },
   created() {
     this.tokenExists = auth.storage.loged()
-    console.log(auth.storage.get('name'))
-    this.fullname = auth.storage.get('name')
+    this.fullname = auth.storage.get("name");
+  },
+  directives: {
+    "click-outside": {
+      bind: function(el, binding, vnode) {
+        el.clickOutsideEvent = function(event) {
+          if (!(el == event.target || el.contains(event.target))) {
+            vnode.context[binding.expression](event);
+          }
+        };
+        document.body.addEventListener("click", el.clickOutsideEvent);
+      },
+      unbind: function(el) {
+        document.body.removeEventListener("click", el.clickOutsideEvent);
+      }
+    }
   }
 };
 </script>
 
 <style lang="scss" scoped>
 .navbar {
-  height: 110px;
-  background-color: #ffe01b;
-  color: #4d4d4d;
+  height: 90px;
+  background-color: #081641;
+  color: white;
   .navbar-brand {
     img {
-      height: 80px;
-      margin-left: 40px;
+      height: 44px;
+      margin-left: 6%;
     }
   }
   .login {
     padding: 5px 20px;
-    color: #4d4d4d;
-    font-size: 1.3em;
-    border-style: solid !important;
-    border: 2px;
-    border-color: #4d4d4d;
-    margin-right: 40px;
+    font-size: 22px;
+    margin-right: 6%;
     background-color: transparent;
+    border-color: transparent;
     border-radius: 0px;
   }
+  .nav-link {
+    color: white;
+    font-size: 22px;
+    
+  }
   .user-drop {
-    padding: 5px 20px;
-    border-style: solid !important;
-    border: 2px;
-    border-color: #4d4d4d;
-    margin-right: 40px;
     span {
-      color: #4d4d4d;
-      font-size: 1.3em;
+      margin-right: 10px;
     }
-    .signout {
-      background-color: #4d4d4d;
-      a {
-        color: #ffe01b;
-      }
-      & :hover {
-        background-color: #5d5d5d;
+    img {
+      border-color: white;
+      border-style: solid !important;
+      border: 2px;
+    }
+  }
+  .logout {
+    color: #ff0000;
+  }
+  .dropdown-menu {
+    top: 65px;
+  }
+
+  .navbar-toggler {
+    color: white !important;
+    border: none;
+    span {
+      color: white;
+      background-image: url("data:image/svg+xml,%3csvg viewBox='0 0 30 30' xmlns='http://www.w3.org/2000/svg'%3e%3cpath stroke='rgba(255, 255, 255, 1)' stroke-width='2' stroke-linecap='round' stroke-miterlimit='10' d='M4 7h22M4 15h22M4 23h22'/%3e%3c/svg%3e") !important;
+    }
+  }
+  .navbar-collapse {
+    background-color: #081641;
+    text-align: center;
+    @media (max-width: 576px) { 
+      margin-top: 28px;
+      .nav-link{
+        margin: 6px;
       }
     }
+    
+    -webkit-border-bottom-right-radius: 10px;
+    -webkit-border-bottom-left-radius: 10px;
+    -moz-border-radius-bottomright: 10px;
+    -moz-border-radius-bottomleft: 10px;
+    border-bottom-right-radius: 10px;
+    border-bottom-left-radius: 10px;
   }
 }
 </style>
