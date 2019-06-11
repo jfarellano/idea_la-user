@@ -25,6 +25,7 @@
                 v-validate="'required|email'"
                 :class="{'has-error': errors.has('email_invalid')}"
                 name="email"
+                @keydown.space.prevent
               >
             </div>
             <p v-if="errors.has('email')" class="incorrectInput">
@@ -45,11 +46,14 @@
             <p v-if="errors.has('password')" class="incorrectInput">
               Este campo es obligatorio.
             </p>
+            
             <button
               type="button"
               class="btn btn-primary btn-lg btn-block btnLoginStyle"
               v-on:click.prevent="userLogin()"
+              :disabled="!validLogin()"
             >Iniciar Sesión</button>
+
             <p class="parag" id="registerStyle">
               ¿No tienes cuenta?
               <router-link to="/register">Registrate aquí.</router-link>
@@ -97,21 +101,18 @@ import auth from "../authentication.js";
 export default {
   data() {
     return {
-      userCredentials: {
-        email: "",
-        password: ""
-      },
-      userCredentials2: {
-        email: "",
-        password: ""
-      }
+      userCredentials: {}
     };
   },
   methods: {
+    validLogin(){
+      if (this.errors.count() == 0 && this.userCredentials.email != null && this.userCredentials.password != null) {
+        return true;
+      } else {
+        return false;
+      }
+    },
     userLogin() {
-      console.log('this.userCredentials.email: ', this.userCredentials.email)
-      console.log('this.userCredentials.email: ', this.userCredentials.password)
-
       auth.session
         .login({
           email: this.userCredentials.email,
