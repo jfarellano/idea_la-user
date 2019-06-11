@@ -18,6 +18,9 @@ export default {
         }
     },
     storage: {
+        setImage: function (url) {
+            localStorage.setItem('picture', url)
+        },
         set: function (user_id, secret, expire) {
             localStorage.setItem('user_id', user_id)
             localStorage.setItem('secret', secret)

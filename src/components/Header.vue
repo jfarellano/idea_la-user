@@ -31,7 +31,7 @@
                 <b-img
                   rounded="circle"
                   class="avatar img-responsive"
-                  src="http://placehold.it/30x30"
+                  :src="getPic()"
                   alt="Circle image"
                 ></b-img>
               </a>
@@ -78,6 +78,9 @@ export default {
             pauseOnHover: true
           });
         });
+    },
+    getPic(){
+      return auth.storage.get('picture')
     },
     goToLogin() {
       this.$router.push("/login");
@@ -166,6 +169,10 @@ export default {
   }
   .dropdown-menu {
     top: 65px;
+  }
+  .avatar{
+    width: 34px;
+    height: 34px;
   }
 
   .navbar-toggler {

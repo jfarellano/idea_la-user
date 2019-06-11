@@ -154,6 +154,8 @@ export default {
       auth.session
         .user_info(user_id)
         .then(response => {
+          if (response.data.picture != null) auth.storage.setImage(response.data.picture.url)
+          else auth.storage.setImage("http://placehold.it/30x30")
           auth.storage.set_name(response.data.name, response.data.lastname);
           this.$router.push("/");
         })
@@ -274,7 +276,6 @@ export default {
     height: 44px;
     // width: 213px;
     color: #0E2469;
-    font-family: "Circular Std";
     font-size: 35px;
     font-weight: bold;
     line-height: 44px;
@@ -283,7 +284,6 @@ export default {
     height: 27px;
     // width: 175px;
     color: #6A6A6A;
-    font-family: "Circular Std";
     font-size: 21px;
     font-weight: 300;
     line-height: 27px;
