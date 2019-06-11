@@ -14,13 +14,10 @@ export default {
 </script>
 
 <style>
-  @import url('https://fonts.googleapis.com/css?family=Montserrat|Roboto+Slab');
+  @import url('https://fonts.googleapis.com/css?family=Rubik&display=swap');
 
-  .title {
-    font-family: 'Roboto Slab', serif;
-  }
-  .parag {
-    font-family: 'Montserrat', sans-serif;
+  *{
+    font-family: 'Rubik', sans-serif;
   }
   #app {
     /* font-family: 'Avenir', Helvetica, Arial, sans-serif; */

@@ -8,7 +8,7 @@
             data-aos="zoom-in"
             data-aos-duration="1000"
             data-aos-delay="10"
-          > 
+          >
             <div class="row justify-content-start">
               <router-link to="/">
                 <img src="../assets/CamaraBaq-Blue.svg" alt height="110px" class="iconImage">
@@ -19,7 +19,7 @@
             </div>
             <div class="space"></div>
             <div class="row justify-content-between">
-              <div class="col">
+              <div class="col-md">
                 <h5>Correo electrónico</h5>
                 <div class="input-group">
                   <input
@@ -27,27 +27,46 @@
                     class="form-control inputStyles"
                     placeholder="ej. example@email.com"
                     v-model="userData.email"
+                    v-validate="'required|email'"
+                    :class="{'has-error': errors.has('email_invalid')}"
+                    name="email"
                   >
                 </div>
-                <div class="divSeparator"></div>
+                <p
+                  v-if="errors.has('email')"
+                  class="incorrectInput"
+                >El correo ingresado no es válido.</p>
+
                 <h5>Contraseña</h5>
                 <div class="input-group">
                   <input
                     type="password"
                     class="form-control inputStyles"
                     v-model="userData.password"
+                    v-validate="'required'"
+                    ref="password"
+                    :class="{'has-error': errors.has('pass_required')}"
+                    name="password"
                   >
                 </div>
+                <p v-if="errors.has('password')" class="incorrectInput">La contraseña es necesaria</p>
                 <h5>Confirmar contraseña</h5>
                 <div class="input-group">
                   <input
                     type="password"
                     class="form-control inputStyles"
                     v-model="userData.password_confirm"
+                    v-validate="'required|confirmed:password'"
+                    :class="{'has-error': errors.has('pass_confirmed')}"
+                    name="password_conf"
                   >
                 </div>
+                <p
+                  v-if="errors.has('password_conf')"
+                  class="incorrectInput"
+                >La contraseña no coincide</p>
               </div>
-              <div class="col-sm">
+              <div class="col-md">
                 <h5>Nombre</h5>
                 <div class="input-group">
                   <input
@@ -55,9 +74,12 @@
                     class="form-control inputStyles"
                     placeholder="ej. Juan"
                     v-model="userData.name"
+                    v-validate="'alpha_spaces|max:50|required'"
+                    :class="{'has-error': errors.has('name_invalid')}"
+                    name="name"
                   >
                 </div>
-                <div class="divSeparator"></div>
+                <p v-if="errors.has('name')" class="incorrectInput">Nombre invalido</p>
                 <h5>Apellido</h5>
                 <div class="input-group">
                   <input
@@ -65,65 +87,89 @@
                     class="form-control inputStyles"
                     placeholder="ej. Perez"
                     v-model="userData.lastname"
+                    v-validate="'alpha_spaces|max:50|required'"
+                    :class="{'has-error': errors.has('lasname_invalid')}"
+                    name="lastname"
                   >
                 </div>
-                <div class="divSeparator"></div>
-                <h5>Cédula</h5>
+                <p v-if="errors.has('lastname')" class="incorrectInput">Apellido invalido</p>
+                <h5>Documento de identificación</h5>
                 <div class="input-group">
                   <input
                     type="text"
                     class="form-control inputStyles"
                     placeholder="ej. 1234567890"
                     v-model="userData.cc"
+                    v-validate="'max:15|required|alpha_num'"
+                    :class="{'has-error': errors.has('cc_invalid')}"
+                    name="cc"
                   >
                 </div>
-                <div class="divSeparator"></div>
+                <p
+                  v-if="errors.has('cc')"
+                  class="incorrectInput"
+                >Documento de identificación invalido</p>
                 <h5>Edad</h5>
                 <div class="input-group">
                   <input
-                    type="text"
+                    type="number"
                     class="form-control inputStyles"
                     placeholder="ej. 20"
                     v-model="userData.age"
+                    v-validate="'max:3|required|min_value:1'"
+                    :class="{'has-error': errors.has('age_invalid')}"
+                    name="age"
                   >
                 </div>
+                <p v-if="errors.has('age')" class="incorrectInput">Edad invalida</p>
               </div>
-              <div class="col-sm">
+              <div class="col-md">
                 <h5>Género</h5>
                 <b-form-select
-                  class="mb-2 mr-sm-2 mb-sm-0 squareInput"
+                  class="mb-2 mr-sm-2 mb-sm-0 squareInput inputStyles"
                   :value="null"
                   :options="{ 'male': 'Masculino', 'female': 'Femenino', 'other': 'Otro'}"
                   id="inline-form-custom-select-pref"
                   v-model="userData.gender"
+                  v-validate="'required'"
+                  :class="{'has-error': errors.has('gender_invalid')}"
+                  name="gender"
                 >
                   <option slot="first" :value="null"></option>
                 </b-form-select>
-                <div class="divSeparator"></div>
+                <p v-if="errors.has('gender')" class="incorrectInput">Selecciona tu género</p>
                 <h5>Télefono</h5>
                 <div class="input-group">
                   <input
-                    type="text"
+                    type="number"
                     class="form-control inputStyles"
                     placeholder="ej. 300-123 4567"
                     v-model="userData.phone"
+                    v-validate="'required'"
+                    :class="{'has-error': errors.has('phone_invalid')}"
+                    name="phone"
                   >
                 </div>
-                <div class="divSeparator"></div>
+                <p v-if="errors.has('phone')" class="incorrectInput">Telefono invalido</p>
                 <h5>Barrio</h5>
-
-                <select
-                  class="form-control"
-                  id="pickerStyle"
-                  @change="switchView($event)"
+                <b-form-select
+                  class="mb-2 mr-sm-2 mb-sm-0 squareInput inputStyles"
+                  :value="null"
+                  id="inline-form-custom-select-pref"
                   v-model="indexChosedHood"
+                  v-validate="'required'"
+                  :class="{'has-error': errors.has('hood_invalid')}"
+                  name="hood"
+                  @change="switchView($event)"
                 >
+                  <option slot="first" :value="null"></option>
                   <option
                     v-for="(location, index) in locations"
-                    v-bind:value="location.id"
+                    :value="location.id"
                     :key="index"
                   >{{ location.name }}</option>
-                </select>
+                </b-form-select>
+                <p v-if="errors.has('hood')" class="incorrectInput">Selecciona tu barrio</p>
                 <div class="divSeparator"></div>
                 <h5>Localidad</h5>
                 <div class="input-group">
@@ -207,6 +253,7 @@
     <b-modal id="modalPopover" title="Error" ok-only>
       <p class="parag">Por favor asegúrese de llenar todos los campos con su información.</p>
     </b-modal>
+    <vue-snotify></vue-snotify>
   </div>
 </template>
 
@@ -241,7 +288,6 @@ export default {
       var lastnameField = this.userData.lastname;
       var ageField = this.userData.age;
       var genderField = this.userData.gender;
-
       if (
         emailField == "" ||
         passwordField == "" ||
@@ -250,9 +296,22 @@ export default {
         nameField == "" ||
         lastnameField == "" ||
         ageField == "" ||
-        genderField == ""
+        genderField == "" ||
+        emailField == "" ||
+        passwordField == null ||
+        ccField == null ||
+        phoneField == null ||
+        nameField == null ||
+        lastnameField == null ||
+        ageField == null ||
+        genderField == null
       ) {
-        this.$bvModal.show("modalPopover");
+        this.$snotify.error("Diligencia correctamente el formulario", "Atención", {
+          timeout: 2000,
+          showProgressBar: false,
+          closeOnClick: true,
+          pauseOnHover: true
+        });
       } else {
         api.challenges
           .index()
@@ -313,7 +372,7 @@ export default {
   // height: 100%;
   text-align: center;
   background-color: #0e2469;
-  h2{
+  h2 {
     padding-left: 15px;
     @media (max-width: 800px) {
       font-size: 20px;
@@ -383,13 +442,26 @@ export default {
     }
   }
   .inputStyles {
-    border: 1px solid #dcdcdc;
+    border: 1px solid #0e2469;
     border-radius: 5px;
+    box-shadow: 0 0 2px 0 #ffffff;
+    // width: 27.85%;
+    height: 50px;
+    font-size: 17px;
+    color: #0e2469;
+    &:focus {
+      border: 2px solid #0e2469;
+    }
   }
   .lineDivider {
     border-left: 2px solid #888888;
     height: 300px;
     margin-left: 20px;
+  }
+  .incorrectInput {
+    color: red;
+    font-size: 12px;
+    margin: 0px;
   }
   .modalStyle {
     text-align: left;
@@ -407,25 +479,25 @@ export default {
     }
   }
   ::-webkit-input-placeholder {
-    font-size: 21px;
+    font-size: 17px;
     font-weight: 300;
     color: #dddddd;
   }
 
   :-moz-placeholder {
-    font-size: 21px;
+    font-size: 17px;
     font-weight: 300;
     color: #dddddd;
   }
 
   ::-moz-placeholder {
-    font-size: 21px;
+    font-size: 17px;
     font-weight: 300;
     color: #dddddd;
   }
 
   :-ms-input-placeholder {
-    font-size: 21px;
+    font-size: 17px;
     font-weight: 300;
     color: #dddddd;
   }
