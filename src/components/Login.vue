@@ -15,7 +15,7 @@
 
             <p class="iniciar-sesion">Iniciar Sesión</p>
 
-            <h3 class="input-title">Correo electrónico</h3>
+            <h3 class="input-title" id="email">Correo electrónico</h3>
             <div class="input-group">
               <input
                 type="email"
@@ -59,7 +59,7 @@
               <b-col>
                 <hr>
               </b-col>
-              <b-col cols="1" class="orSocialMedia">
+              <b-col cols="1" class="orSocialMedia align-items-center">
                 <p>o</p>
               </b-col>
               <b-col>
@@ -68,13 +68,13 @@
             </b-row>
             <b-row>
               <b-col>
-                <b-button v-on:click.prevent="oauthSocial('facebook')">Facebook</b-button>
+                <b-button v-on:click.prevent="authenticate('facebook')">Facebook</b-button>
               </b-col>
               <b-col>
-                <b-button v-on:click.prevent="oauthSocial('google')">Google</b-button>
+                <b-button v-on:click.prevent="authenticate('google')">Google</b-button>
               </b-col>
               <b-col>
-                <b-button v-on:click.prevent="oauthSocial('twitter')">Twitter</b-button>
+                <b-button v-on:click.prevent="authenticate('twitter')">Twitter</b-button>
               </b-col>
             </b-row>
           </div>
@@ -201,6 +201,16 @@ export default {
       font-size: 31px !important;
     }
   }
+  @media (max-width: 365px) {
+    .iniciar-sesion {
+      margin-bottom: 50px !important;
+    }
+  }
+  @media (max-width: 321px) {
+    #email {
+      margin-bottom: 40px !important;
+    }
+  }
   .fieldsContainer {
     // background-color: white;
     text-align: left;
@@ -212,7 +222,7 @@ export default {
 
     padding: 60px;
 
-    height: 708px;
+    min-height: 708px;
     width: 521px;
 
     border-radius: 6px;
@@ -236,7 +246,7 @@ export default {
     // margin-bottom: 17px;
 
     height: 50px;
-    width: 100%;
+    // width: 100%;
     border-radius: 5px;
     border-color: #0E2469;
     background-color: #0E2469;
@@ -261,7 +271,7 @@ export default {
   }
   .iniciar-sesion {
     height: 44px;
-    width: 213px;
+    // width: 213px;
     color: #0E2469;
     font-family: "Circular Std";
     font-size: 35px;
@@ -270,7 +280,7 @@ export default {
   }
   .input-title {
     height: 27px;
-    width: 175px;
+    // width: 175px;
     color: #6A6A6A;
     font-family: "Circular Std";
     font-size: 21px;
@@ -279,7 +289,7 @@ export default {
     margin-top: 17px;
   }
   .orSocialMedia {
-    margin-left: -20px;
+    margin-left: -17px;
     margin-right: -17px;
   }
 }
