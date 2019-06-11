@@ -2,7 +2,7 @@
 // Se debe eliminar el recurso de variables debido a que se puede usar este mismo
 // servicio para el manejo de variables como se muestra en este ejemplo
 const r = require('axios');
-const SERVER_URL = 'http://3.83.146.210:5005'
+const SERVER_URL = 'http://ec2-18-222-177-88.us-east-2.compute.amazonaws.com:5005'
 import auth from './authentication.js'
 
 function getHeaders() {
