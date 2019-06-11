@@ -1,0 +1,281 @@
+<template>
+  <section>
+    <Header></Header>
+    <div class="main-container container-fluid">
+      <div class="row first">
+        <div class="col">
+          <div v-if="idea.picture == null">
+            <img
+              src="https://ep01.epimg.net/internacional/imagenes/2018/07/23/billete_a_macondo/1532310440_143390_1532310884_noticia_normal.jpg"
+            >
+          </div>
+          <div v-else>
+            <img v-bind:src="idea.picture.url">
+          </div>
+        </div>
+      </div>
+      <div class="row second">
+        <h1 class="title">{{idea.title}}</h1>
+      </div>
+      <div class="row third">
+        <p class="parag">{{idea.description}}</p>
+      </div>
+      <div class="row fourth justify-content-center">
+        <div v-if="idea.videoLink == ''">
+          <iframe
+            v-bind:src="idea.videoLink"
+            frameborder="0"
+            allow="accelerometer; autoplay; encrypted-media; gyroscope; picture-in-picture"
+            allowfullscreen
+          ></iframe>
+        </div>
+        <div v-else>
+          <iframe
+            src="https://www.youtube.com/embed/JVRY5z7-MpM"
+            frameborder="0"
+            allow="accelerometer; autoplay; encrypted-media; gyroscope; picture-in-picture"
+            allowfullscreen
+          ></iframe>
+        </div>
+      </div>
+      <div class="row fifth">
+        <b-button class="title" v-on:click.prevent="voteForIdea()">Votar por esta idea</b-button>
+      </div>
+
+      <div v-if="tokenExists == true">
+        <div class="row sixth">
+          <b-form-group class="w-comment" label="Cuéntanos que tal te pareció esta idea">
+            <b-form-textarea placeholder="Comentario" v-model="newComment"></b-form-textarea>
+          </b-form-group>
+          <b-button v-on:click.prevent="commentIdea()">Enviar</b-button>
+        </div>
+      </div>
+
+      <div class="row comments">
+        <div class="comment container-fluid">
+          <h3 class="title">Comentarios</h3>
+          <br>
+          <div class="row" v-for="(comment, index) in comments" :key="index">
+            <div class="col">
+              <p class="parag">{{comment.description}}</p>
+              <hr>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+    <b-modal id="modalPopover" title="Felicitaciones" ok-only>
+      <p class="parag">Tu voto se ha realizado exitosamente.</p>
+    </b-modal>
+    <b-modal id="modalPopover voted" title="Error" ok-only>
+      <p class="parag">Ya has votado por ésta idea.</p>
+    </b-modal>
+  </section>
+</template>
+
+<script>
+import api from "../requests.js";
+
+import Header from "./Header.vue";
+export default {
+  components: {
+    Header
+  },
+  data() {
+    return {
+      ideaID: "",
+      idea: "",
+      tokenExists: false,
+      userInfo: {},
+      comments: [],
+      newComment: ""
+    };
+  },
+  methods: {
+    checkToken() {
+      if (this.$cookie.get("secret") == null) {
+        this.tokenExists = false;
+      } else {
+        this.tokenExists = true;
+        console.log("COOKIE: " + this.$cookie.get("secret"));
+        var userInfo = JSON.parse(this.$cookie.get("secret"));
+        this.userInfo.id = userInfo.user_id;
+        this.userInfo.secret = userInfo.secret;
+        this.userInfo.expire_at = userInfo.expire_at;
+        this.userInfo.name = userInfo.name;
+        this.userInfo.lastname = userInfo.lastname;
+      }
+    },
+    loadIdeaInfo() {
+      this.ideaID = this.$route.params.iId;
+      api.idea
+        .getInfo(this.ideaID)
+        .then(response => {
+          this.idea = response.data;
+        })
+        .catch(err => {
+          console.log(err.data);
+        });
+
+      // this.$http.get(SERVER_URL + "/ideas/" + this.id).then(function(response) {
+      //   this.idea = response.data;
+      //   console.log("RESPONSE: " + JSON.stringify(this.idea));
+      // });
+    },
+    voteForIdea() {
+      if (this.tokenExists == false) {
+        this.$router.push("/register");
+      } else {
+        api.idea
+          .vote(this.ideaID)
+          .then(response => {
+            this.$bvModal.show("modalPopover voted");
+          })
+          .catch(err => {
+            console.log(err.data);
+            this.$bvModal.show("modalPopover");
+          });
+
+        // this.$http
+        //   .post(SERVER_URL + "/ideas/" + this.id + "/votes", {
+        //     headers: {
+        //       Authorization: 'Token token="' + this.userInfo.secret + '"'
+        //     }
+        //   })
+        //   .then(response => response.json())
+        //   .then(
+        //     function(json) {
+        //       console.log(json);
+        //       this.$bvModal.show("modalPopover voted");
+        //     },
+        //     err => {
+        //       console.log("Err", err);
+        //       this.$bvModal.show("modalPopover");
+        //     }
+        //   );
+      }
+    },
+    loadComments() {
+      api.idea
+        .getComments(this.ideaID)
+        .then(response => {
+          this.comments = response.data;
+        })
+        .catch(err => {
+          console.log(err.data);
+        });
+
+      // this.$http
+      //   .get(SERVER_URL + "/ideas/" + this.id + "/comments")
+      //   .then(function(response) {
+      //     this.comments = response.data;
+      //   });
+    },
+    commentIdea() {
+      api.idea
+        .postComment(this.ideaID)
+        .then(response => {
+          location.reload();
+        })
+        .catch(err => {
+          console.log(err.data);
+        });
+
+      // this.$http
+      //   .post(
+      //     SERVER_URL + "/ideas/" + this.id + "/comments",
+      //     {
+      //       title: "Comentario",
+      //       description: this.newComment
+      //     },
+      //     {
+      //       headers: {
+      //         Authorization: 'Token token="' + this.userInfo.secret + '"'
+      //       }
+      //     }
+      //   )
+      //   .then(response => response.json())
+      //   .then(
+      //     function(json) {
+      //       console.log(json);
+      //       // this.$router.push('/idea');
+      //       location.reload();
+      //     },
+      //     err => {
+      //       console.log("Err", err);
+      //     }
+      //   );
+    }
+  },
+  created() {
+    this.loadIdeaInfo();
+    this.checkToken();
+    this.loadComments();
+  }
+};
+</script>
+
+<style lang="scss" scoped>
+.main-container {
+  margin-top: 110px;
+  .first {
+    background-color: #e6e6e6;
+    height: 300px;
+    text-align: center;
+    img {
+      height: 300px;
+      margin: auto;
+    }
+  }
+  .second {
+    padding: 50px;
+  }
+  .third {
+    padding: 0px 50px;
+  }
+  .fourth {
+    margin-top: 40px;
+    height: 200px;
+  }
+  .fifth {
+    padding: 50px;
+    button {
+      width: 100%;
+      border: 2px solid #4d4d4d;
+      background-color: #ffe01b;
+      color: #4d4d4d;
+      border-radius: 0px;
+      font-size: 2em;
+    }
+  }
+  .sixth {
+    padding: 0px 50px 50px 50px;
+    .w-comment {
+      width: 100%;
+      color: #4d4d4d;
+      legend {
+        font-family: "Roboto Slab", serif;
+        font-size: 1.2em;
+      }
+      textarea {
+        border: 2px solid #4d4d4d;
+        border-radius: 0px;
+      }
+    }
+    button {
+      border: 2px solid #4d4d4d;
+      color: #4d4d4d;
+      border-radius: 0px;
+      font-size: 1em;
+      background-color: transparent;
+    }
+  }
+  .comments {
+    .comment {
+      padding: 10px 50px;
+      margin-bottom: 20px;
+      border-bottom: 0.5px solid #e6e6e6;
+    }
+  }
+}
+</style>

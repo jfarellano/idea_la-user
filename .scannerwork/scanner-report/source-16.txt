@@ -1,0 +1,39 @@
+<template>
+  <b-button class="add-button title" v-on:click.prevent="createIdea">Agrega nueva idea</b-button>
+</template>
+
+<script>
+  import auth from "../authentication.js"
+  export default {
+  data() {
+    return {};
+  },
+  methods: {
+    createIdea() {
+      if (auth.storage.get('secret') == null) {
+        this.$router.push("/login");
+      } else {
+        this.$router.push("/creareditaridea");
+      }
+    }
+  },
+  created() {}
+};
+</script>
+
+<style lang="scss" scoped>
+.add-button {
+  position: fixed;
+  padding: 20px;
+  z-index: 1000;
+  border: none;
+  background-color: #ffe01b;
+  color: #4d4d4d;
+  border-radius: 0px;
+  right: 0px;
+  bottom: 70px;
+  -webkit-box-shadow: -19px 17px 25px -12px rgba(115, 115, 115, 0.53);
+  -moz-box-shadow: -19px 17px 25px -12px rgba(115, 115, 115, 0.53);
+  box-shadow: -19px 17px 25px -12px rgba(115, 115, 115, 0.53);
+}
+</style>
