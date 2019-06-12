@@ -66,7 +66,35 @@
                   class="incorrectInput"
                 >La contraseña no coincide</p>
                 <h5>Imagen de perfil</h5>
-                <b-form-file ref="file" v-model="userData.image" placeholder="Choose a file..."></b-form-file>
+                <b-button
+                  @click="$refs.fileInput.$el.querySelector('input[type=file]').click()"
+                  class="loadBtn"
+                  v-if="userData.image == null"
+                >Carga tu imagen</b-button>
+                <b-button-group class="loadBtn" v-if="userData.image != null">
+                  <b-button
+                    class="text"
+                    @click="$refs.fileInput.$el.querySelector('input[type=file]').click()"
+                  >Cambia tu imagen</b-button>
+                  <b-button class="icon" @click="clearImage()">
+                    <font-awesome-icon icon="times"></font-awesome-icon>
+                  </b-button>
+                </b-button-group>
+                <b-form-file
+                  v-model="userData.image"
+                  accept="image/jpeg, image/png"
+                  style="display:none;"
+                  @change="checkSize()"
+                  ref="fileInput"
+                  v-validate="'size:2000'"
+                  :class="{'has-error': errors.has('image_size')}"
+                  name="image"
+                />
+                <p v-if="userData.image != null" class="selectedImage">{{userData.image.name}}</p>
+                <p
+                  v-if="errors.has('image')"
+                  class="incorrectInput"
+                >La imagen es muy grande, el maximo son 2MB</p>
               </div>
               <div class="col-md">
                 <h5>Nombre</h5>
@@ -172,7 +200,6 @@
                   >{{ location.name }}</option>
                 </b-form-select>
                 <p v-if="errors.has('hood')" class="incorrectInput">Selecciona tu barrio</p>
-                <div class="divSeparator"></div>
                 <h5>Localidad</h5>
                 <div class="input-group">
                   <input
@@ -184,9 +211,6 @@
                 </div>
               </div>
             </div>
-
-            <div class="divSeparator"></div>
-            <div class="divSeparator"></div>
 
             <div class="spacer">
               <div class="row justify-content-end">
@@ -210,7 +234,7 @@
     </div>
 
     <!-- MODAL -->
-    <b-modal
+    <!-- <b-modal
       id="modal-scrollable"
       centered
       title="Priorización de Retos"
@@ -249,7 +273,7 @@
 
     <b-modal id="modalPopover" title="Error" ok-only>
       <p class="parag">Por favor asegúrese de llenar todos los campos con su información.</p>
-    </b-modal>
+    </b-modal> -->
     <vue-snotify></vue-snotify>
   </div>
 </template>
@@ -276,6 +300,9 @@ export default {
     };
   },
   methods: {
+    clearImage() {
+      this.userData.image = null;
+    },
     registerCheckFormData() {
       var emailField = this.userData.email;
       var passwordField = this.userData.password;
@@ -391,6 +418,36 @@ export default {
     min-height: 100vh;
     height: 100%;
   }
+  .loadBtn {
+    border: 1px solid #0e2469;
+    border-radius: 5px;
+    box-shadow: 0 0 2px 0 #ffffff;
+    background-color: transparent;
+    // width: 27.85%;
+    width: 100%;
+    height: 50px;
+    font-size: 17px;
+    color: #0e2469;
+    &:focus {
+      border: 2px solid #0e2469;
+    }
+    .text {
+      background-color: transparent;
+      color: #0e2469;
+      border: 0px;
+    }
+    .icon {
+      background-color: #ff0000;
+      color: white;
+      border: 0px;
+      z-index: 0;
+    }
+  }
+  .selectedImage {
+    color: #6a6a6a;
+    font-size: 12px;
+    margin: 0px;
+  }
   .iconImage {
     height: 54px;
     margin-bottom: 15px;
@@ -417,9 +474,6 @@ export default {
     margin: auto;
     max-width: 952px;
   }
-  .divSeparator {
-    height: 13px;
-  }
   #btnRegisterStyle {
     background-color: #0e2469;
     border-radius: 5px;
@@ -430,6 +484,7 @@ export default {
     }
   }
   .spacer {
+    padding-top: 10px;
     @media (max-width: 800px) {
       padding-left: 15px;
       padding-right: 15px;
