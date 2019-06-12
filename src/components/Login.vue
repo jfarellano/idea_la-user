@@ -72,13 +72,13 @@
             </b-row>
             <b-row>
               <b-col>
-                <b-button v-on:click.prevent="authenticate('facebook')">Facebook</b-button>
+                <b-button v-on:click.prevent="oauthSocial('facebook')">Facebook</b-button>
               </b-col>
               <b-col>
-                <b-button v-on:click.prevent="authenticate('google')">Google</b-button>
+                <b-button v-on:click.prevent="oauthSocial('google')">Google</b-button>
               </b-col>
               <b-col>
-                <b-button v-on:click.prevent="authenticate('twitter')">Twitter</b-button>
+                <b-button v-on:click.prevent="oauthSocial('twitter')">Twitter</b-button>
               </b-col>
             </b-row>
           </div>
@@ -105,6 +105,13 @@ export default {
     };
   },
   methods: {
+    // authenticate: function (provider) {
+    //   this.$auth.authenticate(provider).then(response => {
+    //     console.log('response.data: ', response.data)
+    //   }).catch(err => {
+    //     console.log(err)
+    //   })
+    // },
     validLogin(){
       if (this.errors.count() == 0 && this.userCredentials.email != null && this.userCredentials.password != null) {
         return true;
@@ -195,7 +202,8 @@ export default {
   }
   @media (max-width: 800px) {
     .fieldsContainer {
-      max-width: 90% !important;
+      max-width: 100% !important;
+      padding: 21px !important;
     }
     .input-title {
       font-size: 17px !important;
@@ -203,6 +211,7 @@ export default {
     .iniciar-sesion {
       font-size: 31px !important;
     }
+    
   }
   @media (max-width: 365px) {
     .iniciar-sesion {
