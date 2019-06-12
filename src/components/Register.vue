@@ -65,6 +65,8 @@
                   v-if="errors.has('password_conf')"
                   class="incorrectInput"
                 >La contraseña no coincide</p>
+                <h5>Imagen de perfil</h5>
+                <b-form-file ref="file" v-model="userData.image" placeholder="Choose a file..."></b-form-file>
               </div>
               <div class="col-md">
                 <h5>Nombre</h5>
@@ -224,11 +226,6 @@
         <div v-for="(challenge, index3) in challenges" :key="index3">
           <li class="dropdownItemStyle">
             <div class="form-group">
-              <!--  -->
-              <!-- <select class="form-control" id="pickerStyle" @change="switchView($event)" v-model="indexChosedHood">
-                <option v-for="(location, index) in locations" v-bind:value="location.id" :key="index"> {{ location.name }} </option>
-              </select>-->
-              <!--  -->
               <select class="form-control" id="pickerStyle" v-model="surveyResult[index3]">
                 <option
                   v-for="(challengeItem, index2) in challenges"
@@ -306,43 +303,46 @@ export default {
         ageField == null ||
         genderField == null
       ) {
-        this.$snotify.error("Diligencia correctamente el formulario", "Atención", {
-          timeout: 2000,
-          showProgressBar: false,
-          closeOnClick: true,
-          pauseOnHover: true
-        });
+        this.$snotify.error(
+          "Diligencia correctamente el formulario",
+          "Atención",
+          {
+            timeout: 2000,
+            showProgressBar: false,
+            closeOnClick: true,
+            pauseOnHover: true
+          }
+        );
       } else {
-        api.challenges
-          .index()
-          .then(response => {
-            this.challenges = response.data;
-            this.userRegister();
-            setTimeout(() => this.$bvModal.show("modal-scrollable"), 500);
-          })
-          .catch(err => {
-            console.log(err);
-          });
+        this.userRegister();
       }
     },
     userRegister() {
+      var fd = new FormData();
+      fd.append("email", this.userData.email);
+      fd.append("password", this.userData.password);
+      fd.append("cc", this.userData.cc);
+      fd.append("phone", this.userData.phone);
+      fd.append("name", this.userData.name);
+      fd.append("lastname", this.userData.lastname);
+      fd.append("age", this.userData.age);
+      fd.append("gender", this.userData.gender);
+      fd.append("image", this.userData.image);
+      fd.append("location_id", this.userData.location_id);
       api.user
-        .create({
-          email: this.userData.email,
-          password: this.userData.password,
-          cc: this.userData.cc,
-          phone: this.userData.phone,
-          name: this.userData.name,
-          lastname: this.userData.lastname,
-          age: this.userData.age,
-          gender: this.userData.gender,
-          picture: this.userData.picture,
-          location_id: this.indexChosedHood
-        })
+        .create(fd)
         .then(response => {
-          console.log("Exito");
+          this.$router.push("/login");
         })
-        .catch(err => {});
+        .catch(err => {
+          console.log(err.response);
+          this.$snotify.error("Hubo un error creando tu cuenta", "Atención", {
+            timeout: 2000,
+            showProgressBar: false,
+            closeOnClick: true,
+            pauseOnHover: true
+          });
+        });
     },
     getLocations() {
       api.variable.locations().then(response => {
@@ -353,12 +353,6 @@ export default {
       var i = this.indexChosedHood;
       this.userData.location_id = this.indexChosedHood;
       this.locationAuto = this.locations[i].hood;
-    },
-    onChangeChallenge(event) {
-      console.log(JSON.stringify(event.target));
-    },
-    sendForm() {
-      setTimeout(() => this.$router.push("/login"), 500);
     }
   },
   created() {
@@ -441,6 +435,31 @@ export default {
       padding-right: 15px;
     }
   }
+  .custom-file {
+    border: 1px solid #0e2469;
+    border-radius: 5px;
+    box-shadow: 0 0 2px 0 #ffffff;
+    font-size: 17px;
+    color: #0e2469;
+    &:focus {
+      border: 2px solid #0e2469;
+    }
+    .custom-file-input {
+      height: 100% !important;
+    }
+    .custom-file-label {
+      padding: 0.75rem;
+      font-size: 17px;
+      font-weight: 300;
+      color: #dddddd;
+      height: 100% !important;
+      &::after {
+        padding: 0.75rem !important;
+        height: 100% !important;
+      }
+    }
+  }
+
   .inputStyles {
     border: 1px solid #0e2469;
     border-radius: 5px;
