@@ -41,6 +41,7 @@
                 v-validate="'required'"
                 :class="{'has-error': errors.has('password_invalid')}"
                 name="password"
+                v-on:keyup.enter="userLogin()"
               >
             </div>
             <p v-if="errors.has('password')" class="incorrectInput">
@@ -72,13 +73,13 @@
             </b-row>
             <b-row>
               <b-col>
-                <b-button v-on:click.prevent="oauthSocial('facebook')">Facebook</b-button>
+                <b-button @click="facebookOauth()">Facebook</b-button>
               </b-col>
               <b-col>
-                <b-button v-on:click.prevent="oauthSocial('google')">Google</b-button>
+                <b-button @click="authenticate('google')">Google</b-button>
               </b-col>
               <b-col>
-                <b-button v-on:click.prevent="oauthSocial('twitter')">Twitter</b-button>
+                <b-button @click="authenticate('twitter')">Twitter</b-button>
               </b-col>
             </b-row>
           </div>
@@ -95,22 +96,27 @@
   </div>
 </template>
 
+
 <script>
 import auth from "../authentication.js";
 
 export default {
   data() {
     return {
-      userCredentials: {}
+      userCredentials: {},
+      FB: {}
     };
   },
   methods: {
-    // authenticate: function (provider) {
-    //   this.$auth.authenticate(provider).then(response => {
-    //     console.log('response.data: ', response.data)
-    //   }).catch(err => {
-    //     console.log(err)
-    //   })
+    // facebookOauth() {
+    //   FB.api(
+    //     '/me',
+    //     'GET',
+    //     {"fields":"id,name"},
+    //     function(response) {
+    //         console.log(response.data)
+    //     }
+    //   );
     // },
     validLogin(){
       if (this.errors.count() == 0 && this.userCredentials.email != null && this.userCredentials.password != null) {
@@ -183,7 +189,33 @@ export default {
     oauthSocial(provider){
       console.log(provider);
     }
-  }
+  },
+  created (){
+    // this.fbInit();
+  },
+  mounted () {
+    let _this = this
+    this.$nextTick(() => {
+      window.fbAsyncInit = function () {
+        FB.init({
+          appId            : '366615240874673',
+          autoLogAppEvents : true,
+          xfbml            : true,
+          version          : 'v3.3'
+        })
+        FB.AppEvents.logPageView()
+        _this.FB = FB
+        console.log('FB SDK was initialized as mixin')
+      };
+      (function (d, s, id) {
+        let js, fjs = d.getElementsByTagName(s)[0]
+        if (d.getElementById(id)) { return }
+        js = d.createElement(s); js.id = id
+        js.src = '//connect.facebook.net/en_US/sdk.js'
+        fjs.parentNode.insertBefore(js, fjs)
+      }(document, 'script', 'facebook-jssdk'))
+    })
+}
 };
 </script>
 
