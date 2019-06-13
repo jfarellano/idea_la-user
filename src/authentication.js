@@ -1,16 +1,3 @@
-// import VueAuthenticate from 'vue-authenticate'
-
-// Vue.use(VueAuthenticate, {
-//   baseUrl: 'http://localhost:3000', // Your API domain
-  
-//   providers: {
-//     github: {
-//       clientId: '',
-//       redirectUri: 'http://localhost:8080/auth/callback' // Your client app URL
-//     }
-//   }
-// })
-
 const r = require('axios');
 import api from './requests'
 

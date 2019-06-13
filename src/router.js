@@ -9,6 +9,7 @@ import Challenge from './components/Challenge.vue'
 import Idea from './components/Idea.vue'
 import MyProfile from './components/MyProfile.vue'
 import CreateEditIdea from './components/CreateEditIdea.vue'
+import RecoverPassword from './components/RecoverPassword.vue'
 
 Vue.use(Router)
 
@@ -53,6 +54,11 @@ export default new Router ({
             path: '/creareditaridea',
             name: 'CreateEditIdea',
             component: CreateEditIdea
+        },
+        {
+            path: '/recover-password',
+            name: 'RecoverPassword',
+            component: RecoverPassword
         },
     ]
 })
