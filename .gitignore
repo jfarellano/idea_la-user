@@ -3,8 +3,9 @@ node_modules
 /dist
 
 #Sonar directory
+src/.scannerwork
+/.scannerwork
 /src/.scannerwork
-
 # local env files
 .env.local
 .env.*.local

@@ -1,39 +1,55 @@
-<template>
-  <b-button class="add-button title" v-on:click.prevent="createIdea">Agrega nueva idea</b-button>
-</template>
+const r = require('axios');
+import api from './requests'
 
-<script>
-  import auth from "../authentication.js"
-  export default {
-  data() {
-    return {};
+function getHeaders() {
+  return { headers: { "Authorization": 'Token token=' + localStorage.getItem('secret') } }
+}
+export default {
+  oauth: {
+    
   },
-  methods: {
-    createIdea() {
-      if (auth.storage.get('secret') == null) {
-        this.$router.push("/login");
-      } else {
-        this.$router.push("/creareditaridea");
-      }
+  session: {
+    login: function (body) {
+      return r.post(api.variable.URL + '/sessions', body)
+    },
+    logout: function () {
+      return r.delete(api.variable.URL + '/sessions', getHeaders())
+    },
+    user_info(user_id){
+      return r.get(api.variable.URL + '/users/' + user_id)
     }
   },
-  created() {}
-};
-</script>
-
-<style lang="scss" scoped>
-.add-button {
-  position: fixed;
-  padding: 20px;
-  z-index: 1000;
-  border: none;
-  background-color: #ffe01b;
-  color: #4d4d4d;
-  border-radius: 0px;
-  right: 0px;
-  bottom: 70px;
-  -webkit-box-shadow: -19px 17px 25px -12px rgba(115, 115, 115, 0.53);
-  -moz-box-shadow: -19px 17px 25px -12px rgba(115, 115, 115, 0.53);
-  box-shadow: -19px 17px 25px -12px rgba(115, 115, 115, 0.53);
+  storage: {
+    setImage: function (url) {
+      localStorage.setItem('picture', url)
+    },
+    set: function (user_id, secret, expire, admin) {
+      localStorage.setItem('user_id', user_id)
+      localStorage.setItem('secret', secret)
+      localStorage.setItem('expire', expire)
+      localStorage.setItem('admin', admin)
+    },
+    set_name: function (name, lastname) {
+      localStorage.setItem('name', api.utils.upcase(name + ' ' + lastname))
+    },
+    logged: function () {
+      if (localStorage.getItem('secret') != null && localStorage.getItem('admin')) {
+        var exp = new Date(localStorage.getItem('expire'))
+        if (exp > Date.now()){
+          return true
+        }else{
+          localStorage.clear()
+          return false
+        }
+      } else {
+        return false
+      }
+    },
+    get: function (name) {
+      return localStorage.getItem(name)
+    },
+    clear: function(){
+      localStorage.clear()
+    }
+  }
 }
-</style>

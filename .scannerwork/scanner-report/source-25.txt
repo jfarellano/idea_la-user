@@ -95,7 +95,7 @@ export default {
     }
   },
   created() {
-    this.checkToken();
+    // this.checkToken();
   }
 };
 </script>

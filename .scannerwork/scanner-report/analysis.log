@@ -1,5 +1,4 @@
 Environment variables:
-  - =::=::\
   - =C:=C:\Users\Andres\Documents\Hackathon\2019\idea_la-user
   - =D:=D:\
   - =E:=E:\
@@ -26,6 +25,7 @@ Environment variables:
   - HOMEPATH=\Users\Andres
   - JAVA_EXEC="C:\Users\Andres\Documents\Nativapps\sonar-scanner-3.3.0.1492-windows\bin\..\jre\bin\java.exe"
   - JAVA_HOME=C:\Users\Andres\Documents\Nativapps\sonar-scanner-3.3.0.1492-windows\bin\..\jre
+  - LANG=en_US.UTF-8
   - LOCALAPPDATA=C:\Users\Andres\AppData\Local
   - LOGONSERVER=\\ACT
   - NUMBER_OF_PROCESSORS=4
@@ -52,6 +52,8 @@ Environment variables:
   - SystemDrive=C:
   - SystemRoot=C:\WINDOWS
   - TEMP=C:\Users\Andres\AppData\Local\Temp
+  - TERM_PROGRAM=vscode
+  - TERM_PROGRAM_VERSION=1.35.0
   - TMP=C:\Users\Andres\AppData\Local\Temp
   - USERDOMAIN=ACT
   - USERDOMAIN_ROAMINGPROFILE=ACT

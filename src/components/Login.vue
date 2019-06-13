@@ -143,25 +143,40 @@ export default {
           this.extraData(response.data.user_id)
         })
         .catch(err => {
-          console.log(err)
-          if (err.response.data.single_authentication == "invalid credentials") {
-            this.$snotify.error("Credenciales inválidas.", "Atención", {
-              timeout: 2000,
-              showProgressBar: false,
-              closeOnClick: true,
-              pauseOnHover: true
-            });
-            this.userCredentials.password = ""
-          } else if (err.response.data.single_authentication == "user is blocked") {
-            // ALERT NOTIFICATION USER BLOCKED
-            this.$snotify.error("Usuario bloqueado", "Atención", {
-              timeout: 2000,
-              showProgressBar: false,
-              closeOnClick: true,
-              pauseOnHover: true
-            });
-            this.userCredentials.username = "";
-            this.userCredentials.password = "";
+          if (err.response == null) {
+            this.$snotify.error("Error de red. Inténtelo mas tarde.", "Error", {
+                timeout: 2000,
+                showProgressBar: false,
+                closeOnClick: true,
+                pauseOnHover: true
+              });
+          } else {
+            if (err.response.data.single_authentication == "invalid credentials") {
+              this.$snotify.error("Credenciales inválidas.", "Atención", {
+                timeout: 2000,
+                showProgressBar: false,
+                closeOnClick: true,
+                pauseOnHover: true
+              });
+              this.userCredentials.password = ""
+            } else if (err.response.data.single_authentication == "user is blocked") {
+              // ALERT NOTIFICATION USER BLOCKED
+              this.$snotify.error("Usuario bloqueado", "Atención", {
+                timeout: 2000,
+                showProgressBar: false,
+                closeOnClick: true,
+                pauseOnHover: true
+              });
+              this.userCredentials.username = "";
+              this.userCredentials.password = "";
+            } else {
+              this.$snotify.error("Error de red. Inténtelo mas tarde.", "Error", {
+                timeout: 2000,
+                showProgressBar: false,
+                closeOnClick: true,
+                pauseOnHover: true
+              });
+            }
           }
         });
     },
