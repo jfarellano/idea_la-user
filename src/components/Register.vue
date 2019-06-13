@@ -232,48 +232,6 @@
         </div>
       </div>
     </div>
-
-    <!-- MODAL -->
-    <!-- <b-modal
-      id="modal-scrollable"
-      centered
-      title="Priorización de Retos"
-      cancel-variant="ok"
-      cancel-title
-      class="modalStyle"
-      ok-disabled
-    >
-      <p
-        class="parag"
-      >Por favor priorice según su criterio los siguientes retos de mayor a menor relevancia.</p>
-      <ol>
-        <div v-for="(challenge, index3) in challenges" :key="index3">
-          <li class="dropdownItemStyle">
-            <div class="form-group">
-              <select class="form-control" id="pickerStyle" v-model="surveyResult[index3]">
-                <option
-                  v-for="(challengeItem, index2) in challenges"
-                  :key="index2"
-                  v-bind:value="challengeItem.id"
-                >{{ challengeItem.title }}</option>
-              </select>
-            </div>
-          </li>
-        </div>
-      </ol>
-      <div class="row justify-content-center">
-        <b-button
-          type="button"
-          class="btn btn-primary btn-mg btn-block"
-          id="btnRegisterStyle"
-          v-on:click.prevent="sendForm()"
-        >Aceptar</b-button>
-      </div>
-    </b-modal>
-
-    <b-modal id="modalPopover" title="Error" ok-only>
-      <p class="parag">Por favor asegúrese de llenar todos los campos con su información.</p>
-    </b-modal> -->
     <vue-snotify></vue-snotify>
   </div>
 </template>
