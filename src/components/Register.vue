@@ -243,17 +243,12 @@ import api from "../requests.js";
 export default {
   data() {
     return {
-      challenges: [],
-      challengesCopy: [],
-      pickedChal: "",
       userData: {},
       locations: [],
       chosedHood: "",
       indexChosedHood: "",
       locationAuto: "",
       indexChosedChallenge: "",
-      surveyResult: [],
-      userCookie: {},
       userCredentials: {}
     };
   },
