@@ -47,6 +47,7 @@
             <p v-if="errors.has('password')" class="incorrectInput">
               Este campo es obligatorio.
             </p>
+            <router-link to="/recover-password">¿Has olvidado tu contraseña?</router-link>
             
             <button
               type="button"
@@ -119,6 +120,7 @@ export default {
     //   );
     // },
     validLogin(){
+      console.log('ENTRA CARGANDO')
       if (this.errors.count() == 0 && this.userCredentials.email != null && this.userCredentials.password != null) {
         return true;
       } else {
@@ -257,13 +259,10 @@ export default {
     }
   }
   .fieldsContainer {
-    // background-color: white;
     text-align: left;
     padding: 23px;
     margin: auto;
     margin-top: 20px !important;
-    // max-width: 35%;
-    // max-height: 80%;
 
     padding: 60px;
 
@@ -274,24 +273,13 @@ export default {
     background-color: #FFFFFF;
     box-shadow: 0 0 14px 0 rgba(20,20,20,0.3);
   }
-  .divSeparator {
-    height: 13px;
-  }
   @media (max-width: 341px) {
     .btnLoginStyle {
       height: 75px !important;
     }
   }
   .btnLoginStyle {
-    // background-color: grey;
-    // border: grey;
-    // box-shadow: 0px 5px #ffe01b;
-    // border-radius: 0px;
-    // margin-top: 17px;
-    // margin-bottom: 17px;
-
     height: 50px;
-    // width: 100%;
     border-radius: 5px;
     border-color: #0E2469;
     background-color: #0E2469;
@@ -302,7 +290,6 @@ export default {
     border: 1px solid #0E2469;
     border-radius: 5px;
     box-shadow: 0 0 2px 0 #ffffff;
-    // width: 27.85%;
     height: 50px;
     font-size: 21px;
     color: #0E2469;
@@ -316,7 +303,6 @@ export default {
   }
   .iniciar-sesion {
     height: 44px;
-    // width: 213px;
     color: #0E2469;
     font-size: 35px;
     font-weight: bold;
@@ -324,7 +310,6 @@ export default {
   }
   .input-title {
     height: 27px;
-    // width: 175px;
     color: #6A6A6A;
     font-size: 21px;
     font-weight: 300;
