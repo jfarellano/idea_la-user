@@ -1,1 +1,1 @@
-src/components/Idea.vue 2jsXšh
+src/components/Idea.vue 2jsXšh

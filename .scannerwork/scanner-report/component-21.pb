@@ -1,1 +1,1 @@
-src/components/Challenges.vue 2jsXrh
+src/components/Challenges.vue 2jsXrh

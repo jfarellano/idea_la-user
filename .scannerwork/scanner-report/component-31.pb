@@ -1,1 +1,1 @@
-src/router.js 2jsX:h
+src/main.js 2jsX(h

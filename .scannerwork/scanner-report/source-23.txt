@@ -31,7 +31,7 @@
                 <b-img
                   rounded="circle"
                   class="avatar img-responsive"
-                  src="http://placehold.it/30x30"
+                  :src="getPic()"
                   alt="Circle image"
                 ></b-img>
               </a>
@@ -79,6 +79,9 @@ export default {
           });
         });
     },
+    getPic(){
+      return auth.storage.get('picture')
+    },
     goToLogin() {
       this.$router.push("/login");
     },
@@ -106,8 +109,13 @@ export default {
     }
   },
   created() {
-    this.tokenExists = auth.storage.loged()
-    this.fullname = auth.storage.get("name");
+    var loged = auth.storage.logged()
+    if(loged){
+      this.tokenExists = loged
+      this.fullname = auth.storage.get("name");
+    }else{
+      auth.storage.clear()
+    }
   },
   directives: {
     "click-outside": {
@@ -166,6 +174,10 @@ export default {
   }
   .dropdown-menu {
     top: 65px;
+  }
+  .avatar{
+    width: 34px;
+    height: 34px;
   }
 
   .navbar-toggler {
