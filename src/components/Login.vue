@@ -149,6 +149,7 @@ export default {
               closeOnClick: true,
               pauseOnHover: true
             });
+            this.userCredentials.password = ""
           } else if (err.response.data.single_authentication == "user is blocked") {
             // ALERT NOTIFICATION USER BLOCKED
             this.$snotify.error("Usuario bloqueado", "Atención", {
@@ -191,7 +192,7 @@ export default {
     }
   },
   created (){
-    // this.fbInit();
+    if (auth.storage.logged()) this.$router.push("/");
   },
   mounted () {
     let _this = this

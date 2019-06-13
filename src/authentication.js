@@ -45,7 +45,7 @@ export default {
     set_name: function (name, lastname) {
       localStorage.setItem('name', api.utils.upcase(name + ' ' + lastname))
     },
-    loged: function () {
+    logged: function () {
       if (localStorage.getItem('secret') != null && localStorage.getItem('admin')) {
         var exp = new Date(localStorage.getItem('expire'))
         if (exp > Date.now()){
