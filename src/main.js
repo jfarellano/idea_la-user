@@ -8,8 +8,6 @@ import 'bootstrap-vue/dist/bootstrap-vue.css'
 // AOS dependecies
 import AOS from 'aos';
 import 'aos/dist/aos.css';
-// Vue Resource dependencies
-import VueResource from 'vue-resource'
 // Snotify notifications dependencies
 import Snotify from 'vue-snotify'
 import 'vue-snotify/styles/simple.css';
@@ -24,18 +22,12 @@ import { FontAwesomeIcon } from '@fortawesome/vue-fontawesome'
 import { fab } from '@fortawesome/free-brands-svg-icons'
 import { far } from '@fortawesome/free-regular-svg-icons'
 
-import VueAuthenticate from 'vue-authenticate'   //PENDIENTE
-
-
 // Vue Awesome font dependencies
 library.add(fas, fab, far)
 Vue.component('font-awesome-icon', FontAwesomeIcon)
 
-Vue.use(VueAuthenticate)   //PENDIENTE
-
 Vue.use(VeeValidate);
 Vue.use(Snotify)
-Vue.use(VueResource);
 Vue.use(BootstrapVue)
 Vue.config.productionTip = false
 
