@@ -197,7 +197,7 @@
                     v-for="(location, index) in locations"
                     :value="location.id"
                     :key="index"
-                  >{{ location.name }}</option>
+                  >{{ upcase(location.name) }}</option>
                 </b-form-select>
                 <p v-if="errors.has('hood')" class="incorrectInput">Selecciona tu barrio</p>
                 <h5>Localidad</h5>
@@ -332,7 +332,10 @@ export default {
     switchView(event) {
       var i = this.indexChosedHood;
       this.userData.location_id = this.indexChosedHood;
-      this.locationAuto = this.locations[i].hood;
+      this.locationAuto = this.upcase(this.locations[i].hood);
+    },
+    upcase(str) {
+      return api.utils.upcase(str);
     }
   },
   created() {
