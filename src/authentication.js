@@ -17,7 +17,6 @@ import api from './requests'
 function getHeaders() {
   return { headers: { "Authorization": 'Token token=' + localStorage.getItem('secret') } }
 }
-
 export default {
   oauth: {
     
@@ -37,22 +36,17 @@ export default {
     setImage: function (url) {
       localStorage.setItem('picture', url)
     },
-    set: function (user_id, secret, expire) {
+    set: function (user_id, secret, expire, admin) {
       localStorage.setItem('user_id', user_id)
       localStorage.setItem('secret', secret)
       localStorage.setItem('expire', expire)
+      localStorage.setItem('admin', admin)
     },
     set_name: function (name, lastname) {
-      const nameCapitalized =
-        name.charAt(0).toUpperCase() +
-        name.slice(1);
-      const lastnameCapitalized =
-        lastname.charAt(0).toUpperCase() +
-        lastname.slice(1);
-      localStorage.setItem('name', nameCapitalized + " " + lastnameCapitalized)
+      localStorage.setItem('name', api.utils.upcase(name + ' ' + lastname))
     },
     loged: function () {
-      if (localStorage.getItem('secret') != null) {
+      if (localStorage.getItem('secret') != null && localStorage.getItem('admin')) {
         var exp = new Date(localStorage.getItem('expire'))
         if (exp > Date.now()){
           return true

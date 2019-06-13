@@ -109,8 +109,13 @@ export default {
     }
   },
   created() {
-    this.tokenExists = auth.storage.loged()
-    this.fullname = auth.storage.get("name");
+    var loged = auth.storage.loged()
+    if(loged){
+      this.tokenExists = loged
+      this.fullname = auth.storage.get("name");
+    }else{
+      auth.storage.clear()
+    }
   },
   directives: {
     "click-outside": {
