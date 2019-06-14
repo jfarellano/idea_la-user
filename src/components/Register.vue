@@ -158,7 +158,7 @@
                 <b-form-select
                   class="mb-2 mr-sm-2 mb-sm-0 squareInput inputStyles"
                   :value="null"
-                  :options="{ 'male': 'Masculino', 'female': 'Femenino', 'other': 'Otro'}"
+                  :options="{ 'male': 'Masculino', 'female': 'Femenino', 'other': 'Otro', 'i_prefer_not_to_say': 'Prefiero no decir'}"
                   id="inline-form-custom-select-pref"
                   v-model="userData.gender"
                   v-validate="'required'"
