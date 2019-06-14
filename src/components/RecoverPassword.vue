@@ -9,76 +9,129 @@
             data-aos-duration="1000"
             data-aos-delay="10"
           >
-            <div v-if="!emailValid">
-              <router-link to="/">
+            <router-link to="/">
               <img src="../assets/CamaraBaq-Blue.svg" alt height="54px" class="iconImage">
-              </router-link>
-
-              <p class="recuperar-pass">Recuperar contraseña</p>
-              <h3 class="input-title" id="email">Introduce tu dirección de correo electrónico para buscar tu cuenta.</h3>
-              <div class="input-group">
-                <input
-                  type="email"
-                  class="form-control inputStyles"
-                  placeholder="ej. example@email.com"
-                  v-model="emailRecover"
-                  v-validate="'required|email'"
-                  :class="{'has-error': errors.has('email_invalid')}"
-                  name="email"
-                  @keydown.space.prevent
-                >
-              </div>
-              <p v-if="errors.has('email')" class="incorrectInput">
-                El correo ingresado no es válido.
-              </p>
-              
-              <button
-                type="button"
-                class="btn btn-primary btn-lg btn-block btnContinueStyle"
-                v-on:click.prevent="continueRecover()"
-                :disabled="!validRecover()"
-              >Continuar</button>
-
-              <router-link
-                to="/login" 
-                tag="button" 
-                class="btn btn-primary btn-lg btn-block btnCancelStyle"
-              >Cancelar</router-link>
-
+            </router-link>
+            <div v-if="!validToken">
+              <p class="recuperar-pass solicitud-ex">Enlace no disponible</p>
+              <p>El enlace no está disponible. Por favor inténtelo nuevamente.</p>
             </div>
             <div v-else>
-              <p class="recuperar-pass solicitud-ex">¡Solicitud Exitosa!</p>
-              <p>Se ha enviado un correo electrónico a <b>{{ this.emailRecover }}</b> con un link para realizar el cambio de contraseña.</p>
-            </div>
+              <div v-if="!successChange">
+                <p class="recuperar-pass">Recuperar contraseña</p>
+                <h3 class="input-title" id="email">Introduce tu nueva contraseña. <br>
+                Recuerda que debe contener mínimo 6 caracteres.</h3>
 
+                <div class="input-group">
+                  <input
+                    placeholder="Nueva contraseña"
+                    type="password"
+                    class="form-control inputStyles"
+                    v-model="password"
+                    v-validate="'required'"
+                    :class="{'has-error': errors.has('password_invalid')}"
+                    name="password"
+                    v-on:keyup.enter="userLogin()"
+                  >
+                </div>
+                <p v-if="errors.has('password')" class="incorrectInput">
+                  Este campo es obligatorio.
+                </p>
+                <div v-else>
+                  <br>
+                </div>
+                <div class="input-group">
+                  <input
+                    placeholder="Confirmar contraseña"
+                    type="password"
+                    class="form-control inputStyles"
+                    v-model="passwordConfirm"
+                    v-validate="'required'"
+                    :class="{'has-error': errors.has('password_invalid')}"
+                    name="password"
+                    v-on:keyup.enter="userLogin()"
+                  >
+                </div>
+                <p v-if="errors.has('password')" class="incorrectInput">
+                  Este campo es obligatorio.
+                </p>
+                
+                <button
+                  type="button"
+                  class="btn btn-primary btn-lg btn-block btnContinueStyle"
+                  v-on:click.prevent="confirmPassword()"
+                  :disabled="!validRecover()"
+                >Aceptar</button>
+
+              </div>
+              <div v-else>
+                <p class="recuperar-pass solicitud-ex">¡Cambio Exitoso!</p>
+                <p>Tu contraseña se ha cambiado exitosamente.</p>
+                <router-link to="/login">Ir a inicio de sesión.</router-link>
+              </div>
+            </div>
           </div>
         </div>
       </div>
     </div>
+    <vue-snotify></vue-snotify>
   </div>
 </template>
 
 <script>
+import api from "../requests.js";
+
 export default {
   data(){
     return {
-      emailRecover: '',
-      emailValid: false
+      password: '',
+      passwordConfirm: '',
+      validToken: true,
+      successChange: false,
+      token: ''
     }
   },
   created(){
-    console.log(this.$route.params.token);
+    this.token = this.$route.params.token;
+    api.password.validate(
+      this.token
+    ).then(response => {
+      this.validToken = true;
+    }).catch(err => {
+      this.validToken = false;
+    })
   },
   methods: {
     validRecover() {
-      if (this.errors.count() == 0 && this.emailRecover != '') {
+      if (this.errors.count() == 0 && this.password != '' && this.passwordConfirm != '') {
         return true;
       } else {
         return false;
       }
     },
-    continueRecover() {
-      this.emailValid = true;
+    confirmPassword(){
+      if (this.passwordConfirm != this.password) {
+        this.$snotify.error("Las contraseñas no coinciden.", "Error", {
+          timeout: 2000,
+          showProgressBar: false,
+          closeOnClick: true,
+          pauseOnHover: true
+        });
+      } else {
+        api.password.change(this.token, {
+          password: this.password
+        }).then(response => {
+          this.successChange = true;
+        }).catch(err => {
+          console.log(err);
+          this.$snotify.error("Error de red. Inténtelo mas tarde.", "Error", {
+            timeout: 2000,
+            showProgressBar: false,
+            closeOnClick: true,
+            pauseOnHover: true
+          });
+        })
+      }
     }
   }
 }

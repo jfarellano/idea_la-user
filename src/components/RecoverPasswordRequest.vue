@@ -9,10 +9,10 @@
             data-aos-duration="1000"
             data-aos-delay="10"
           >
-            <div v-if="!emailValid">
-              <router-link to="/">
+            <router-link to="/">
               <img src="../assets/CamaraBaq-Blue.svg" alt height="54px" class="iconImage">
-              </router-link>
+            </router-link>
+            <div v-if="!emailValid">
 
               <p class="recuperar-pass">Recuperar contraseña</p>
               <h3 class="input-title" id="email">Introduce tu dirección de correo electrónico para buscar tu cuenta.</h3>
@@ -55,6 +55,7 @@
         </div>
       </div>
     </div>
+    <vue-snotify></vue-snotify>
   </div>
 </template>
 
@@ -68,10 +69,6 @@ export default {
       emailValid: false
     }
   },
-  created(){
-    var currentUrl = this.$route.query.page;
-    console.log(currentUrl);
-  },
   methods: {
     validRecover() {
       if (this.errors.count() == 0 && this.emailRecover != '') {
@@ -81,20 +78,36 @@ export default {
       }
     },
     continueRecover() {
-      
       api.password.mail({
         email: this.emailRecover
       }).then(response => {
-        console.log(response.data)
         this.emailValid = true;
       }).catch(err => {
-        console.log(err.response)
-        this.$snotify.error("Error de red. Inténtelo mas tarde.", "Error", {
-          timeout: 2000,
-          showProgressBar: false,
-          closeOnClick: true,
-          pauseOnHover: true
-        });
+        if (err.response != null) {
+          if (err.response.data.error == 'user not found') {
+            this.$snotify.error("Usuario no encontrado.", "Error", {
+              timeout: 2000,
+              showProgressBar: false,
+              closeOnClick: true,
+              pauseOnHover: true
+            });
+          } else {
+            console.log(err)
+            this.$snotify.error("Error de red. Inténtelo mas tarde.", "Error", {
+              timeout: 2000,
+              showProgressBar: false,
+              closeOnClick: true,
+              pauseOnHover: true
+            });  
+          }
+        } else {
+          this.$snotify.error("Error de red. Inténtelo mas tarde.", "Error", {
+            timeout: 2000,
+            showProgressBar: false,
+            closeOnClick: true,
+            pauseOnHover: true
+          });
+        }
       })
     }
   }

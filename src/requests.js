@@ -88,8 +88,8 @@ export default {
     validate: function(token) {
       return r.get(SERVER_URL + '/validate_password_token/' + token)
     },
-    change: function(token) {
-      return r.put(SERVER_URL + '/change_password/' + token)
+    change: function(token, body) {
+      return r.put(SERVER_URL + '/change_password/' + token, body)
     }
   }
 }
