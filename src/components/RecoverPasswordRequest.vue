@@ -69,6 +69,10 @@ export default {
       emailValid: false
     }
   },
+  created(){
+    //COMANDO PARA GUARDAR EL CURREN PATH
+    console.log(this.$router.currentRoute.fullPath)
+  },
   methods: {
     validRecover() {
       if (this.errors.count() == 0 && this.emailRecover != '') {
