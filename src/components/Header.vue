@@ -17,14 +17,19 @@
 
     <div :class="collapseClass()" id="nav-collapse">
       <b-navbar-nav class="ml-auto">
-        <div v-if="tokenExists == false">
-          <b-button class="login" right @click.prevent="goToLogin()">Ingresar</b-button>
-        </div>
-        <div v-else>
-          <ul class="nav navbar-nav navbar-right">
+        <ul class="nav navbar-nav navbar-right">
+          <li>
+            <router-link tag="a" class="nav-link" to="/">Inicio</router-link>
+          </li>
+          <li>
+            <router-link tag="a" class="nav-link" to="/">Retos</router-link>
+          </li>
+          <div v-if="tokenExists == false">
             <li>
-              <a href="/login" class="nav-link">Retos</a>
+              <router-link tag="a" class="nav-link" to="/login">Ingresar</router-link>
             </li>
+          </div>
+          <div v-else>
             <li :class="dropClass('nav-item user-drop dropdown')" v-click-outside="close">
               <a class="user-drop nav-link dropdown-toggle" href="#" @click="toggleDropdown()">
                 <span>{{fullname}}</span>
@@ -41,8 +46,8 @@
                 <a class="dropdown-item logout" @click="userLogout()">Cerrar sesión</a>
               </div>
             </li>
-          </ul>
-        </div>
+          </div>
+        </ul>
       </b-navbar-nav>
     </div>
     <vue-snotify></vue-snotify>
@@ -88,12 +93,6 @@ export default {
     getPic() {
       return auth.storage.get("picture");
     },
-    goToLogin() {
-      this.$router.push("/login");
-    },
-    gotoProfile() {
-      this.$router.push("/miperfil");
-    },
     toggleDropdown() {
       this.expanded = !this.expanded;
     },
@@ -122,7 +121,7 @@ export default {
 
       api.user.survey().then(response => {
         if (!response.data.complete_survey) {
-          this.$refs.survey.open()
+          this.$refs.survey.open();
         }
       });
     } else {
