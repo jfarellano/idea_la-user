@@ -123,7 +123,7 @@ export default {
         })
         .then(response => {
           auth.storage.set(
-            response.data.user_id,
+            response.data.user.id,
             response.data.secret,
             response.data.expire_at
           )
