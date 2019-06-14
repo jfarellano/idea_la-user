@@ -76,6 +76,9 @@ export default {
     },
     survey:  function() {
       return r.get(SERVER_URL + '/status_user', getHeaders())
+    },
+    save_survey: function(body) {
+      return r.put(SERVER_URL + '/multiple_surveys', body, getHeaders())
     }
   },
   password: {
