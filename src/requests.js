@@ -62,17 +62,20 @@ export default {
       return r.get(SERVER_URL + '/ideas/' + ideaID + '/comments')
     },
     postComment: function(ideaID, body) {
-      return r.post(SERVER_URL + '/ideas/' + ideaID + '/comments', body, getHeaders)
+      return r.post(SERVER_URL + '/ideas/' + ideaID + '/comments', body, getHeaders())
     }
   },
   myProfile: {
     getIdeas: function() {
-      return r.get(SERVER_URL + '/users_ideas', getHeaders)
+      return r.get(SERVER_URL + '/users_ideas', getHeaders())
     }
   },
   user: {
     create: function(body){
       return r.post(SERVER_URL + '/users', body)
+    },
+    survey:  function() {
+      return r.get(SERVER_URL + '/status_user', getHeaders())
     }
   }
 }
