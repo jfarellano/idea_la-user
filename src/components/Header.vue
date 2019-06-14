@@ -46,11 +46,14 @@
       </b-navbar-nav>
     </div>
     <vue-snotify></vue-snotify>
+    <Survey ref="survey"></Survey>
   </b-navbar>
 </template>
 
 <script>
 import auth from "../authentication.js";
+import api from "../requests.js";
+import Survey from "./Survey.vue";
 import { setTimeout } from "timers";
 
 export default {
@@ -61,6 +64,9 @@ export default {
       expanded: false,
       show: false
     };
+  },
+  components: {
+    Survey
   },
   methods: {
     userLogout() {
@@ -79,8 +85,8 @@ export default {
           });
         });
     },
-    getPic(){
-      return auth.storage.get('picture')
+    getPic() {
+      return auth.storage.get("picture");
     },
     goToLogin() {
       this.$router.push("/login");
@@ -109,12 +115,18 @@ export default {
     }
   },
   created() {
-    var loged = auth.storage.logged()
-    if(loged){
-      this.tokenExists = loged
+    var loged = auth.storage.logged();
+    if (loged) {
+      this.tokenExists = loged;
       this.fullname = auth.storage.get("name");
-    }else{
-      auth.storage.clear()
+
+      api.user.survey().then(response => {
+        if (!response.data.complete_survey) {
+          this.$refs.survey.open()
+        }
+      });
+    } else {
+      auth.storage.clear();
     }
   },
   directives: {
@@ -157,7 +169,6 @@ export default {
   .nav-link {
     color: white;
     font-size: 22px;
-    
   }
   .user-drop {
     span {
@@ -175,7 +186,7 @@ export default {
   .dropdown-menu {
     top: 65px;
   }
-  .avatar{
+  .avatar {
     width: 34px;
     height: 34px;
   }
@@ -191,13 +202,13 @@ export default {
   .navbar-collapse {
     background-color: #081641;
     text-align: center;
-    @media (max-width: 576px) { 
+    @media (max-width: 576px) {
       margin-top: 28px;
-      .nav-link{
+      .nav-link {
         margin: 6px;
       }
     }
-    
+
     -webkit-border-bottom-right-radius: 10px;
     -webkit-border-bottom-left-radius: 10px;
     -moz-border-radius-bottomright: 10px;
