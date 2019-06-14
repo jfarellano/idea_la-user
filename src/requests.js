@@ -77,5 +77,16 @@ export default {
     survey:  function() {
       return r.get(SERVER_URL + '/status_user', getHeaders())
     }
+  },
+  password: {
+    mail: function(body) {
+      return r.post(SERVER_URL + '/forgot_password', body, getHeaders())
+    },
+    validate: function(token) {
+      return r.get(SERVER_URL + '/validate_password_token/' + token)
+    },
+    change: function(token) {
+      return r.put(SERVER_URL + '/change_password/' + token)
+    }
   }
 }
