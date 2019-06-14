@@ -1,6 +1,6 @@
 import Vue from 'vue'
 import Router from 'vue-router'
-
+// Components
 import LandingPage from './components/LandingPage.vue'
 import Login from './components/Login.vue'
 import Register from './components/Register.vue'
@@ -10,6 +10,8 @@ import Idea from './components/Idea.vue'
 import MyProfile from './components/MyProfile.vue'
 import CreateEditIdea from './components/CreateEditIdea.vue'
 import RecoverPassword from './components/RecoverPassword.vue'
+import RecoverPasswordRequest from './components/RecoverPasswordRequest.vue'
+
 
 Vue.use(Router)
 
@@ -56,7 +58,12 @@ export default new Router ({
             component: CreateEditIdea
         },
         {
-            path: '/recover-password',
+            path: '/request-password-change',
+            name: 'RecoverPasswordRequest',
+            component: RecoverPasswordRequest
+        },
+        {
+            path: '/recover-password/:token',
             name: 'RecoverPassword',
             component: RecoverPassword
         },

@@ -59,6 +59,8 @@
 </template>
 
 <script>
+import api from "../requests.js";
+
 export default {
   data(){
     return {
@@ -67,7 +69,8 @@ export default {
     }
   },
   created(){
-    console.log(this.$route.params.token);
+    var currentUrl = this.$route.query.page;
+    console.log(currentUrl);
   },
   methods: {
     validRecover() {
@@ -78,7 +81,21 @@ export default {
       }
     },
     continueRecover() {
-      this.emailValid = true;
+      
+      api.password.mail({
+        email: this.emailRecover
+      }).then(response => {
+        console.log(response.data)
+        this.emailValid = true;
+      }).catch(err => {
+        console.log(err.response)
+        this.$snotify.error("Error de red. Inténtelo mas tarde.", "Error", {
+          timeout: 2000,
+          showProgressBar: false,
+          closeOnClick: true,
+          pauseOnHover: true
+        });
+      })
     }
   }
 }

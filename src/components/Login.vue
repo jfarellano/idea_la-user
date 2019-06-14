@@ -47,7 +47,7 @@
             <p v-if="errors.has('password')" class="incorrectInput">
               Este campo es obligatorio.
             </p>
-            <router-link to="/recover-password">¿Has olvidado tu contraseña?</router-link>
+            <router-link to="/request-password-change">¿Has olvidado tu contraseña?</router-link>
             
             <button
               type="button"
@@ -104,9 +104,8 @@ import auth from "../authentication.js";
 export default {
   data() {
     return {
-      userCredentials: {},
-      FB: {}
-    };
+      userCredentials: {}
+    }
   },
   methods: {
     validLogin(){
@@ -128,17 +127,20 @@ export default {
             response.data.secret,
             response.data.expire_at
           )
+          if (response.data.user.picture != null) auth.storage.setImage(response.data.user.picture.url)
+          else auth.storage.setImage("http://placehold.it/30x30")
+          auth.storage.set_name(response.data.user.name, response.data.user.lastname);
+          this.$router.push("/");
           console.log(response.data)
-          this.extraData(response.data.user_id)
         })
         .catch(err => {
           if (err.response == null) {
             this.$snotify.error("Error de red. Inténtelo mas tarde.", "Error", {
-                timeout: 2000,
-                showProgressBar: false,
-                closeOnClick: true,
-                pauseOnHover: true
-              });
+              timeout: 2000,
+              showProgressBar: false,
+              closeOnClick: true,
+              pauseOnHover: true
+            });
           } else {
             if (err.response.data.single_authentication == "invalid credentials") {
               this.$snotify.error("Credenciales inválidas.", "Atención", {
@@ -169,33 +171,6 @@ export default {
           }
         });
     },
-
-    extraData(user_id) {
-      auth.session
-        .user_info(user_id)
-        .then(response => {
-          if (response.data.picture != null) auth.storage.setImage(response.data.picture.url)
-          else auth.storage.setImage("http://placehold.it/30x30")
-          auth.storage.set_name(response.data.name, response.data.lastname);
-          this.$router.push("/");
-        })
-        .catch(err => {
-          auth.storage.clear();
-          this.$snotify.error(
-            "Error obteniendo informacion del usuario", "Atención",
-            {
-              timeout: 2000,
-              showProgressBar: false,
-              closeOnClick: true,
-              pauseOnHover: true
-            }
-          );
-        });
-    },
-
-    oauthSocial(provider){
-      console.log(provider);
-    }
   },
   created (){
     if (auth.storage.logged()) this.$router.push("/");
