@@ -61,7 +61,7 @@
               <router-link to="/register">Registrate aquí.</router-link>
             </p>
 
-            <b-row>
+            <!-- <b-row>
               <b-col>
                 <hr>
               </b-col>
@@ -82,7 +82,7 @@
               <b-col>
                 <b-button @click="authenticate('twitter')">Twitter</b-button>
               </b-col>
-            </b-row>
+            </b-row> -->
           </div>
         </div>
       </div>
@@ -109,18 +109,7 @@ export default {
     };
   },
   methods: {
-    // facebookOauth() {
-    //   FB.api(
-    //     '/me',
-    //     'GET',
-    //     {"fields":"id,name"},
-    //     function(response) {
-    //         console.log(response.data)
-    //     }
-    //   );
-    // },
     validLogin(){
-      console.log('ENTRA CARGANDO')
       if (this.errors.count() == 0 && this.userCredentials.email != null && this.userCredentials.password != null) {
         return true;
       } else {
@@ -191,9 +180,9 @@ export default {
           this.$router.push("/");
         })
         .catch(err => {
+          auth.storage.clear();
           this.$snotify.error(
-            "Error obteniendo informacion del usuario",
-            "Atención",
+            "Error obteniendo informacion del usuario", "Atención",
             {
               timeout: 2000,
               showProgressBar: false,
@@ -212,28 +201,8 @@ export default {
     if (auth.storage.logged()) this.$router.push("/");
   },
   mounted () {
-    let _this = this
-    this.$nextTick(() => {
-      window.fbAsyncInit = function () {
-        FB.init({
-          appId            : '366615240874673',
-          autoLogAppEvents : true,
-          xfbml            : true,
-          version          : 'v3.3'
-        })
-        FB.AppEvents.logPageView()
-        _this.FB = FB
-        console.log('FB SDK was initialized as mixin')
-      };
-      (function (d, s, id) {
-        let js, fjs = d.getElementsByTagName(s)[0]
-        if (d.getElementById(id)) { return }
-        js = d.createElement(s); js.id = id
-        js.src = '//connect.facebook.net/en_US/sdk.js'
-        fjs.parentNode.insertBefore(js, fjs)
-      }(document, 'script', 'facebook-jssdk'))
-    })
-}
+
+  }
 };
 </script>
 

@@ -16,7 +16,7 @@ export default {
       return r.delete(api.variable.URL + '/sessions', getHeaders())
     },
     user_info(user_id){
-      return r.get(api.variable.URL + '/users/' + user_id)
+      return r.get(api.variable.URL + '/users/' + user_id, getHeaders())
     }
   },
   storage: {
