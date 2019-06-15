@@ -110,7 +110,7 @@ export default {
       } else {
         api.idea
           .vote(this.ideaID)
-          .then(response => {
+          .then(() => {
             this.$bvModal.show("modalPopover voted");
           })
           .catch(err => {
@@ -132,7 +132,7 @@ export default {
     commentIdea() {
       api.idea
         .postComment(this.ideaID)
-        .then(response => {
+        .then(() => {
           location.reload();
         })
         .catch(err => {

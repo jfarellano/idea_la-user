@@ -98,9 +98,9 @@ export default {
     this.token = this.$route.params.token;
     api.password.validate(
       this.token
-    ).then(response => {
+    ).then(() => {
       this.validToken = true;
-    }).catch(err => {
+    }).catch(() => {
       this.validToken = false;
     })
   },
@@ -118,9 +118,9 @@ export default {
       } else {
         api.password.change(this.token, {
           password: this.password
-        }).then(response => {
+        }).then(() => {
           this.successChange = true;
-        }).catch(err => {
+        }).catch(() => {
           this.$refs.alert.network_error()
         })
       }

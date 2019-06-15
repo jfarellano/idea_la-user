@@ -190,7 +190,7 @@
                   v-validate="'required'"
                   :class="{'has-error': errors.has('hood_invalid')}"
                   name="hood"
-                  @change="switchView($event)"
+                  @change="switchView()"
                 >
                   <option slot="first" :value="null"></option>
                   <option
@@ -237,7 +237,6 @@
 </template>
 
 <script>
-import auth from "../authentication.js";
 import api from "../requests.js";
 import Alert from './Alert.vue'
 export default {
@@ -305,10 +304,10 @@ export default {
       fd.append("location_id", this.userData.location_id);
       api.user
         .create(fd)
-        .then(response => {
+        .then(() => {
           this.$router.push("/login");
         })
-        .catch(err => {
+        .catch(() => {
           this.$refs.alert.error('Hubo un error creando tu cuenta, intenta de nuevo mas tarde')
         });
     },
@@ -317,7 +316,7 @@ export default {
         this.locations = response.data;
       });
     },
-    switchView(event) {
+    switchView() {
       var i = this.indexChosedHood;
       this.userData.location_id = this.indexChosedHood;
       this.locationAuto = this.upcase(this.locations[i].hood);

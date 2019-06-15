@@ -78,7 +78,7 @@ export default {
     userLogout() {
       auth.session
         .logout()
-        .then(response => {
+        .then(() => {
           auth.storage.clear();
           location.reload();
         })
@@ -124,7 +124,7 @@ export default {
             }
           });
         })
-        .catch(err => {
+        .catch(() => {
           this.$refs.alert.network_error()
           auth.storage.clear();
         });

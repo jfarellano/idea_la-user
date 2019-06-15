@@ -87,7 +87,7 @@ export default {
     continueRecover() {
       api.password.mail({
         email: this.emailRecover
-      }).then(response => {
+      }).then(() => {
         this.emailValid = true;
       }).catch(err => {
         if (err.response != null) {

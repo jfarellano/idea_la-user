@@ -83,19 +83,19 @@ export default {
     save() {
       api.user
         .save_survey({ array: this.selected })
-        .then(response => {
+        .then(() => {
           this.saved = true;
           this.$bvModal.hide("survey");
         })
-        .catch(err => {
+        .catch(() => {
           this.$refs.alert.network_error()
         });
     },
     logout(){
-      auth.session.logout().then(response => {
+      auth.session.logout().then(() => {
         auth.storage.clear()
         location.reload()
-      }).catch(err => {
+      }).catch(() => {
         auth.storage.clear()
         location.reload()
       })
