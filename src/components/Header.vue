@@ -59,7 +59,6 @@
 import auth from "../authentication.js";
 import api from "../requests.js";
 import Survey from "./Survey.vue";
-import { setTimeout } from "timers";
 
 export default {
   data() {
