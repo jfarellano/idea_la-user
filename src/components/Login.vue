@@ -87,12 +87,6 @@
         </div>
       </div>
     </div>
-    <b-modal id="modalPopover credentials" title="Atención" ok-only>
-      <p class="parag">Credenciales Inválidas.</p>
-    </b-modal>
-    <b-modal id="modalPopover blocked" title="Atención" ok-only>
-      <p class="parag">Usuario bloqueado.</p>
-    </b-modal>
     <vue-snotify></vue-snotify>
   </div>
 </template>
