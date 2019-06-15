@@ -47,6 +47,9 @@ export default {
     },
     form_error: function() {
       this.$snotify.warning('El formulario no esta completo o tiene un error, revisa de nuevo', 'Atención', this.params)
+    },
+    blocked_user: function() {
+      thie.$snotify.error('Tu usuario ha sido bloqueado', 'Usuario bloqueado', this.params)
     }
   }
 };
