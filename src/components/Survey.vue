@@ -32,13 +32,14 @@
       </div>
       <b-button @click="logout()" class="logout">Cerrar sesión</b-button>
     </b-modal>
-    <vue-snotify></vue-snotify>
+    <Alert ref="alert"></Alert >
   </div>
 </template>
 
 <script>
 import auth from '../authentication.js'
 import api from "../requests.js";
+import Alert from './Alert.vue'
 export default {
   data() {
     return {
@@ -46,6 +47,9 @@ export default {
       selected: [],
       saved: false
     };
+  },
+  components:{
+    Alert
   },
   methods: {
     open() {
@@ -83,12 +87,7 @@ export default {
           this.$bvModal.hide("survey");
         })
         .catch(err => {
-          this.$snotify.error("Usuario bloqueado", "Atención", {
-            timeout: 2000,
-            showProgressBar: false,
-            closeOnClick: true,
-            pauseOnHover: true
-          });
+          this.$refs.alert.network_error()
         });
     },
     logout(){

@@ -87,19 +87,23 @@
         </div>
       </div>
     </div>
-    <vue-snotify></vue-snotify>
+    <Alert ref="alert"></Alert>
   </div>
 </template>
 
 
 <script>
 import auth from "../authentication.js";
+import Alert from './Alert.vue'
 
 export default {
   data() {
     return {
       userCredentials: {}
     }
+  },
+  components: {
+    Alert
   },
   methods: {
     validLogin(){
@@ -125,38 +129,17 @@ export default {
         })
         .catch(err => {
           if (err.response == null) {
-            this.$snotify.error("Error de red. Inténtelo mas tarde.", "Error", {
-              timeout: 2000,
-              showProgressBar: false,
-              closeOnClick: true,
-              pauseOnHover: true
-            });
+            this.$refs.alert.network_error()
           } else {
             if (err.response.data.single_authentication == "invalid credentials") {
-              this.$snotify.error("Credenciales inválidas.", "Atención", {
-                timeout: 2000,
-                showProgressBar: false,
-                closeOnClick: true,
-                pauseOnHover: true
-              });
+              this.$refs.alert.credentials_error()
               this.userCredentials.password = ""
             } else if (err.response.data.single_authentication == "user is blocked") {
-              // ALERT NOTIFICATION USER BLOCKED
-              this.$snotify.error("Usuario bloqueado", "Atención", {
-                timeout: 2000,
-                showProgressBar: false,
-                closeOnClick: true,
-                pauseOnHover: true
-              });
+              this.$refs.alert.blocked_user()
               this.userCredentials.username = "";
               this.userCredentials.password = "";
             } else {
-              this.$snotify.error("Error de red. Inténtelo mas tarde.", "Error", {
-                timeout: 2000,
-                showProgressBar: false,
-                closeOnClick: true,
-                pauseOnHover: true
-              });
+              this.$refs.alert.network_error()
             }
           }
         });

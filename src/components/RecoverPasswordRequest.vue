@@ -55,19 +55,22 @@
         </div>
       </div>
     </div>
-    <vue-snotify></vue-snotify>
+    <Alert ref="alert"></Alert>
   </div>
 </template>
 
 <script>
 import api from "../requests.js";
-
+import Alert from './Alert.vue'
 export default {
   data(){
     return {
       emailRecover: '',
       emailValid: false
     }
+  },
+  components: {
+    Alert
   },
   created(){
     //COMANDO PARA GUARDAR EL CURREN PATH
@@ -89,28 +92,12 @@ export default {
       }).catch(err => {
         if (err.response != null) {
           if (err.response.data.error == 'user not found') {
-            this.$snotify.error("Usuario no encontrado.", "Error", {
-              timeout: 2000,
-              showProgressBar: false,
-              closeOnClick: true,
-              pauseOnHover: true
-            });
+            this.$refs.alert.error('No hemos podido encontrar tu usuario')
           } else {
-            console.log(err)
-            this.$snotify.error("Error de red. Inténtelo mas tarde.", "Error", {
-              timeout: 2000,
-              showProgressBar: false,
-              closeOnClick: true,
-              pauseOnHover: true
-            });  
+            this.$refs.alert.network_error() 
           }
         } else {
-          this.$snotify.error("Error de red. Inténtelo mas tarde.", "Error", {
-            timeout: 2000,
-            showProgressBar: false,
-            closeOnClick: true,
-            pauseOnHover: true
-          });
+          this.$refs.alert.network_error()
         }
       })
     }

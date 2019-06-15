@@ -50,15 +50,16 @@
         </ul>
       </b-navbar-nav>
     </div>
-    <vue-snotify></vue-snotify>
+    <Alert ref="alert"></Alert>
     <Survey ref="survey"></Survey>
   </b-navbar>
 </template>
 
 <script>
-import auth from "../authentication.js";
-import api from "../requests.js";
-import Survey from "./Survey.vue";
+import auth from "../authentication.js"
+import api from "../requests.js"
+import Survey from "./Survey.vue"
+import Alert from './Alert.vue'
 
 export default {
   data() {
@@ -70,7 +71,8 @@ export default {
     };
   },
   components: {
-    Survey
+    Survey,
+    Alert
   },
   methods: {
     userLogout() {
@@ -80,14 +82,6 @@ export default {
           auth.storage.clear();
           location.reload();
         })
-        .catch(err => {
-          this.$snotify.error("Usuario bloqueado", "Atención", {
-            timeout: 2000,
-            showProgressBar: false,
-            closeOnClick: true,
-            pauseOnHover: true
-          });
-        });
     },
     getPic() {
       return auth.storage.get("picture");
@@ -131,12 +125,7 @@ export default {
           });
         })
         .catch(err => {
-          this.$snotify.error("Error en la conexión, ingrese de nuevo", "Atención", {
-            timeout: 2000,
-            showProgressBar: false,
-            closeOnClick: true,
-            pauseOnHover: true
-          });
+          this.$refs.alert.network_error()
           auth.storage.clear();
         });
     } else {

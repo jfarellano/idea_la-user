@@ -74,13 +74,13 @@
         </div>
       </div>
     </div>
-    <vue-snotify></vue-snotify>
+    <Alert ref="alert"></Alert>
   </div>
 </template>
 
 <script>
 import api from "../requests.js";
-
+import Alert from './Alert.vue'
 export default {
   data(){
     return {
@@ -90,6 +90,9 @@ export default {
       successChange: false,
       token: ''
     }
+  },
+  components: {
+    Alert
   },
   created(){
     this.token = this.$route.params.token;
@@ -111,25 +114,14 @@ export default {
     },
     confirmPassword(){
       if (this.passwordConfirm != this.password) {
-        this.$snotify.error("Las contraseñas no coinciden.", "Error", {
-          timeout: 2000,
-          showProgressBar: false,
-          closeOnClick: true,
-          pauseOnHover: true
-        });
+        this.$refs.alert.warning('Las contraseñas no coinciden')
       } else {
         api.password.change(this.token, {
           password: this.password
         }).then(response => {
           this.successChange = true;
         }).catch(err => {
-          console.log(err);
-          this.$snotify.error("Error de red. Inténtelo mas tarde.", "Error", {
-            timeout: 2000,
-            showProgressBar: false,
-            closeOnClick: true,
-            pauseOnHover: true
-          });
+          this.$refs.alert.network_error()
         })
       }
     }

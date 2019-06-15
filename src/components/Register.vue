@@ -232,14 +232,14 @@
         </div>
       </div>
     </div>
-    <vue-snotify></vue-snotify>
+    <Alert ref="alert"></Alert >
   </div>
 </template>
 
 <script>
 import auth from "../authentication.js";
 import api from "../requests.js";
-
+import Alert from './Alert.vue'
 export default {
   data() {
     return {
@@ -251,6 +251,9 @@ export default {
       indexChosedChallenge: "",
       userCredentials: {}
     };
+  },
+  components: {
+    Alert
   },
   methods: {
     clearImage() {
@@ -283,16 +286,7 @@ export default {
         ageField == null ||
         genderField == null
       ) {
-        this.$snotify.error(
-          "Diligencia correctamente el formulario",
-          "Atención",
-          {
-            timeout: 2000,
-            showProgressBar: false,
-            closeOnClick: true,
-            pauseOnHover: true
-          }
-        );
+        this.$refs.alert.form_error()
       } else {
         this.userRegister();
       }
@@ -315,13 +309,7 @@ export default {
           this.$router.push("/login");
         })
         .catch(err => {
-          console.log(err.response);
-          this.$snotify.error("Hubo un error creando tu cuenta", "Atención", {
-            timeout: 2000,
-            showProgressBar: false,
-            closeOnClick: true,
-            pauseOnHover: true
-          });
+          this.$refs.alert.error('Hubo un error creando tu cuenta, intenta de nuevo mas tarde')
         });
     },
     getLocations() {
