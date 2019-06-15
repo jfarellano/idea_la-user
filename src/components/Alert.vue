@@ -15,17 +15,17 @@ export default {
 		}
 	},
   methods: {
-    error: function(title, message) {
-      this.$snotify.error(message, title, this.params);
+    error: function(message) {
+      this.$snotify.error(message, 'Error', this.params);
 		},
 		simple: function(title, message) {
       this.$snotify.simple(message, title, this.params);
 		},
-		success: function(title, message) {
-      this.$snotify.success(message, title, this.params);
+		success: function(message) {
+      this.$snotify.success(message, 'Exito', this.params);
 		},
-		warning: function(title, message) {
-      this.$snotify.warning(message, title, this.params);
+		warning: function(message) {
+      this.$snotify.warning(message, 'Alerta', this.params);
 		},
 		confirm: function(title, message, accept, deny) {
       this.$snotify.confirm(message, title, {
@@ -38,6 +38,15 @@ export default {
 					{text: 'Cancelar', action: () => deny()}
 				]
       });
+    },
+    network_error: function() {
+      this.$snotify.error('Hubo un error en la red, intenta de nuevo', 'Error', this.params)
+    },
+    credentials_error: function() {
+      this.$snotify.warning('Credenciales invalidas, intenta de nuevo', 'Atención', this.params)
+    },
+    form_error: function() {
+      this.$snotify.warning('El formulario no esta completo o tiene un error, revisa de nuevo', 'Atención', this.params)
     }
   }
 };
