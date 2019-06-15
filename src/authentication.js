@@ -15,7 +15,7 @@ export default {
     logout: function () {
       return r.delete(api.variable.URL + '/sessions', getHeaders())
     },
-    user_info(user_id){
+    user_info: function(user_id){
       return r.get(api.variable.URL + '/users/' + user_id, getHeaders())
     }
   },

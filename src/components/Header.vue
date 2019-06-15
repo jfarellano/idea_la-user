@@ -117,13 +117,29 @@ export default {
     var loged = auth.storage.logged();
     if (loged) {
       this.tokenExists = loged;
-      this.fullname = auth.storage.get("name");
-
-      api.user.survey().then(response => {
-        if (!response.data.complete_survey) {
-          this.$refs.survey.open();
-        }
-      });
+      auth.session
+        .user_info(auth.storage.get("user_id"))
+        .then(response => {
+          if (response.data.picture != null)
+            auth.storage.setImage(response.data.picture.url);
+          else auth.storage.setImage("http://placehold.it/30x30");
+          auth.storage.set_name(response.data.name, response.data.lastname);
+          this.fullname = auth.storage.get("name");
+          api.user.survey().then(response => {
+            if (!response.data.complete_survey) {
+              this.$refs.survey.open();
+            }
+          });
+        })
+        .catch(err => {
+          this.$snotify.error("Error en la conexión, ingrese de nuevo", "Atención", {
+            timeout: 2000,
+            showProgressBar: false,
+            closeOnClick: true,
+            pauseOnHover: true
+          });
+          auth.storage.clear();
+        });
     } else {
       auth.storage.clear();
     }

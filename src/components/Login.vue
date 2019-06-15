@@ -121,9 +121,6 @@ export default {
             response.data.secret,
             response.data.expire_at
           )
-          if (response.data.user.picture != null) auth.storage.setImage(response.data.user.picture.url)
-          else auth.storage.setImage("http://placehold.it/30x30")
-          auth.storage.set_name(response.data.user.name, response.data.user.lastname);
           this.$router.push("/");
         })
         .catch(err => {
