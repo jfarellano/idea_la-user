@@ -88,24 +88,11 @@ export default {
       tokenExists: false,
       userInfo: {},
       comments: [],
-      newComment: ""
+      newComment: "",
+      err: {}
     };
   },
   methods: {
-    checkToken() {
-      if (this.$cookie.get("secret") == null) {
-        this.tokenExists = false;
-      } else {
-        this.tokenExists = true;
-        console.log("COOKIE: " + this.$cookie.get("secret"));
-        var userInfo = JSON.parse(this.$cookie.get("secret"));
-        this.userInfo.id = userInfo.user_id;
-        this.userInfo.secret = userInfo.secret;
-        this.userInfo.expire_at = userInfo.expire_at;
-        this.userInfo.name = userInfo.name;
-        this.userInfo.lastname = userInfo.lastname;
-      }
-    },
     loadIdeaInfo() {
       this.ideaID = this.$route.params.iId;
       api.idea
@@ -114,13 +101,8 @@ export default {
           this.idea = response.data;
         })
         .catch(err => {
-          console.log(err.data);
+          this.err = err
         });
-
-      // this.$http.get(SERVER_URL + "/ideas/" + this.id).then(function(response) {
-      //   this.idea = response.data;
-      //   console.log("RESPONSE: " + JSON.stringify(this.idea));
-      // });
     },
     voteForIdea() {
       if (this.tokenExists == false) {
@@ -132,27 +114,9 @@ export default {
             this.$bvModal.show("modalPopover voted");
           })
           .catch(err => {
-            console.log(err.data);
+            this.err = err
             this.$bvModal.show("modalPopover");
           });
-
-        // this.$http
-        //   .post(SERVER_URL + "/ideas/" + this.id + "/votes", {
-        //     headers: {
-        //       Authorization: 'Token token="' + this.userInfo.secret + '"'
-        //     }
-        //   })
-        //   .then(response => response.json())
-        //   .then(
-        //     function(json) {
-        //       console.log(json);
-        //       this.$bvModal.show("modalPopover voted");
-        //     },
-        //     err => {
-        //       console.log("Err", err);
-        //       this.$bvModal.show("modalPopover");
-        //     }
-        //   );
       }
     },
     loadComments() {
@@ -162,14 +126,8 @@ export default {
           this.comments = response.data;
         })
         .catch(err => {
-          console.log(err.data);
+          this.err = err
         });
-
-      // this.$http
-      //   .get(SERVER_URL + "/ideas/" + this.id + "/comments")
-      //   .then(function(response) {
-      //     this.comments = response.data;
-      //   });
     },
     commentIdea() {
       api.idea
@@ -178,33 +136,8 @@ export default {
           location.reload();
         })
         .catch(err => {
-          console.log(err.data);
+          this.err = err
         });
-
-      // this.$http
-      //   .post(
-      //     SERVER_URL + "/ideas/" + this.id + "/comments",
-      //     {
-      //       title: "Comentario",
-      //       description: this.newComment
-      //     },
-      //     {
-      //       headers: {
-      //         Authorization: 'Token token="' + this.userInfo.secret + '"'
-      //       }
-      //     }
-      //   )
-      //   .then(response => response.json())
-      //   .then(
-      //     function(json) {
-      //       console.log(json);
-      //       // this.$router.push('/idea');
-      //       location.reload();
-      //     },
-      //     err => {
-      //       console.log("Err", err);
-      //     }
-      //   );
     }
   },
   created() {

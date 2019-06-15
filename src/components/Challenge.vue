@@ -57,7 +57,8 @@ export default {
   data() {
     return {
       challenge: {},
-      ideas: []
+      ideas: [],
+      err: {}
     };
   },
   methods: {
@@ -70,7 +71,7 @@ export default {
       api.challenge.getInfo(challengeID).then(response => {
         this.challenge = response.data
       }).catch(err => {
-        console.log(err)
+        this.err = err
       })
 
       // api.challenge.getInfo(challengeID).then(response => {
@@ -89,7 +90,7 @@ export default {
           this.ideas = response.data;
         })
         .catch(err => {
-          console.log(err);
+          this.err = err
         });
 
       // this.$http.get(SERVER_URL + '/challenges/' + this.challengeID + '/ideas').then(function(response){

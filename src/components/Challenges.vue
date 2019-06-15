@@ -50,7 +50,8 @@ export default {
   },
   data() {
     return {
-      challenges: []
+      challenges: [],
+      err: {}
     };
   },
   methods: {
@@ -61,7 +62,7 @@ export default {
           this.challenges = response.data;
         })
         .catch(err => {
-          console.log(err.data);
+          this.err = err
         });
     }
   },

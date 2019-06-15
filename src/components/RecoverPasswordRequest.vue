@@ -74,7 +74,7 @@ export default {
   },
   created(){
     //COMANDO PARA GUARDAR EL CURREN PATH
-    console.log(this.$router.currentRoute.fullPath)
+    // console.log(this.$router.currentRoute.fullPath)
   },
   methods: {
     validRecover() {

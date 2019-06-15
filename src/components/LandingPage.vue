@@ -75,27 +75,9 @@ export default {
     };
   },
   methods: {
-    checkToken() {
-      if (this.$cookie.get("secret") == null) {
-        this.tokenExists = false;
-      } else {
-        this.tokenExists = true;
-        console.log("COOKIE: " + this.$cookie.get("secret"));
-        var userInfo = JSON.parse(this.$cookie.get("secret"));
-        this.userCookie.id = userInfo.user_id;
-        this.userCookie.secret = userInfo.secret;
-        this.userCookie.expire_at = userInfo.expire_at;
-        this.userCookie.name = userInfo.name;
-
-        this.nameOfUser = userInfo.name;
-      }
-    },
     goToChallenges() {
       this.$router.push("/retos");
     }
-  },
-  created() {
-    // this.checkToken();
   }
 };
 </script>

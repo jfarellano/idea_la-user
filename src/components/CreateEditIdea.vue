@@ -63,38 +63,17 @@ export default {
       idea: {},
       tokenExists: false,
       userInfo: {},
-      misc: {}
+      err: {}
     };
   },
   methods: {
-  checkToken(){
-    if (this.$cookie.get('secret') == null){
-      this.tokenExists = false;
-    }else{
-      this.tokenExists = true;
-      console.log("COOKIE: " + this.$cookie.get('secret'));
-      var userInfo = JSON.parse(this.$cookie.get('secret'));
-      this.userInfo.id = userInfo.user_id;
-      this.userInfo.secret = userInfo.secret;
-      this.userInfo.expire_at = userInfo.expire_at;
-      this.userInfo.name = userInfo.name;
-      this.userInfo.lastname = userInfo.lastname;
-    }
-  },
+
   getChallenges() {
     api.challenges.index().then((response)=>{
       this.challenges = response.data
     }).catch((err) => {
-      console.log(err.data)
+      this.err = err
     })
-
-    // this.$http.get(SERVER_URL + '/challenges').then(function(response){
-    //   this.challenges = response.data;
-    // }),
-    // (err) => {
-    // console.log("Err", err);
-    // };
-    // console.log(JSON.stringify(this.challenges.title))
   },
   createIdea(){
     api.createEditIdea.createIdea({
@@ -107,26 +86,8 @@ export default {
     }).then((response) => {
       this.misc = response.data
     }).catch((err) => {
-      console.log(err.data)
+      this.err = err
     })
-
-    // this.$http.post((SERVER_URL + '/ideas'),{
-    //   image: this.idea.image,
-    //   title: this.idea.title,
-    //   description: this.idea.description,
-    //   videLink: this.idea.videLink,
-    //   edition: this.idea.edition,
-    //   challenge_id: this.idea.challenge_id
-    // }, { headers: {Authorization: 'Token token="' + this.userInfo.secret + '"'}}).then(response => response.json())
-    //   .then(function(json){
-    //   console.log(json);
-    //   this.$router.push('/miperfil');
-    //   },
-    //   (err) => {
-    //   console.log("Err", err);
-    //   this.$router.push('/miperfil');
-    //   }
-    // );
   },
   cancelCreateIdea(){
     this.$router.push('/miperfil');

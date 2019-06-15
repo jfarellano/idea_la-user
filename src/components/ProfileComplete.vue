@@ -173,7 +173,6 @@ export default {
       }
     },
     save() {
-      console.log("guardado");
       this.saved = true;
       this.$bvModal.hide("complete-profile");
     },

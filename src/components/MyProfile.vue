@@ -114,48 +114,26 @@ export default {
       ],
       tokenExists: false,
       userInfo: {},
-      ideas:[]
+      ideas:[],
+      err: {}
     }
   },
   methods:{
-    checkToken(){
-      if (this.$cookie.get('secret') == null) {
-        this.tokenExists = false;
-      } else {
-        this.tokenExists = true;
-        console.log("COOKIE: " + this.$cookie.get('secret'));
-        var userInfo = JSON.parse(this.$cookie.get('secret'));
-        this.userInfo.id = userInfo.user_id;
-        this.userInfo.secret = userInfo.secret;
-        this.userInfo.expire_at = userInfo.expire_at;
-        this.userInfo.name = userInfo.name;
-        this.userInfo.lastname = userInfo.lastname;
-        this.userInfo.email = userInfo.email;
-        this.userInfo.cc = userInfo.cc;
-      }
-    },
-    buildFullName(){
-      const nameCapitalized = this.userInfo.name.charAt(0).toUpperCase() + this.userInfo.name.slice(1)
-      const lastnameCapitalized = this.userInfo.lastname.charAt(0).toUpperCase() + this.userInfo.lastname.slice(1)
-      this.userInfo.fullname = nameCapitalized + " " + lastnameCapitalized
-    },
     editIdea(){
-      console.log('Editar Idea')
+      
     },
     deleteIdea(){
-      console.log('Eliminar Idea')
+      
     },
     getIdeas(){
       api.myProfile.getIdeas().then(response => {
         this.ideas = response.data
       }).catch(err => {
-        console.log(err.data)
+        this.err = err
       })
     }
   },
   created(){
-    this.checkToken();
-    setTimeout(() => this.buildFullName(), 500);
     this.getIdeas();
   }
 }

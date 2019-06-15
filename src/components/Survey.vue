@@ -45,7 +45,8 @@ export default {
     return {
       challenges: [],
       selected: [],
-      saved: false
+      saved: false,
+      err: {}
     };
   },
   components:{
@@ -107,7 +108,7 @@ export default {
         this.challenges = response.data;
       })
       .catch(err => {
-        console.log(err.response);
+        this.err = err
       });
   }
 };
