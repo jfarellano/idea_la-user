@@ -11,7 +11,7 @@ import MyProfile from './components/MyProfile.vue'
 import CreateEditIdea from './components/CreateEditIdea.vue'
 import RecoverPassword from './components/RecoverPassword.vue'
 import RecoverPasswordRequest from './components/RecoverPasswordRequest.vue'
-
+import Profile from './components/Profile.vue'
 
 Vue.use(Router)
 
@@ -67,5 +67,10 @@ export default new Router ({
             name: 'RecoverPassword',
             component: RecoverPassword
         },
+        {
+            path: '/perfil',
+            name: 'Profile',
+            component: Profile
+        }
     ]
 })

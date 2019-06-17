@@ -42,7 +42,7 @@
               </a>
               <div :class="dropClass('dropdown-menu')" aria-labelledby="navbarDropdownMenuLink">
                 <a class="dropdown-item" href="#">Mis Ideas</a>
-                <a class="dropdown-item" href="#">Mi Perfil</a>
+                <router-link tag="a" class="dropdown-item" to="/perfil">Mi Perfil</router-link>
                 <a class="dropdown-item logout" @click="userLogout()">Cerrar sesión</a>
               </div>
             </li>
