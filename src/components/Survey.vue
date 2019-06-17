@@ -19,7 +19,7 @@
           v-for="challenge in availableChallenges()"
           :key="challenge.id"
           v-b-tooltip.hover
-          :title="challenge.description"
+          :title="challenge.short_description"
         >{{challenge.title}}</b-button>
       </div>
       <div v-else>
