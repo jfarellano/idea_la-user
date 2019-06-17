@@ -4,10 +4,10 @@
     <Idea></Idea>
     <div class="main-container container-fluid">
       <div class="row first">
-        <div class="col-sm-6 align-self-center main-image">
+        <div class="col-md-6 align-self-center main-image">
           <img src="../assets/challenges.png">
         </div>
-        <div class="col-sm-6 align-self-center">
+        <div class="col-md-6 align-self-center">
           <h1 class="title">Conoce los retos y ayuda a crecer a Barranquilla</h1>
           <p
             class="parag"
@@ -36,23 +36,24 @@
         <h2 class="title">No se han encontrado retos</h2>
       </div>
     </div>
+    <Alert ref="alert"></Alert>
   </section>
 </template>
 <script>
-import api from "../requests.js";
-
-import Header from "./Header.vue";
-import Idea from "./AddIdea.vue";
+import api from "../requests.js"
+import Alert from './Alert.vue'
+import Header from "./Header.vue"
+import Idea from "./AddIdea.vue"
 
 export default {
   components: {
     Header,
-    Idea
+    Idea,
+    Alert
   },
   data() {
     return {
-      challenges: [],
-      err: {}
+      challenges: []
     };
   },
   methods: {
@@ -62,8 +63,8 @@ export default {
         .then(response => {
           this.challenges = response.data;
         })
-        .catch(err => {
-          this.err = err
+        .catch(() => {
+          this.$refs.alert.network_error()
         });
     }
   },
@@ -88,9 +89,10 @@ export default {
   }
   .parag{
     color: #9B9B9B;
+    text-align: justify;
   }
   .first {
-    padding: 10px;
+    padding: 30px;
   }
   .second {
     padding: 10px;
