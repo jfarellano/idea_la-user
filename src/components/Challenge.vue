@@ -4,35 +4,37 @@
     <Idea></Idea>
     <div class="main-container container-fluid">
       <div class="row first">
-        <div class="col-md-3 align-self-center">
+        <div class="col-md-6 align-self-center main-image">
           <h1 class="title">{{challenge.title}}</h1>
         </div>
-        <div class="col-md-9 align-self-center">
-          <p class="parag">{{challenge.description}}</p>
+      </div>
+      <div class="description row justify-content-center">
+        <div class="col-md-10">
+          <p>{{challenge.description}}</p>
         </div>
       </div>
-      <div class="row second justify-content-around" v-if="ideas != ''">
+      <div class="row second justify-content-center" v-if="ideas != ''">
+        <div class="input-group search">
+          <input
+            type="text"
+            class="form-control inputStyles"
+            placeholder="Buscar ideas"
+            v-model="search"
+          >
+        </div>
         <router-link
           class="idea container-fluid"
-          v-for="(idea, index) in ideas"
+          v-for="(idea, index) in filter()"
+          tag="div"
           :key="index"
           :to="{name: 'Idea', params: { iId: idea.id } }"
         >
-          <div v-if="idea.picture != null">
-            <div class="row image">
-              <img v-bind:src="idea.picture.url">
-            </div>
-          </div>
-          <div v-else>
-            <div class="row image">
-              <img
-                src="https://ep01.epimg.net/internacional/imagenes/2018/07/23/billete_a_macondo/1532310440_143390_1532310884_noticia_normal.jpg"
-              >
-            </div>
+          <div class="row image">
+            <img v-bind:src="idea.idea_pictures[0].url">
           </div>
           <div class="row data">
             <h3 class="title">{{idea.title}}</h3>
-            <p class="parag">{{idea.description}}</p>
+            <p class="parag">{{getDescription(idea.description)}}</p>
           </div>
         </router-link>
       </div>
@@ -58,7 +60,9 @@ export default {
     return {
       challenge: {},
       ideas: [],
-      err: {}
+      search: "",
+      page: 1,
+      size: 10
     };
   },
   methods: {
@@ -68,34 +72,45 @@ export default {
     getChallengeInfo() {
       var challengeID = this.$route.params.cId;
 
-      api.challenge.getInfo(challengeID).then(response => {
-        this.challenge = response.data
-      }).catch(err => {
-        this.err = err
-      })
-
-      // api.challenge.getInfo(challengeID).then(response => {
-      //   this.challenge = response.data
-      // }).catch(err => {
-      //   console.log(err)
-      // })
-      // this.$http.get(SERVER_URL + '/challenges/' + this.id).then(function(response){
-      //   this.challenge = response.data;
-      // })
+      api.challenge
+        .getInfo(challengeID)
+        .then(response => {
+          this.challenge = response.data;
+        })
+        .catch(err => {
+          this.err = err;
+        });
+    },
+    filter() {
+      var list = [];
+      if (this.search != "" && this.search != null) {
+        var here = this;
+        list = here.ideas.filter(function(idea) {
+          return (
+            idea.title.toLowerCase().includes(here.search.toLowerCase()) ||
+            idea.description.toLowerCase().includes(here.search.toLowerCase())
+          );
+        });
+      } else {
+        list = this.ideas;
+      }
+      // return list.slice(0, this.page * this.size)
+      return list
+    },
+    getDescription(desc) {
+      if (desc.length <= 100) return desc;
+      else return desc.slice(0, 100) + "...";
     },
     getIdeas() {
       var challengeID = this.$route.params.cId;
-      api.challenge.getIdeas(challengeID)
+      api.challenge
+        .getIdeas(challengeID)
         .then(response => {
           this.ideas = response.data;
         })
         .catch(err => {
-          this.err = err
+          this.err = err;
         });
-
-      // this.$http.get(SERVER_URL + '/challenges/' + this.challengeID + '/ideas').then(function(response){
-      //   this.ideas = response.data;
-      // })
     }
   },
   created() {
@@ -107,38 +122,88 @@ export default {
 
 <style lang="scss" scoped>
 .main-container {
-  margin-top: 110px;
+  margin-top: 90px;
+  .main-image {
+    width: 80%;
+    text-align: center;
+    img {
+      width: 80%;
+    }
+  }
+  .input-group {
+    width: 80%;
+  }
+  .inputStyles {
+    border: 1px solid #0e2469;
+    border-radius: 5px;
+    box-shadow: 0 0 2px 0 #ffffff;
+    height: 50px;
+    font-size: 21px;
+    color: #0e2469;
+    &:focus {
+      border: 2px solid #0e2469;
+    }
+  }
+  .title {
+    color: #0e2469;
+  }
+  .parag {
+    color: #020202;
+    text-align: justify;
+  }
+  .description {
+    text-align: justify;
+    margin: 20px 0px;
+  }
+  .search {
+    margin: 20px 0px;
+  }
   .first {
     padding: 50px;
+    min-height: 400px;
+    background-size: 100%;
+    background-image: url("../assets/group.svg");
+    background-repeat: no-repeat;
+    background-position: right bottom;
   }
   .second {
     padding: 50px;
-    background-color: #e6e6e6;
+    padding-top: 0px;
+    background-color: white;
 
     .idea {
       margin: 10px;
       background-color: white;
+      border: 1px solid #ededed;
       color: #6d6d6d;
+      border-radius: 5px;
       width: 300px;
       height: 350px;
       cursor: pointer;
+
       .image {
         height: 150px;
-        background-color: #ffe01b;
+        border-top-right-radius: 5px;
+        border-top-left-radius: 5px;
+        overflow: hidden;
         img {
-          overflow: hidden;
-          height: 150px;
+          width: 300px;
           margin: auto;
         }
       }
       .data {
         padding: 20px;
         h3 {
-          border-bottom: 4px solid #ffe01b;
-          padding-bottom: 0.5px;
+          font-size: 1.3rem;
+          color: #0e2469;
+          &:hover {
+            text-decoration: none;
+          }
         }
         p {
-          margin-top: 10px;
+          color: #262626;
+          margin-top: 5px;
+          margin-bottom: 5px;
           text-align: justify;
         }
       }
