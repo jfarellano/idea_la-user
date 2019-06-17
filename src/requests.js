@@ -46,11 +46,6 @@ export default {
       return r.get(SERVER_URL + '/challenges/' + challengeID + '/ideas')
     }
   },
-  createEditIdea: {
-    createIdea: function(body) {
-      return r.post(SERVER_URL + '/ideas', body, getHeaders)
-    }
-  },
   idea: {
     getInfo: function(ideaID) {
       return r.get(SERVER_URL + '/ideas/' + ideaID)
@@ -63,6 +58,9 @@ export default {
     },
     postComment: function(ideaID, body) {
       return r.post(SERVER_URL + '/ideas/' + ideaID + '/comments', body, getHeaders())
+    },
+    create: function(body){
+      return r.post(SERVER_URL + '/ideas', body, getHeaders())
     }
   },
   myProfile: {
