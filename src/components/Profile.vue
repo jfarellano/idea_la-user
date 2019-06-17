@@ -204,11 +204,11 @@ export default {
       if (this.userData.image != null) fd.append("image", this.userData.image);
       api.user
         .update(this.userData.id, fd)
-        .then(response => {
+        .then(() => {
           this.$refs.alert.success('Tu información ha sido actualizada')
           setTimeout(function(){ location.reload() }, 3300);
         })
-        .catch(err => {
+        .catch(() => {
           this.$refs.alert.error(
             "Hubo un error actualizando tu información, intenta de nuevo mas tarde"
           );
