@@ -22,7 +22,7 @@
             <router-link tag="a" class="nav-link" to="/">Inicio</router-link>
           </li>
           <li>
-            <router-link tag="a" class="nav-link" to="/">Retos</router-link>
+            <router-link tag="a" class="nav-link" to="/retos">Retos</router-link>
           </li>
           <div v-if="tokenExists == false">
             <li>
