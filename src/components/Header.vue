@@ -110,8 +110,8 @@ export default {
     var loged = auth.storage.logged();
     if (loged) {
       this.tokenExists = loged;
-      auth.session
-        .user_info(auth.storage.get("user_id"))
+      api.user
+        .show(auth.storage.get("user_id"))
         .then(response => {
           if (response.data.picture != null)
             auth.storage.setImage(response.data.picture.url);
