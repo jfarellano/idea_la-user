@@ -43,13 +43,13 @@
                     type="password"
                     class="form-control inputStyles"
                     v-model="userData.password"
-                    v-validate="'required'"
+                    v-validate="'required|min:6'"
                     ref="password"
                     :class="{'has-error': errors.has('pass_required')}"
                     name="password"
                   >
                 </div>
-                <p v-if="errors.has('password')" class="incorrectInput">La contraseña es necesaria</p>
+                <p v-if="errors.has('password')" class="incorrectInput">La contraseña debe ser minimo de 6 caracteres</p>
                 <h5>Confirmar contraseña</h5>
                 <div class="input-group">
                   <input

@@ -28,14 +28,14 @@
                     type="password"
                     class="form-control inputStyles"
                     v-model="password"
-                    v-validate="'required'"
+                    v-validate="'required|min:6'"
                     :class="{'has-error': errors.has('password_invalid')}"
                     name="password"
                     v-on:keyup.enter="userLogin()"
                   >
                 </div>
                 <p v-if="errors.has('password')" class="incorrectInput">
-                  Este campo es obligatorio.
+                  La contraseña debe ser minimo de 6 caracteres
                 </p>
                 <div v-else>
                   <br>
