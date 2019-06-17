@@ -27,13 +27,12 @@
   padding: 20px;
   z-index: 1000;
   border: none;
-  background-color: #ffe01b;
-  color: #4d4d4d;
-  border-radius: 0px;
-  right: 0px;
+  background-color: #0E2469;
+  color: white;
+  border-radius: 5px;
+  right: -3px;
   bottom: 70px;
-  -webkit-box-shadow: -19px 17px 25px -12px rgba(115, 115, 115, 0.53);
-  -moz-box-shadow: -19px 17px 25px -12px rgba(115, 115, 115, 0.53);
-  box-shadow: -19px 17px 25px -12px rgba(115, 115, 115, 0.53);
+  -webkit-box-shadow: 0px 12px 40px -12px rgba(14,36,105,0.35); 
+  box-shadow: 0px 12px 40px -12px rgba(14,36,105,0.35);
 }
 </style>
