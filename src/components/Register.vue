@@ -300,7 +300,7 @@ export default {
       fd.append("lastname", this.userData.lastname);
       fd.append("age", this.userData.age);
       fd.append("gender", this.userData.gender);
-      fd.append("image", this.userData.image);
+      if (this.userData.image != null ) fd.append("image", this.userData.image);
       fd.append("location_id", this.userData.location_id);
       api.user
         .create(fd)

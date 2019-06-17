@@ -22,7 +22,7 @@ export default {
       this.$snotify.simple(message, title, this.params);
 		},
 		success: function(message) {
-      this.$snotify.success(message, 'Exito', this.params);
+      this.$snotify.success(message, 'Éxito', this.params);
 		},
 		warning: function(message) {
       this.$snotify.warning(message, 'Alerta', this.params);
@@ -43,10 +43,10 @@ export default {
       this.$snotify.error('Hubo un error en la red, intenta de nuevo', 'Error', this.params)
     },
     credentials_error: function() {
-      this.$snotify.warning('Credenciales invalidas, intenta de nuevo', 'Atención', this.params)
+      this.$snotify.warning('Credenciales inválidas, intenta de nuevo', 'Atención', this.params)
     },
     form_error: function() {
-      this.$snotify.warning('El formulario no esta completo o tiene un error, revisa de nuevo', 'Atención', this.params)
+      this.$snotify.warning('El formulario no está completo o tiene un error, revisa de nuevo', 'Atención', this.params)
     },
     blocked_user: function() {
       this.$snotify.error('Tu usuario ha sido bloqueado', 'Usuario bloqueado', this.params)
