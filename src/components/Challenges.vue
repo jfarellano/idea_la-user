@@ -23,11 +23,11 @@
             class="challenge container-fluid"
           >
             <div class="row image">
-              <img src="../assets/group.svg" alt="Imagen de reto">
+              <img :src="challenge.challenge_pictures[0].url" alt="Imagen de reto">
             </div>
             <div class="row data">
               <h3 class="title">{{challenge.title}}</h3>
-              <p class="parag">{{challenge.description.slice(0,40)}}</p>
+              <p class="parag">{{challenge.short_description}}</p>
             </div>
           </router-link>
         </div>
@@ -78,7 +78,7 @@ export default {
 .main-container {
   margin-top: 90px;
   .main-image{
-    width: 80%;
+    width: 100%;
     text-align: center;
     img{
       width: 80%;
@@ -86,9 +86,12 @@ export default {
   }
   .title{
     color: #0E2469;
+    font-size: 1.1rem;
+    margin:0px;
   }
   .parag{
     color: #9B9B9B;
+    margin:0px;
     text-align: justify;
   }
   .first {
@@ -115,6 +118,7 @@ export default {
         img {
           overflow: hidden;
           height: 100px;
+          width: auto;
           margin: auto;
         }
       }
@@ -122,10 +126,12 @@ export default {
         padding: 20px;
         padding-top: 0px;
         h3 {
+          margin-top: 5px;
           padding-bottom: 0.5px;
+          text-align: justify;
         }
         p {
-          margin-top: 10px;
+          margin-top: 5px;
           text-align: justify;
         }
       }
