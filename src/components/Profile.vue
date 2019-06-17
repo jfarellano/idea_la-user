@@ -194,7 +194,6 @@ export default {
     userSave() {
       var fd = new FormData();
       fd.append("email", this.userData.email);
-      fd.append("password", this.userData.password);
       fd.append("cc", this.userData.cc);
       fd.append("phone", this.userData.phone);
       fd.append("name", this.userData.name);
