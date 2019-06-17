@@ -4,17 +4,18 @@
     <Idea></Idea>
     <div class="main-container container-fluid">
       <div class="row first">
-        <div class="col-md-3 align-self-center">
-          <h1 class="title">Retos</h1>
+        <div class="col-sm-6 align-self-center main-image">
+          <img src="../assets/challenges.png">
         </div>
-        <div class="col-md-9 align-self-center">
+        <div class="col-sm-6 align-self-center">
+          <h1 class="title">Conoce los retos y ayuda a crecer a Barranquilla</h1>
           <p
             class="parag"
-          >¡Tú eres el actor principal! Ahora nos ayudarás en la elección de los 5 desafíos de cara a los Objetivos del Desarrollo Sostenible que nuestra ciudad debe afrontar al tiempo que se fomenta el involucramiento ciudadano en el proceso electoral local. Junto a ti, encontraremos las soluciones más innovadoras para hacer frente a estos desafíos. Los Objetivos del Desarrollo Sostenible conllevan un espíritu de colaboración y pragmatismo para elegir las mejores opciones con el fin de mejorar la vida de manera sostenible para las generaciones futuras. Se abordan las causas sociales fundamentales y nos unen para para emprender un nuevo camino en el que se focalice el mejoramiento de la vida de todos, sin dejar a nadie atrás.</p>
+          >Para lograrlo necesitamos que tú seas parte del cambio. Sabemos que tienesmucho que aportar. Tus ideas, experiencia y tiempo nos ayudarán a encontrarsoluciones sostenibles a los desafíos que afrontamos. ¡Todos podemosconvertirnos en protagonistas de nuestra ciudad!</p>
         </div>
       </div>
       <!-- INICIO DE CHALLENGES -->
-      <div v-if="challenges != ''" class="row second justify-content-around">
+      <div v-if="challenges != ''" class="row second justify-content-center">
         <div v-for="(challenge, index) in challenges" :key="index">
           <router-link
             tag="div"
@@ -22,7 +23,7 @@
             class="challenge container-fluid"
           >
             <div class="row image">
-              <img v-bind:src="challenge.picture.url" alt="Imagen de reto">
+              <img src="../assets/group.svg" alt="Imagen de reto">
             </div>
             <div class="row data">
               <h3 class="title">{{challenge.title}}</h3>
@@ -74,33 +75,51 @@ export default {
 
 <style lang="scss" scoped>
 .main-container {
-  margin-top: 110px;
+  margin-top: 90px;
+  .main-image{
+    width: 80%;
+    text-align: center;
+    img{
+      width: 80%;
+    }
+  }
+  .title{
+    color: #0E2469;
+  }
+  .parag{
+    color: #9B9B9B;
+  }
   .first {
-    padding: 50px;
+    padding: 10px;
   }
   .second {
-    padding: 50px;
-    background-color: #e6e6e6;
+    padding: 10px;
 
     .challenge {
       margin: 10px;
       background-color: white;
+      border: 1px solid #EDEDED;
+      border-radius: 5px;
+      box-shadow: 0 0 15px 0 rgba(232,232,232,0.4);
       width: 300px;
       height: 350px;
       cursor: pointer;
       .image {
-        height: 200px;
-        background-color: #ffe01b;
+        border-top-left-radius: 5px;
+        border-top-right-radius: 5px;
+        height: 100px;
+        margin-top: 15px;
+        background-color: white;
         img {
           overflow: hidden;
-          height: 200px;
+          height: 100px;
           margin: auto;
         }
       }
       .data {
         padding: 20px;
+        padding-top: 0px;
         h3 {
-          border-bottom: 4px solid #ffe01b;
           padding-bottom: 0.5px;
         }
         p {
