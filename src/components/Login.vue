@@ -41,7 +41,7 @@
                 v-validate="'required'"
                 :class="{'has-error': errors.has('password_invalid')}"
                 name="password"
-                v-on:keyup.enter="userLogin()"
+                @keyup.enter="userLogin()"
               >
             </div>
             <p v-if="errors.has('password')" class="incorrectInput">
