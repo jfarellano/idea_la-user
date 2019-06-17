@@ -42,19 +42,21 @@
         <h2 class="title">No se han encontrado ideas</h2>
       </div>
     </div>
+    <Alert ref="alert"></Alert>
   </section>
 </template>
 
 <script>
-import api from "../requests.js";
-
-import Header from "./Header.vue";
-import Idea from "./AddIdea.vue";
+import api from "../requests.js"
+import Alert from './Alert.vue'
+import Header from "./Header.vue"
+import Idea from "./AddIdea.vue"
 
 export default {
   components: {
     Header,
-    Idea
+    Idea,
+    Alert
   },
   data() {
     return {
@@ -77,8 +79,8 @@ export default {
         .then(response => {
           this.challenge = response.data;
         })
-        .catch(err => {
-          this.err = err;
+        .catch(() => {
+          this.$refs.alert.network_error()
         });
     },
     filter() {
@@ -108,8 +110,8 @@ export default {
         .then(response => {
           this.ideas = response.data;
         })
-        .catch(err => {
-          this.err = err;
+        .catch(() => {
+          this.$refs.alert.network_error()
         });
     }
   },
