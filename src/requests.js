@@ -74,11 +74,17 @@ export default {
     create: function(body){
       return r.post(SERVER_URL + '/users', body)
     },
+    update: function(id, body){
+      return r.put(SERVER_URL + '/users/' + id, body, getHeaders())
+    },
     survey:  function() {
       return r.get(SERVER_URL + '/status_user', getHeaders())
     },
     save_survey: function(body) {
       return r.put(SERVER_URL + '/multiple_surveys', body, getHeaders())
+    },
+    show: function(id){
+      return r.get(SERVER_URL + '/users/' + id, getHeaders())
     }
   },
   password: {
