@@ -3,6 +3,9 @@
 // servicio para el manejo de variables como se muestra en este ejemplo
 const r = require('axios');
 const SERVER_URL = 'http://34.226.46.43'
+// const WEB_URL = 'localhost:8080/#/'
+const WEB_URL = 'http://ideala.surge.sh/#/'
+
 import auth from './authentication.js'
 
 function getHeaders() {
@@ -14,7 +17,8 @@ export default {
     URL: SERVER_URL,
     locations: function(){
       return r.get(SERVER_URL + '/locations')
-    }
+    },
+    WEB: WEB_URL
   },
   utils: {
     upcase: function (str) {
@@ -23,6 +27,14 @@ export default {
           splitStr[i] = splitStr[i].charAt(0).toUpperCase() + splitStr[i].substring(1);     
       }
       return splitStr.join(' '); 
+    }
+  },
+  comments: {
+    index: function(idea_id) {
+      return r.get(SERVER_URL + '/ideas/' + idea_id + '/comments')
+    },
+    create: function(idea_id, body) {
+      return r.post(SERVER_URL + '/ideas/' + idea_id + '/comments', body, getHeaders())
     }
   },
   challenges: {
