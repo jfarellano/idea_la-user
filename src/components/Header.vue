@@ -119,7 +119,7 @@ export default {
           auth.storage.set_name(response.data.name, response.data.lastname);
           this.fullname = auth.storage.get("name");
           api.user.survey().then(response => {
-            if (!response.data.complete_survey) {
+            if (response.data.complete_survey) {
               this.$refs.survey.open();
             }
           });
