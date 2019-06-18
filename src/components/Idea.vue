@@ -64,7 +64,7 @@
             <b-img
               rounded="circle"
               class="avatar img-responsive"
-              src="http://placehold.it/30x30"
+              :src="comment.user_profile_picture.url"
               alt="Circle image"
             ></b-img>
           </b-button>
