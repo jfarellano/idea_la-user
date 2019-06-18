@@ -71,7 +71,7 @@
                   class="loadBtn"
                   v-if="userData.image == null"
                 >Carga tu imagen</b-button>
-                <b-button-group class="loadBtn" v-if="userData.image != null">
+                <b-button-group class="loadBtn" v-else>
                   <b-button
                     class="text"
                     @click="$refs.fileInput.$el.querySelector('input[type=file]').click()"
@@ -84,7 +84,6 @@
                   v-model="userData.image"
                   accept="image/jpeg, image/png"
                   style="display:none;"
-                  @change="checkSize()"
                   ref="fileInput"
                   v-validate="'size:2000'"
                   :class="{'has-error': errors.has('image_size')}"
