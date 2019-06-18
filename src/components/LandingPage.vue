@@ -1,55 +1,82 @@
 <template>
   <section>
     <Header></Header>
-    <div class="main-container container-fluid">
-      <div class="first row">
-        <div class="col-md-6 align-self-end">
-          <img src="../assets/FS_FC.svg">
+    <div class="sections-container">
+      <div class="main-container container-fluid">
+        <div class="first row justify-content-end align-items-center">
+          <div class="col-md-6">
+            <img src="../assets/CamaraBaq-Blue.svg">
+          </div>
         </div>
-        <div class="col-md-6 align-self-end">
-          <div class="left-cont">
-            <img src="../assets/aduana.svg">
-            <p
-              class="parag"
-            >Idéala es una iniciativa liderada por la Cámara de Comercio de Barranquilla en alianza con distintos actores locales con el fin de trabajar en el fomento y fortalecimiento de la ciudadanía activa de tal modo que sean los propios ciudadanos quienes prioricen los grandes desafíos que afronta nuestro territorio frente a los Objetivos del Desarrollo Sostenible de frente a las elecciones locales.</p>
-            <div class="over-border">
-              <b-button class="option title" v-on:click.prevent="goToChallenges">Conoce las ideas</b-button>
+
+        <div class="row justify-content-center">
+          <div class="section-left col">
+            <div class="container-fluid">
+              <div class="row">
+                <div class="col-sm-7 align-self-center info order-2 order-sm-1">
+                  <h1 class="title">La iniciativa</h1>
+                  <p
+                    class="parag"
+                  >Imagina Tu Ciudá es un espacio para que busquemos juntos soluciones a los desafíos de nuestra ciudad, frente a los Objetivos de Desarrollo Sostenible y así construir, entre todos, la Barranquilla que soñamos.</p>
+                </div>
+                <div class="col-sm-5 align-self-center order-1 order-sm-2">
+                  <img src="../assets/landing/Land1.svg" alt="ODS">
+                </div>
+              </div>
             </div>
           </div>
         </div>
-      </div>
-      <div class="row second">
-        <div class="col-md-8 align-self-center info">
-          <h1 class="title">Comprometidos con los ODS</h1>
-          <p
-            class="parag"
-          >Estamos convencidos de que la participación ciudadana es pieza fundamental para emprender un nuevo camino en el que se focalice el mejoramiento de la vida de todos, sin dejar a nadie atrás. Tomando como base la necesidad de cumplir los Objetivos del Desarrollo Sostenible como modelo para alcanzar un mejor y sostenible futuro para todos.</p>
+        <div class="row justify-content-center">
+          <div class="section-rigth col">
+            <div class="container-fluid">
+              <div class="row">
+                <div class="col-sm-5 align-self-center">
+                  <img src="../assets/landing/Land2.svg" alt="ODS">
+                </div>
+                <div class="col-sm-7 align-self-center info">
+                  <h1 class="title">Comprometidos con los ODS</h1>
+                  <p
+                    class="parag"
+                  >Para cumplir con los Objetivos de Desarrollo Sostenible todos los actores del territorio debemos trabajar colaborativamente. Es necesario que empresas privadas, instituciones públicas, academia, ONGs y organizaciones de la sociedad civil logren conectarse con la ciudadanía para alcanzar las metas pactadas, sin dejar a nadie atrás.</p>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+        <div class="row justify-content-center">
+          <div class="section-left col">
+            <div class="container-fluid">
+              <div class="row">
+                <div class="col-sm-7 align-self-center info order-2 order-sm-1">
+                  <h1 class="title">Te necesitamos</h1>
+                  <p
+                    class="parag"
+                  >Para lograrlo necesitamos que tú seas parte del cambio. Sabemos que tienes mucho que aportar. Tus ideas, experiencia y tiempo nos ayudarán a encontrar soluciones sostenibles a los desafíos que afrontamos. ¡Todos podemos convertirnos en protagonistas de nuestra ciudad!</p>
+                </div>
+                <div class="col-sm-5 align-self-center order-1 order-sm-2">
+                  <img src="../assets/landing/Land3.svg" alt="ODS">
+                </div>
+              </div>
+            </div>
+          </div>
         </div>
 
-        <div class="col-md-4 align-self-center">
-          <img src="../assets/ODS.svg" alt="ODS">
-        </div>
-      </div>
-      <div class="row third">
-        <div class="col-md-4 align-self-center">
-          <img src="../assets/miss.svg" alt="Miss">
-        </div>
-        <div class="col-md-8 align-self-center info">
-          <h1 class="title">Avanzamos a pasos agigantados</h1>
-          <p
-            class="parag"
-          >La ciudad avanza a pasos agigantados, cada uno de los ciudadanos tenemos mucho que aportar y así hacer de Barranquilla una mejor y sostenible ciudad para todos. Todos podemos convertirnos en protagonistas de ciudad, imaginando nuevas ideas de ciudad y realizando acciones de ciudad.</p>
-        </div>
-      </div>
-      <div class="row fourth">
-        <div class="col-md-4 align-self-center">
-          <img src="../assets/dream.svg" alt="Dream">
-        </div>
-        <div class="col-md-8 align-self-center info">
-          <h1 class="title">Podemos hacer un sueño realidad</h1>
-          <p
-            class="parag"
-          >Este es un espacio para que juntos construyamos una mejor ciudad con el apoyo de nuestros ciudadanos motivados por su desarrollo que nos brinden su mirada al futuro para que todos creemos la Barranquilla que soñamos.</p>
+        <div class="row justify-content-center">
+          <div class="brands col">
+            <div class="container-fluid container-flex">
+              <div class="row">
+                <h3 class="support">Apoyan</h3>
+              </div>
+              <div class="row justify-content-arround">
+                <img class="logo col" src="../assets/landing/brands/BCV.svg">
+                <img class="logo col" src="../assets/landing/brands/CCB.svg">
+                <img class="logo col" src="../assets/landing/brands/GS.svg">
+                <img class="logo col" src="../assets/landing/brands/JOO.svg">
+                <img class="logo col" src="../assets/landing/brands/NA.svg">
+                <img class="logo col" src="../assets/landing/brands/UN.svg">
+              </div>
+            </div>
+          </div>
         </div>
       </div>
     </div>
@@ -83,111 +110,110 @@ export default {
 </script>
 
 <style lang="scss" scoped>
+.sections-container {
+  background-color: #f7f7f7;
+  width: 100%;
+}
+
 .main-container {
-  margin-top: 110px;
+  margin-top: 90px;
   .first {
-    background-image: url("../assets/first-bg.svg");
+    background-color: white;
+    height: calc(100vw * 0.33);
+    background-image: url("../assets/landing/Land-f.svg");
     background-repeat: no-repeat;
-    background-size: 50vw;
-    background-position-x: -30%;
-    background-position-y: 90%;
-    margin-bottom: 50px;
+    background-position: bottom right;
+    background-size: 100vw;
+    @media (max-width: 768px) {
+      height: calc(100vw * 0.5);
+    }
+  }
+  .section-left {
+    width: 100%;
+    max-width: 1100px;
+    padding: 30px 0px 0px 80px;
+    margin-top: 0px;
+    background-color: white;
+    text-align: center;
+    .info {
+      h1 {
+        text-align: left;
+        font-size: 2rem;
+        color: #0e2469;
+      }
+      p {
+        color: #282828;
+        text-align: justify;
+        font-size: 1rem;
+      }
+    }
     img {
-      margin-bottom: 40px;
-      margin-left: 50px;
+      width: 70%;
     }
-    p {
-      text-align: justify;
-      padding: 50px;
-    }
-    .left-cont {
-      margin-bottom: 40px;
-      text-align: center;
+    @media (max-width: 768px) {
+      margin-top: 0px !important;
+      padding: 20px !important;
       img {
-        width: 50%;
-        margin: 0px;
+        width: 100% !important;
       }
     }
-    .over-border {
-      padding-right: 2px;
-      padding-bottom: 2px;
-      border-right: 2px solid #ffe01b;
-      border-bottom: 2px solid #ffe01b;
-      margin: 0px 50px;
+    @media (max-width: 1100px) {
+      padding: 30px 0px 0px 50px;
+      width: 1100px !important;
     }
-    .option {
-      padding: 5px 20px;
-      border-style: solid !important;
-      border: 2px;
+  }
+  .section-rigth {
+    width: 100%;
+    max-width: 1100px;
+    padding: 30px 80px 0px 0px;
+    margin-top: 0px;
+    background-color: white;
+    text-align: center;
+    .info {
+      h1 {
+        text-align: left;
+        font-size: 2rem;
+        color: #0e2469;
+      }
+      p {
+        color: #282828;
+        text-align: justify;
+        font-size: 1rem;
+      }
+    }
+    img {
+      width: 70%;
+    }
+    @media (max-width: 768px) {
+      margin-top: 0px !important;
+      padding: 20px !important;
+      img {
+        width: 100% !important;
+      }
+    }
+    @media (max-width: 1100px) {
+      padding: 30px 50px 0px 0px;
+      width: 1100px !important;
+    }
+  }
+  .brands {
+    width: 100%;
+    max-width: 1100px;
+    margin-top: 0px;
+    background-color: white;
+    text-align: center;
+    .support{
+      color: #0e2469;
+      text-align: center;
       width: 100%;
-      border-color: #4d4d4d;
-      border-radius: 0px;
-      margin: 0px;
-      background-color: transparent;
-      color: #4d4d4d;
-      font-size: 1.3em;
     }
-  }
-  .second {
-    margin-top: 70px;
-    padding: 50px;
-    min-height: 100vh;
-    background-color: #ffe01b;
-    color: #4d4d4d;
-    text-align: center;
-    .info {
-      h1 {
-        text-align: left;
-      }
-      p {
-        text-align: justify;
-        margin-top: 30px;
-        font-size: 1.2em;
-      }
+    .logo {
+      height: 100px;
+      text-align: center;
     }
-    img {
-      width: 70%;
-    }
-  }
-  .third {
-    margin-top: 70px;
-    padding: 50px;
-    min-height: 100vh;
-    color: #4d4d4d;
-    text-align: center;
-    .info {
-      h1 {
-        text-align: left;
-      }
-      p {
-        text-align: justify;
-        margin-top: 30px;
-        font-size: 1.2em;
-      }
-    }
-    img {
-      width: 70%;
-    }
-  }
-  .fourth {
-    margin-top: 70px;
-    padding: 50px;
-    min-height: 100vh;
-    background-color: #ffe01b;
-    color: #4d4d4d;
-    text-align: center;
-    .info {
-      h1 {
-        text-align: left;
-      }
-      p {
-        text-align: justify;
-        margin-top: 30px;
-        font-size: 1.2em;
-      }
-    }
-    img {
-      width: 70%;
+
+    @media (max-width: 1100px) {
+      width: 1100px !important;
     }
   }
 }
