@@ -19,6 +19,9 @@ export default {
   *{
     font-family: 'Rubik', sans-serif;
   }
+  p{
+    white-space: pre-wrap;
+  }
   #app {
     -webkit-font-smoothing: antialiased;
     -moz-osx-font-smoothing: grayscale;
