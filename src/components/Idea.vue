@@ -10,7 +10,7 @@
           <div class="row">
             <h1 class="title">{{idea.title}}</h1>
           </div>
-          <div class="row icons">
+          <div class="row icons align-self-justify">
             <div class="col wapp">
               <font-awesome-icon @click="share('wap')" :icon="['fab', 'whatsapp']"></font-awesome-icon>
             </div>
@@ -22,7 +22,7 @@
             </div>
           </div>
           <div class="row">
-            <b-button @click='vote()' class="vote">Votar por esta idea</b-button>
+            <b-button @click="vote()" class="vote">Votar por esta idea</b-button>
           </div>
         </div>
       </div>
@@ -46,7 +46,11 @@
             <input type="text" v-model="comment.description" placeholder="Escribe tu comentario">
           </div>
           <div class="opt-wrap">
-            <b-button @click='commentIdea()' class="option" :disabled="comment.description == null || comment.description == ''">
+            <b-button
+              @click="commentIdea()"
+              class="option"
+              :disabled="comment.description == null || comment.description == ''"
+            >
               <font-awesome-icon icon="paper-plane"></font-awesome-icon>
             </b-button>
           </div>
@@ -55,7 +59,7 @@
       </div>
 
       <div class="row comments">
-        <b-button-group class="comment-box" v-for="comment in comments" :key='comment.id'>
+        <b-button-group class="comment-box" v-for="comment in comments" :key="comment.id">
           <b-button class="user">
             <b-img
               rounded="circle"
@@ -79,7 +83,7 @@
 import api from "../requests.js";
 import Header from "./Header.vue";
 import auth from "../authentication";
-import Alert from './Alert.vue'
+import Alert from "./Alert.vue";
 
 export default {
   components: {
@@ -104,24 +108,24 @@ export default {
           this.idea = response.data;
         })
         .catch(() => {
-          this.$refs.alert.network_error()
+          this.$refs.alert.network_error();
         });
     },
     share(sn) {
       if (sn == "wap")
-        window.location =
+        var url =
           "whatsapp://send?text=Te comparto esta idea de #ImaginaTuCiudá " +
           api.variable.WEB +
           "idea/" +
           this.$route.params.iId;
-      if (sn == "face")
-        window.location =
+      else if (sn == "face")
+        var url =
           "https://www.facebook.com/sharer/sharer.php?u=" +
           encodeURIComponent(
             api.variable.WEB + "idea/" + this.$route.params.iId
           );
-      if (sn == "tw")
-        window.location =
+      else if (sn == "tw")
+        var url =
           "https://twitter.com/home?status=" +
           encodeURIComponent(
             "Te comparto esta idea de #ImaginaTuCiudá " +
@@ -129,36 +133,40 @@ export default {
               "idea/" +
               this.$route.params.iId
           );
+      window.open(url, "_blank");
     },
     getPic() {
       return auth.storage.get("picture");
     },
     vote() {
       if (this.logged()) {
-        this.$refs.alert.success('Tu voto se ha enviado, gracias por votar')
+        this.$refs.alert.success("Tu voto se ha enviado, gracias por votar");
       } else {
         this.$router.push("/register");
       }
     },
     loadComments() {
-      api.comments.index(this.ideaID)
+      api.comments
+        .index(this.ideaID)
         .then(response => {
           this.comments = response.data;
         })
         .catch(() => {
-          this.$refs.alert.network_error()
+          this.$refs.alert.network_error();
         });
     },
     commentIdea() {
-      api.comments.create
-      (this.ideaID, this.comment)
+      api.comments
+        .create(this.ideaID, this.comment)
         .then(() => {
-          this.loadComments()
-          this.comment = {}
-          this.$refs.alert.success('¡Tu comentario se ha enviado!')
+          this.loadComments();
+          this.comment = {};
+          this.$refs.alert.success("¡Tu comentario se ha enviado!");
         })
         .catch(() => {
-          this.$refs.alert.error('No pudimos enviar tu comentario intenta de nuevo mas tarde')
+          this.$refs.alert.error(
+            "No pudimos enviar tu comentario intenta de nuevo mas tarde"
+          );
         });
     },
     logged() {
@@ -197,6 +205,7 @@ export default {
     .icons {
       text-align: center;
       font-size: 30px;
+      cursor: pointer;
       .wapp {
         color: #25d366 !important;
       }
@@ -241,10 +250,10 @@ export default {
   }
   .sixth {
     padding: 0px 50px 20px 50px;
-    h2{
+    h2 {
       margin-top: 10px;
       text-align: center;
-      width: 100%
+      width: 100%;
     }
     .comment-box {
       width: 100%;
@@ -325,7 +334,7 @@ export default {
         border: none;
         background-color: white;
         color: black;
-        .name{
+        .name {
           color: #0e2469;
         }
         p {
