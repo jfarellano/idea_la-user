@@ -22,6 +22,8 @@
             v-model="search"
           >
         </div>
+      </div>
+      <div class="row second justify-content-center" v-if="ideas != ''">
         <router-link
           class="idea container-fluid"
           v-for="(idea, index) in filter()"
@@ -33,7 +35,7 @@
             <img v-bind:src="idea.idea_pictures[0].url">
           </div>
           <div class="row data">
-            <h3 class="title">{{idea.title}}</h3>
+            <h3>{{idea.title}}</h3>
             <p class="parag">{{getDescription(idea.description)}}</p>
           </div>
         </router-link>
@@ -47,10 +49,10 @@
 </template>
 
 <script>
-import api from "../requests.js"
-import Alert from './Alert.vue'
-import Header from "./Header.vue"
-import Idea from "./AddIdea.vue"
+import api from "../requests.js";
+import Alert from "./Alert.vue";
+import Header from "./Header.vue";
+import Idea from "./AddIdea.vue";
 
 export default {
   components: {
@@ -80,7 +82,7 @@ export default {
           this.challenge = response.data;
         })
         .catch(() => {
-          this.$refs.alert.network_error()
+          this.$refs.alert.network_error();
         });
     },
     filter() {
@@ -97,7 +99,7 @@ export default {
         list = this.ideas;
       }
       // return list.slice(0, this.page * this.size)
-      return list
+      return list;
     },
     getDescription(desc) {
       if (desc.length <= 100) return desc;
@@ -111,7 +113,7 @@ export default {
           this.ideas = response.data;
         })
         .catch(() => {
-          this.$refs.alert.network_error()
+          this.$refs.alert.network_error();
         });
     }
   },
@@ -126,11 +128,8 @@ export default {
 .main-container {
   margin-top: 90px;
   .main-image {
-    width: 80%;
+    width: 100%;
     text-align: center;
-    img {
-      width: 80%;
-    }
   }
   .input-group {
     width: 80%;
@@ -148,6 +147,8 @@ export default {
   }
   .title {
     color: #0e2469;
+    font-size: 1.75em;
+    width: 100%
   }
   .parag {
     color: #020202;
@@ -182,6 +183,10 @@ export default {
       width: 300px;
       height: 350px;
       cursor: pointer;
+      .parag {
+        color: #020202;
+        text-align: justify;
+      }
 
       .image {
         height: 150px;
