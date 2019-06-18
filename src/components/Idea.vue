@@ -112,20 +112,21 @@ export default {
         });
     },
     share(sn) {
+      var url = ''
       if (sn == "wap")
-        var url =
+        url =
           "whatsapp://send?text=Te comparto esta idea de #ImaginaTuCiudá " +
           api.variable.WEB +
           "idea/" +
           this.$route.params.iId;
       else if (sn == "face")
-        var url =
+        url =
           "https://www.facebook.com/sharer/sharer.php?u=" +
           encodeURIComponent(
             api.variable.WEB + "idea/" + this.$route.params.iId
           );
       else if (sn == "tw")
-        var url =
+        url =
           "https://twitter.com/home?status=" +
           encodeURIComponent(
             "Te comparto esta idea de #ImaginaTuCiudá " +
