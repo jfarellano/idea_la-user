@@ -34,12 +34,12 @@
                 class="form-control inputStyles"
                 placeholder="ej. Mi descripción"
                 v-model="idea.description"
-                v-validate="'required'"
+                v-validate="'required|min:400|max:1500'"
                 :class="{'has-error': errors.has('description_invalid')}"
                 name="description"
               ></b-form-textarea>
             </div>
-            <p v-if="errors.has('description')" class="incorrectInput">La descripción es requerida</p>
+            <p v-if="errors.has('description')" class="incorrectInput">La descripción es requerida, debe ser minimo de 400 caracteres y maximo de 1500</p>
           </div>
           <div class="col-sm">
             <h5>Reto al que pertenece esta idea</h5>
