@@ -5,7 +5,7 @@
     <div class="main-container container-fluid">
       <div class="row first">
         <div class="col-md-6 align-self-center main-image">
-          <h1 class="title">{{challenge.title}}</h1>
+          <h1 class="main-title">{{challenge.title}}</h1>
         </div>
       </div>
       <div class="short-description row justify-content-center">
@@ -147,9 +147,15 @@ export default {
       border: 2px solid #0e2469;
     }
   }
+  .main-title {
+    color: #0e2469;
+    h1 {
+      font-size: 2.5rem;
+    }
+  }
   .title {
     color: #0e2469;
-    width: 100%
+    width: 100%;
   }
   .parag {
     color: #020202;
@@ -159,7 +165,7 @@ export default {
     text-align: justify;
     margin: 20px 0px;
   }
-  .short-description{
+  .short-description {
     margin: 20px 0px;
   }
   .search {
