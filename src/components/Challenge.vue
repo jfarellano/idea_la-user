@@ -8,13 +8,18 @@
           <h1 class="title">{{challenge.title}}</h1>
         </div>
       </div>
+      <div class="short-description row justify-content-center">
+        <div class="col-md-10">
+          <h3>{{challenge.short_description}}</h3>
+        </div>
+      </div>
       <div class="description row justify-content-center">
         <div class="col-md-10">
           <p>{{challenge.description}}</p>
         </div>
       </div>
-      <div class="row second justify-content-center" v-if="ideas != ''">
-        <div class="input-group search">
+      <div class="row search justify-content-center" v-if="ideas != ''">
+        <div class="input-group col-md-8">
           <input
             type="text"
             class="form-control inputStyles"
@@ -131,9 +136,6 @@ export default {
     width: 100%;
     text-align: center;
   }
-  .input-group {
-    width: 80%;
-  }
   .inputStyles {
     border: 1px solid #0e2469;
     border-radius: 5px;
@@ -147,7 +149,6 @@ export default {
   }
   .title {
     color: #0e2469;
-    font-size: 1.75em;
     width: 100%
   }
   .parag {
@@ -156,6 +157,9 @@ export default {
   }
   .description {
     text-align: justify;
+    margin: 20px 0px;
+  }
+  .short-description{
     margin: 20px 0px;
   }
   .search {
