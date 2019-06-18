@@ -3,92 +3,95 @@
     <Header></Header>
     <div class="main-container container-fluid">
       <div class="row first">
-        <div class="col">
-          <div v-if="idea.picture == null">
-            <img
-              src="https://ep01.epimg.net/internacional/imagenes/2018/07/23/billete_a_macondo/1532310440_143390_1532310884_noticia_normal.jpg"
-            >
+        <div class="col-md-6 align-self-center main-image">
+          <img v-if="idea.idea_pictures != null" :src="idea.idea_pictures[0].url">
+        </div>
+        <div class="col-md-6 align-self-center">
+          <div class="row">
+            <h1 class="title">{{idea.title}}</h1>
           </div>
-          <div v-else>
-            <img v-bind:src="idea.picture.url">
+          <div class="row icons">
+            <div class="col wapp">
+              <font-awesome-icon @click="share('wap')" :icon="['fab', 'whatsapp']"></font-awesome-icon>
+            </div>
+            <div class="col face">
+              <font-awesome-icon @click="share('face')" :icon="['fab', 'facebook']"></font-awesome-icon>
+            </div>
+            <div class="col tw">
+              <font-awesome-icon @click="share('tw')" :icon="['fab', 'twitter']"></font-awesome-icon>
+            </div>
+          </div>
+          <div class="row">
+            <b-button @click='vote()' class="vote">Votar por esta idea</b-button>
           </div>
         </div>
-      </div>
-      <div class="row second">
-        <h1 class="title">{{idea.title}}</h1>
       </div>
       <div class="row third">
-        <p class="parag">{{idea.description}}</p>
-      </div>
-      <div class="row fourth justify-content-center">
-        <div v-if="idea.videoLink == ''">
-          <iframe
-            v-bind:src="idea.videoLink"
-            frameborder="0"
-            allow="accelerometer; autoplay; encrypted-media; gyroscope; picture-in-picture"
-            allowfullscreen
-          ></iframe>
+        <div class="container-desc">
+          <p class="parag">{{idea.description}}</p>
         </div>
-        <div v-else>
-          <iframe
-            src="https://www.youtube.com/embed/JVRY5z7-MpM"
-            frameborder="0"
-            allow="accelerometer; autoplay; encrypted-media; gyroscope; picture-in-picture"
-            allowfullscreen
-          ></iframe>
-        </div>
-      </div>
-      <div class="row fifth">
-        <b-button class="title" v-on:click.prevent="voteForIdea()">Votar por esta idea</b-button>
       </div>
 
-      <div v-if="tokenExists == true">
-        <div class="row sixth">
-          <b-form-group class="w-comment" label="Cuéntanos que tal te pareció esta idea">
-            <b-form-textarea placeholder="Comentario" v-model="newComment"></b-form-textarea>
-          </b-form-group>
-          <b-button v-on:click.prevent="commentIdea()">Enviar</b-button>
-        </div>
+      <div class="row sixth">
+        <b-button-group class="comment-box" v-if="logged()">
+          <b-button class="user">
+            <b-img
+              rounded="circle"
+              class="avatar img-responsive"
+              :src="getPic()"
+              alt="Circle image"
+            ></b-img>
+          </b-button>
+          <div class="comment">
+            <input type="text" v-model="comment.description" placeholder="Escribe tu comentario">
+          </div>
+          <div class="opt-wrap">
+            <b-button @click='commentIdea()' class="option" :disabled="comment.description == null || comment.description == ''">
+              <font-awesome-icon icon="paper-plane"></font-awesome-icon>
+            </b-button>
+          </div>
+        </b-button-group>
+        <h2 v-else>Si quieres poder comentar registate</h2>
       </div>
 
       <div class="row comments">
-        <div class="comment container-fluid">
-          <h3 class="title">Comentarios</h3>
-          <br>
-          <div class="row" v-for="(comment, index) in comments" :key="index">
-            <div class="col">
-              <p class="parag">{{comment.description}}</p>
-              <hr>
-            </div>
+        <b-button-group class="comment-box" v-for="comment in comments" :key='comment.id'>
+          <b-button class="user">
+            <b-img
+              rounded="circle"
+              class="avatar img-responsive"
+              src="http://placehold.it/30x30"
+              alt="Circle image"
+            ></b-img>
+          </b-button>
+          <div class="comment">
+            <p class="name">{{comment.user_name}}</p>
+            <p>{{comment.description}}</p>
           </div>
-        </div>
+        </b-button-group>
       </div>
     </div>
-    <b-modal id="modalPopover" title="Felicitaciones" ok-only>
-      <p class="parag">Tu voto se ha realizado exitosamente.</p>
-    </b-modal>
-    <b-modal id="modalPopover voted" title="Error" ok-only>
-      <p class="parag">Ya has votado por ésta idea.</p>
-    </b-modal>
+    <Alert ref="alert"></Alert>
   </section>
 </template>
 
 <script>
 import api from "../requests.js";
-
 import Header from "./Header.vue";
+import auth from "../authentication";
+import Alert from './Alert.vue'
+
 export default {
   components: {
-    Header
+    Header,
+    Alert
   },
   data() {
     return {
       ideaID: "",
-      idea: "",
-      tokenExists: false,
-      userInfo: {},
+      idea: {},
       comments: [],
-      newComment: "",
+      comment: {},
       err: {}
     };
   },
@@ -100,49 +103,70 @@ export default {
         .then(response => {
           this.idea = response.data;
         })
-        .catch(err => {
-          this.err = err
+        .catch(() => {
+          this.$refs.alert.network_error()
         });
     },
-    voteForIdea() {
-      if (this.tokenExists == false) {
-        this.$router.push("/register");
+    share(sn) {
+      if (sn == "wap")
+        window.location =
+          "whatsapp://send?text=Te comparto esta idea de #ImaginaTuCiudá " +
+          api.variable.WEB +
+          "idea/" +
+          this.$route.params.iId;
+      if (sn == "face")
+        window.location =
+          "https://www.facebook.com/sharer/sharer.php?u=" +
+          encodeURIComponent(
+            api.variable.WEB + "idea/" + this.$route.params.iId
+          );
+      if (sn == "tw")
+        window.location =
+          "https://twitter.com/home?status=" +
+          encodeURIComponent(
+            "Te comparto esta idea de #ImaginaTuCiudá " +
+              api.variable.WEB +
+              "idea/" +
+              this.$route.params.iId
+          );
+    },
+    getPic() {
+      return auth.storage.get("picture");
+    },
+    vote() {
+      if (this.logged()) {
+        this.$refs.alert.success('Tu voto se ha enviado, gracias por votar')
       } else {
-        api.idea
-          .vote(this.ideaID)
-          .then(() => {
-            this.$bvModal.show("modalPopover voted");
-          })
-          .catch(err => {
-            this.err = err
-            this.$bvModal.show("modalPopover");
-          });
+        this.$router.push("/register");
       }
     },
     loadComments() {
-      api.idea
-        .getComments(this.ideaID)
+      api.comments.index(this.ideaID)
         .then(response => {
           this.comments = response.data;
         })
-        .catch(err => {
-          this.err = err
+        .catch(() => {
+          this.$refs.alert.network_error()
         });
     },
     commentIdea() {
-      api.idea
-        .postComment(this.ideaID)
+      api.comments.create
+      (this.ideaID, this.comment)
         .then(() => {
-          location.reload();
+          this.loadComments()
+          this.comment = {}
+          this.$refs.alert.success('¡Tu comentario se ha enviado!')
         })
-        .catch(err => {
-          this.err = err
+        .catch(() => {
+          this.$refs.alert.error('No pudimos enviar tu comentario intenta de nuevo mas tarde')
         });
+    },
+    logged() {
+      return auth.storage.logged();
     }
   },
   created() {
     this.loadIdeaInfo();
-    this.checkToken();
     this.loadComments();
   }
 };
@@ -150,14 +174,44 @@ export default {
 
 <style lang="scss" scoped>
 .main-container {
-  margin-top: 110px;
-  .first {
-    background-color: #e6e6e6;
-    height: 300px;
+  margin-top: 90px;
+  .main-image {
+    width: 100%;
     text-align: center;
     img {
-      height: 300px;
-      margin: auto;
+      width: 100%;
+    }
+  }
+  .title {
+    color: #0e2469;
+    font-size: 37px;
+    margin: 0px;
+  }
+  .parag {
+    color: #9b9b9b;
+    margin: 0px;
+    text-align: justify;
+  }
+  .first {
+    padding: 30px;
+    .icons {
+      text-align: center;
+      font-size: 30px;
+      .wapp {
+        color: #25d366 !important;
+      }
+      .face {
+        color: #3c5a99 !important;
+      }
+      .tw {
+        color: #38a1f3 !important;
+      }
+    }
+    .vote {
+      width: 100%;
+      border-radius: 5px;
+      border-color: #0e2469;
+      background-color: #0e2469;
     }
   }
   .second {
@@ -165,6 +219,10 @@ export default {
   }
   .third {
     padding: 0px 50px;
+    .container-desc {
+      box-shadow: 0 0 6px 0 rgba(188, 188, 188, 0.5);
+      padding: 30px;
+    }
   }
   .fourth {
     margin-top: 40px;
@@ -182,32 +240,104 @@ export default {
     }
   }
   .sixth {
-    padding: 0px 50px 50px 50px;
-    .w-comment {
-      width: 100%;
-      color: #4d4d4d;
-      legend {
-        font-family: "Roboto Slab", serif;
-        font-size: 1.2em;
-      }
-      textarea {
-        border: 2px solid #4d4d4d;
-        border-radius: 0px;
-      }
+    padding: 0px 50px 20px 50px;
+    h2{
+      margin-top: 10px;
+      text-align: center;
+      width: 100%
     }
-    button {
-      border: 2px solid #4d4d4d;
-      color: #4d4d4d;
-      border-radius: 0px;
-      font-size: 1em;
-      background-color: transparent;
+    .comment-box {
+      width: 100%;
+      height: 50px;
+      border: none;
+      color: #0e2469;
+      margin-top: 20px;
+      .user {
+        width: 50px;
+        background-color: transparent;
+        border: none;
+        color: #0e2469;
+        flex: 0 1 auto;
+        text-align: left;
+      }
+      .comment {
+        width: 100%;
+        border: none;
+        background-color: #f8f8f8;
+        border-radius: 50px;
+        color: black;
+        input {
+          width: calc(100% - 25px);
+          position: relative;
+          left: 25px;
+          height: 100%;
+          border: none;
+          background-color: #f8f8f8;
+          color: black;
+        }
+      }
+      .opt-wrap {
+        background-color: #f8f8f8;
+        border-top-right-radius: 50px;
+        border-bottom-right-radius: 50px;
+      }
+      .option {
+        width: 80px;
+        height: 50px;
+        background-color: #0e2469;
+        color: white;
+        border: none;
+        border-radius: 50px;
+      }
+      .block {
+        width: 50px;
+        background-color: transparent;
+        color: #6a6a6a;
+      }
+      .avatar {
+        width: 34px;
+        height: 34px;
+      }
+      .extra {
+        color: #6a6a6a;
+        font-size: 12px;
+      }
     }
   }
   .comments {
-    .comment {
-      padding: 10px 50px;
-      margin-bottom: 20px;
-      border-bottom: 0.5px solid #e6e6e6;
+    padding: 0px 50px 0px 50px;
+    margin-bottom: 30px;
+    .comment-box {
+      width: 100%;
+      border: none;
+      color: #0e2469;
+      margin-top: 20px;
+      .user {
+        width: 50px;
+        background-color: transparent;
+        border: none;
+        color: #0e2469;
+        flex: 0 1 auto;
+        text-align: left;
+      }
+      .comment {
+        width: 100%;
+        border: none;
+        background-color: white;
+        color: black;
+        .name{
+          color: #0e2469;
+        }
+        p {
+          border: none;
+          color: black;
+          margin: 0px;
+        }
+      }
+      .avatar {
+        width: 34px;
+        height: 34px;
+      }
     }
   }
 }
