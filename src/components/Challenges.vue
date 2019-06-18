@@ -8,7 +8,7 @@
           <img src="../assets/challenges.png">
         </div>
         <div class="col-md-6 align-self-center">
-          <h1 class="title">Conoce los retos y ayuda a crecer a Barranquilla</h1>
+          <h1 class="main-title">Conoce los retos y ayuda a crecer a Barranquilla</h1>
           <p
             class="parag"
           >Para lograrlo necesitamos que tú seas parte del cambio. Sabemos que tienesmucho que aportar. Tus ideas, experiencia y tiempo nos ayudarán a encontrarsoluciones sostenibles a los desafíos que afrontamos. ¡Todos podemosconvertirnos en protagonistas de nuestra ciudad!</p>
@@ -81,8 +81,12 @@ export default {
     width: 100%;
     text-align: center;
     img{
-      width: 80%;
+      width: 70%;
     }
+  }
+  .main-title{
+    color: #0E2469;
+    margin:0px;
   }
   .title{
     color: #0E2469;
