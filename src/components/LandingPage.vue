@@ -117,7 +117,7 @@ export default {
     background-color: #fbeef5;
   }
   .section {
-    min-height: 70vh;
+    min-height: 60vh;
     width: 100%;
     // padding: 30px 0px 0px 80px;
     margin-top: 0px;
@@ -155,8 +155,8 @@ export default {
     }
     @media (min-width: 1100px) {
       width: 1100px !important;
-      height: 770px !important;
-      min-height: 770px !important;
+      height: 660px !important;
+      min-height: 660px !important;
     }
   }
   .left{
@@ -168,7 +168,6 @@ export default {
   }
   .brands {
     width: 100%;
-    max-width: 1100px;
     margin-top: 0px;
     background-color: white;
     text-align: center;
@@ -181,8 +180,7 @@ export default {
       height: 100px;
       text-align: center;
     }
-
-    @media (max-width: 1100px) {
+    @media (min-width: 1100px) {
       width: 1100px !important;
     }
   }
