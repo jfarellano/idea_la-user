@@ -20,7 +20,7 @@
           </div>
         </div>
       </div>
-      <div class="row pink">
+      <div class="row blue">
         <div class="section left container-fluid">
           <div class="row justify-content-center align-items-center">
             <div class="col-md-6 align-self-center info order-2 order-md-2">
@@ -113,8 +113,8 @@ export default {
       height: calc(100vw * 0.5);
     }
   }
-  .pink{
-    background-color: #fbeef5;
+  .blue{
+    background-color: #e2f3fd;
   }
   .section {
     min-height: 60vh;
