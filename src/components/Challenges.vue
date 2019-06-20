@@ -92,10 +92,12 @@ export default {
     color: #0E2469;
     font-size: 1.1rem;
     margin:0px;
+    width: 100%;
   }
   .parag{
     color: #9B9B9B;
     margin:0px;
+    white-space: normal;
     text-align: justify;
   }
   .first {
