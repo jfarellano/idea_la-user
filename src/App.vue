@@ -19,7 +19,7 @@ export default {
   *{
     font-family: 'Rubik', sans-serif;
   }
-  p{
+  .jump{
     white-space: pre-wrap;
   }
   #app {

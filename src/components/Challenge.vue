@@ -15,7 +15,7 @@
       </div>
       <div class="description row justify-content-center">
         <div class="col-md-10">
-          <p>{{challenge.description}}</p>
+          <p class="jump">{{challenge.description}}</p>
         </div>
       </div>
       <div class="row search justify-content-center" v-if="ideas != ''">

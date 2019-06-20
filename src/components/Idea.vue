@@ -28,7 +28,7 @@
       </div>
       <div class="row third">
         <div class="container-desc">
-          <p class="parag">{{idea.description}}</p>
+          <p class="parag jump">{{idea.description}}</p>
         </div>
       </div>
 

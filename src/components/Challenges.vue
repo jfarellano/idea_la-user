@@ -10,7 +10,7 @@
         <div class="col-md-6 align-self-center">
           <h1 class="main-title">Conoce los retos y ayuda a crecer a Barranquilla</h1>
           <p
-            class="parag"
+            class="parag jump"
           >Para lograrlo necesitamos que tú seas parte del cambio. Sabemos que tienesmucho que aportar. Tus ideas, experiencia y tiempo nos ayudarán a encontrarsoluciones sostenibles a los desafíos que afrontamos. ¡Todos podemosconvertirnos en protagonistas de nuestra ciudad!</p>
         </div>
       </div>
