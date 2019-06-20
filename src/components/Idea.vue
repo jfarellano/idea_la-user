@@ -24,7 +24,7 @@
               <font-awesome-icon @click="share('tw')" :icon="['fab', 'twitter']"></font-awesome-icon>
             </div>
           </div>
-          <div v-if="stage(2)" class="row">
+          <div v-if="stage(3)" class="row">
             <b-button @click="vote()" class="vote">Votar por esta idea</b-button>
           </div>
         </div>
