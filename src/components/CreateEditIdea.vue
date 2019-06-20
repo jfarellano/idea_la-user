@@ -39,36 +39,40 @@
                 name="description"
               ></b-form-textarea>
             </div>
-            <p v-if="errors.has('description')" class="incorrectInput">La descripción es requerida, debe ser minimo de 400 caracteres y maximo de 1500</p>
+            <p
+              v-if="errors.has('description')"
+              class="incorrectInput"
+            >La descripción es requerida, debe ser minimo de 400 caracteres y maximo de 1500</p>
           </div>
           <div class="col-sm">
-            <h5>Reto al que pertenece esta idea</h5>
-            <b-form-select
-              class="mb-2 mr-sm-2 mb-sm-0 squareInput inputStyles"
-              :value="null"
-              id="inline-form-custom-select-pref"
-              v-model="idea.challenge_id"
-              v-validate="'required'"
-              :class="{'has-error': errors.has('callenge_invalid')}"
-              name="challenge"
-            >
-              <option
-                slot="first"
-                v-for="(challenge, index) in challenges"
-                v-bind:value="challenge.id"
-                :key="index"
-              >{{ challenge.title }}</option>
-            </b-form-select>
-            <p
-              v-if="errors.has('challenge')"
-              class="incorrectInput"
-            >Selecciona el reto al que pertenece tu idea</p>
-
-            <h5>Imagen de perfil</h5>
+            <div v-if="!edit">
+              <h5>Reto al que pertenece esta idea</h5>
+              <b-form-select
+                class="mb-2 mr-sm-2 mb-sm-0 squareInput inputStyles"
+                :value="null"
+                id="inline-form-custom-select-pref"
+                v-model="idea.challenge_id"
+                v-validate="'required'"
+                :class="{'has-error': errors.has('callenge_invalid')}"
+                name="challenge"
+              >
+                <option
+                  slot="first"
+                  v-for="(challenge, index) in challenges"
+                  v-bind:value="challenge.id"
+                  :key="index"
+                >{{ challenge.title }}</option>
+              </b-form-select>
+              <p
+                v-if="errors.has('challenge')"
+                class="incorrectInput"
+              >Selecciona el reto al que pertenece tu idea</p>
+            </div>
+            <h5>Imagen de tu idea</h5>
             <b-button
               @click="$refs.fileInput.$el.querySelector('input[type=file]').click()"
               class="loadBtn"
-              v-if="idea.image == null"
+              v-if="hasPic(idea.idea_pictures)"
             >Carga tu imagen</b-button>
             <b-button-group class="loadBtn" v-else>
               <b-button
@@ -119,41 +123,74 @@ export default {
   data() {
     return {
       challenges: [],
-      idea: {}
+      idea: {},
+      edit: false
     };
   },
   methods: {
     createIdea() {
       if (
         this.idea.title != null ||
-        this.idea.image != null ||
         this.idea.description != null ||
         this.idea.challenge_id != null ||
         this.idea.title != "" ||
-        this.idea.image != "" ||
         this.idea.description != "" ||
         this.idea.challenge_id != ""
       ) {
         var fd = new FormData();
-        fd.append("image", this.idea.image);
+        if (this.idea.image != null) {
+          if (this.edit) {
+            fd.append("update_img", true);
+            var key = "";
+            if (this.idea.idea_pictures.length == 0) key = "image_create";
+            else key = "image_" + this.idea.idea_pictures[0].id + "_update";
+            fd.append(key, this.idea.image);
+          } else {
+            fd.append("image", this.idea.image);
+            fd.append("challenge_id", this.idea.challenge_id);
+          }
+        }
         fd.append("title", this.idea.title);
         fd.append("description", this.idea.description);
-        fd.append("challenge_id", this.idea.challenge_id);
-        api.idea
-          .create(fd)
-          .then(response => {
-            this.$refs.alert.success("Tu idea se ha creado correctamente");
-            this.$router.push("/idea/" + response.data.id);
-          })
-          .catch(() => {
-            this.$refs.alert.network_error();
-          });
-      }else{
-        this.$refs.alert.form_error()
+        if (this.edit) {
+          api.ideas
+            .edit(this.$route.params.eId, fd)
+            .then(response => {
+              this.$refs.alert.success("Tu idea se ha actualizado correctamente");
+              this.$router.push("/idea/" + response.data.id);
+            })
+            .catch(() => {
+              this.$refs.alert.network_error();
+            });
+        } else {
+          api.idea
+            .create(fd)
+            .then(response => {
+              this.$refs.alert.success("Tu idea se ha creado correctamente");
+              this.$router.push("/idea/" + response.data.id);
+            })
+            .catch(() => {
+              this.$refs.alert.network_error();
+            });
+        }
+      } else {
+        this.$refs.alert.form_error();
       }
     },
     cancelCreateIdea() {
       this.$router.push("/");
+    },
+    hasPic(images) {
+      if (this.edit) {
+        if (images == null) return true;
+        else {
+          if (images.length == 0) return true;
+          else return false;
+        }
+      } else {
+        if (this.idea.image == null) return true;
+        else return false;
+      }
     }
   },
   created() {
@@ -163,8 +200,22 @@ export default {
         this.challenges = response.data;
       })
       .catch(() => {
-        this.$refs.alert.network_error()
+        this.$refs.alert.network_error();
       });
+    var id = this.$route.params.eId;
+    if (id != "new") {
+      this.edit = true;
+      api.idea
+        .getInfo(id)
+        .then(response => {
+          this.idea = response.data;
+        })
+        .catch(() => {
+          this.$refs.alert.network_error();
+        });
+    } else {
+      this.edit = false;
+    }
   }
 };
 </script>

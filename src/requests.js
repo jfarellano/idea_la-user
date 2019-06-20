@@ -40,14 +40,20 @@ export default {
   challenges: {
     index: function () {
       return r.get(SERVER_URL + '/challenges')
-      },
-    create: function (body) {
-      return r.post(SERVER_URL + '/challenges', body ,getHeaders)
-    }
+      }
   },
   ideas: {
     index: function(){
       return r.get(SERVER_URL + '/ideas')
+    },
+    user: function(){
+      return r.get(SERVER_URL + '/users_ideas', getHeaders())
+    },
+    erase: function(id){
+      return r.delete(SERVER_URL + '/ideas/' + id, getHeaders())
+    },
+    edit: function(id, body){
+      return r.put(SERVER_URL + '/ideas/'+ id, body, getHeaders())
     }
   },
   challenge: {

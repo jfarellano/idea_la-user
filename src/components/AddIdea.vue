@@ -13,7 +13,7 @@
       if (auth.storage.get('secret') == null) {
         this.$router.push("/login");
       } else {
-        this.$router.push("/creareditaridea");
+        this.$router.push("/creareditaridea/new");
       }
     }
   },

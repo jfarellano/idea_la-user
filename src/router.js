@@ -12,6 +12,7 @@ import CreateEditIdea from './components/CreateEditIdea.vue'
 import RecoverPassword from './components/RecoverPassword.vue'
 import RecoverPasswordRequest from './components/RecoverPasswordRequest.vue'
 import Profile from './components/Profile.vue'
+import MyIdeas from './components/MyIdeas.vue'
 
 Vue.use(Router)
 
@@ -53,7 +54,7 @@ export default new Router ({
             component: MyProfile
         },
         {
-            path: '/creareditaridea',
+            path: '/creareditaridea/:eId',
             name: 'CreateEditIdea',
             component: CreateEditIdea
         },
@@ -71,6 +72,11 @@ export default new Router ({
             path: '/perfil',
             name: 'Profile',
             component: Profile
+        },
+        {
+            path: '/mis-ideas',
+            name: 'MyIdeas',
+            component: MyIdeas
         }
     ]
 })
