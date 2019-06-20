@@ -236,6 +236,7 @@ export default {
     },
     cancel(){
       this.getUser()
+      this.$router.push('/')
     }
   },
   created() {
