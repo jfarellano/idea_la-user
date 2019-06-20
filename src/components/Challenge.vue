@@ -213,14 +213,13 @@ export default {
         h3 {
           font-size: 1.3rem;
           color: #0e2469;
-          &:hover {
-            text-decoration: none;
-          }
+          width: 100%;
         }
         p {
           color: #262626;
           margin-top: 5px;
           margin-bottom: 5px;
+          white-space: normal;
           text-align: justify;
         }
       }
