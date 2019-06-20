@@ -219,7 +219,6 @@ export default {
           color: #262626;
           margin-top: 5px;
           margin-bottom: 5px;
-          white-space: normal;
           text-align: justify;
         }
       }
