@@ -212,13 +212,17 @@
             </div>
 
             <div class="spacer">
-              <div class="row justify-content-end">
+              <div class="row justify-content-justify">
                 <b-button
-                  type="button"
-                  class="btn btn-primary btn-lg btn-block"
+                  class="btn btn-primary btn-lg btn-block col"
                   id="btnRegisterStyle"
                   v-on:click.prevent="registerCheckFormData()"
                 >Registrar</b-button>
+                <router-link
+                  tag="b-button"
+                  to="/login"
+                  class="btn btn-primary btn-lg btn-block col cancel"
+                >cancelar</router-link>
               </div>
               <div class="row justify-content-end">
                 <p class="parag" id="registerStyle">
@@ -420,13 +424,25 @@ export default {
     background-color: #0e2469;
     border-radius: 5px;
     color: white;
-    max-width: 33%;
+    @media (max-width: 800px) {
+      max-width: 100% !important;
+    }
+  }
+  .cancel{
+    background-color: transparent;
+    border: solid 1px #0e2469;
+    border-radius: 5px;
+    color: #0e2469;
     @media (max-width: 800px) {
       max-width: 100% !important;
     }
   }
   .spacer {
     padding-top: 10px;
+    button {
+      margin: 5px;
+      width: 100%;
+    }
     @media (max-width: 800px) {
       padding-left: 15px;
       padding-right: 15px;

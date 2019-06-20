@@ -56,6 +56,11 @@
               :disabled="!validLogin()"
             >Iniciar Sesión</button>
 
+            <router-link
+              tag="button"
+              class="btn btn-primary btn-lg btn-block cancel"
+              to="/"
+            >Cancelar</router-link>
             <p class="parag" id="registerStyle">
               ¿No tienes cuenta?
               <router-link to="/register">Registrate aquí.</router-link>
@@ -215,6 +220,15 @@ export default {
     border-radius: 5px;
     border-color: #0E2469;
     background-color: #0E2469;
+    margin-top: 17px;
+    margin-bottom: 17px;
+  }
+  .cancel {
+    height: 50px;
+    border-radius: 5px;
+    border: solid 1px #0E2469;
+    background-color: transparent;
+    color: #0E2469;
     margin-top: 17px;
     margin-bottom: 17px;
   }

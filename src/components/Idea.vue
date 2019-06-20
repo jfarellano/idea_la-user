@@ -2,6 +2,9 @@
   <section>
     <Header></Header>
     <div class="main-container container-fluid">
+      <div class="row back">
+        <font-awesome-icon @click="back()" icon="arrow-left"></font-awesome-icon>
+      </div>
       <div class="row first">
         <div class="col-md-6 align-self-center main-image">
           <img v-if="idea.idea_pictures != null" :src="idea.idea_pictures[0].url">
@@ -178,6 +181,10 @@ export default {
     },
     logged() {
       return auth.storage.logged();
+    },
+    back(){
+      var route = '/reto/' + this.idea.challenge.id
+      this.$router.push(route)
     }
   },
   created() {
@@ -209,6 +216,7 @@ export default {
   }
   .first {
     padding: 30px;
+    padding-top: 10px;
     .icons {
       text-align: center;
       font-size: 30px;
@@ -239,6 +247,13 @@ export default {
       box-shadow: 0 0 6px 0 rgba(188, 188, 188, 0.5);
       padding: 30px;
     }
+  }
+  .back{
+    text-align: center;
+    color: #0e2469;
+    font-size: 30px;
+    padding-top: 10px;
+    padding-left: 45px;
   }
   .fourth {
     margin-top: 40px;
