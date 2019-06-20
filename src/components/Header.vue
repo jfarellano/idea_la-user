@@ -22,7 +22,7 @@
             <router-link tag="a" class="nav-link" to="/">Inicio</router-link>
           </li>
           <li>
-            <router-link tag="a" class="nav-link" to="/retos">Retos</router-link>
+            <router-link v-if="stage_from(1) > 0" tag="a" class="nav-link" to="/retos">Retos</router-link>
           </li>
           <div v-if="tokenExists == false">
             <li>
@@ -41,10 +41,11 @@
                 ></b-img>
               </a>
               <div :class="dropClass('dropdown-menu')" aria-labelledby="navbarDropdownMenuLink">
+                <div v-if="stage_from(1)">
                 <router-link tag="a" class="dropdown-item" to="/mis-ideas">Mis Ideas</router-link>
+                </div>
                 <router-link tag="a" class="dropdown-item" to="/perfil">Mi Perfil</router-link>
                 <a class="dropdown-item logout" @click="userLogout()">Cerrar sesión</a>
-                
               </div>
             </li>
           </div>
@@ -57,10 +58,10 @@
 </template>
 
 <script>
-import auth from "../authentication.js"
-import api from "../requests.js"
-import Survey from "./Survey.vue"
-import Alert from './Alert.vue'
+import auth from "../authentication.js";
+import api from "../requests.js";
+import Survey from "./Survey.vue";
+import Alert from "./Alert.vue";
 
 export default {
   data() {
@@ -77,12 +78,16 @@ export default {
   },
   methods: {
     userLogout() {
-      auth.session
-        .logout()
-        .then(() => {
-          auth.storage.clear();
-          location.reload();
-        })
+      auth.session.logout().then(() => {
+        auth.storage.clear();
+        location.reload();
+      });
+    },
+    stage(stage) {
+      return auth.storage.get("stage") == stage;
+    },
+    stage_from(stage) {
+      return auth.storage.get("stage") >= stage;
     },
     getPic() {
       return auth.storage.get("picture");
@@ -124,10 +129,18 @@ export default {
               this.$refs.survey.open();
             }
           });
+          auth.session.stage().then(response => {
+            auth.storage.set_stage(response.data.number);
+          });
         })
-        .catch(() => {
-          this.$refs.alert.network_error()
+        .catch((err) => {
           auth.storage.clear();
+          this.tokenExists = false
+          if ( err.response.data.authentication == 'user not found'){
+            this.$refs.alert.warning('Tu sesión ha caducado, vuelve a iniciar sesión')
+          } else {
+            this.$refs.alert.network_error();
+          }
         });
     } else {
       auth.storage.clear();

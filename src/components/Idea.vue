@@ -21,7 +21,7 @@
               <font-awesome-icon @click="share('tw')" :icon="['fab', 'twitter']"></font-awesome-icon>
             </div>
           </div>
-          <div class="row">
+          <div v-if="stage(2)" class="row">
             <b-button @click="vote()" class="vote">Votar por esta idea</b-button>
           </div>
         </div>
@@ -155,6 +155,12 @@ export default {
         .catch(() => {
           this.$refs.alert.network_error();
         });
+    },
+    stage(stage) {
+      return auth.storage.get("stage") == stage;
+    },
+    stage_from(stage) {
+      return auth.storage.get("stage") >= stage;
     },
     commentIdea() {
       api.comments

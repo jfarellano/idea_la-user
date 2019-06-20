@@ -1,12 +1,14 @@
 <template>
-  <b-button class="add-button title" v-on:click.prevent="createIdea">Agrega nueva idea</b-button>
+  <b-button v-if="active" class="add-button title" v-on:click.prevent="createIdea">Agrega nueva idea</b-button>
 </template>
 
 <script>
   import auth from "../authentication.js"
   export default {
   data() {
-    return {};
+    return {
+      active: false
+    };
   },
   methods: {
     createIdea() {
@@ -17,7 +19,9 @@
       }
     }
   },
-  created() {}
+  created() {
+    this.active = auth.storage.get('stage') == 1
+  }
 };
 </script>
 

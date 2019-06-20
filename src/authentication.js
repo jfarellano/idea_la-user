@@ -14,6 +14,9 @@ export default {
     },
     logout: function () {
       return r.delete(api.variable.URL + '/sessions', getHeaders())
+    },
+    stage: function() {
+      return r.get(api.variable.URL + '/current_stage')
     }
   },
   storage: {
@@ -28,6 +31,9 @@ export default {
     },
     set_name: function (name, lastname) {
       localStorage.setItem('name', api.utils.upcase(name + ' ' + lastname))
+    },
+    set_stage: function (stage) {
+      localStorage.setItem('stage', stage)
     },
     logged: function () {
       if (localStorage.getItem('secret') != null && localStorage.getItem('admin')) {

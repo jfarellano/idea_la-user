@@ -31,7 +31,7 @@
             <h3>{{idea.title}}</h3>
             <p class="parag">{{getDescription(idea.description)}}</p>
           </div>
-          <div class="row modifiy align-self-justify">
+          <div v-if="stage(1)" class="row modifiy align-self-justify">
             <font-awesome-icon v-if='idea.edition < 2' @click.prevent="edit(idea.id)" class="col" icon="pencil-alt"></font-awesome-icon>
             <font-awesome-icon @click.prevent="erase(idea.id)" class="col" icon="trash-alt"></font-awesome-icon>
           </div>
@@ -47,6 +47,7 @@
 
 <script>
 import api from "../requests.js";
+import auth from '../authentication.js'
 import Alert from "./Alert.vue";
 import Header from "./Header.vue";
 import Idea from "./AddIdea.vue";
@@ -68,7 +69,6 @@ export default {
   },
   methods: {
     erase(id) {
-			var here = this
       this.$refs.alert.confirm(
         "Borrar",
         "¿Estas seguro que quieres borrar tu idea?",
@@ -120,6 +120,12 @@ export default {
         .catch(() => {
           this.$refs.alert.network_error();
         });
+    },
+    stage(stage) {
+      return auth.storage.get("stage") == stage;
+    },
+    stage_from(stage) {
+      return auth.storage.get("stage") >= stage;
     }
   },
   created() {
