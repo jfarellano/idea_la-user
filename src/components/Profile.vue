@@ -46,12 +46,10 @@
             class="form-control inputStyles"
             placeholder="ej. example@email.com"
             v-model="userData.email"
-            v-validate="'required|email'"
-            :class="{'has-error': errors.has('email_invalid')}"
+            disabled
             name="email"
           >
         </div>
-        <p v-if="errors.has('email')" class="incorrectInput">El correo ingresado no es válido.</p>
         <h5>Nombre</h5>
         <div class="input-group">
           <input
@@ -235,7 +233,6 @@ export default {
         });
     },
     cancel(){
-      this.getUser()
       this.$router.push('/')
     }
   },

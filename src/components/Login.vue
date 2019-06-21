@@ -130,6 +130,9 @@ export default {
             response.data.secret,
             response.data.expire_at
           )
+          auth.session.stage().then(response => {
+            auth.storage.set_stage(response.data.number);
+          });
           this.$router.push("/");
         })
         .catch(err => {

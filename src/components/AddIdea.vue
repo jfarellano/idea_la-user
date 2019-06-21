@@ -4,6 +4,7 @@
 
 <script>
   import auth from "../authentication.js"
+import { setTimeout } from 'timers';
   export default {
   data() {
     return {

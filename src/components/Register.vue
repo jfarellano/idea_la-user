@@ -145,7 +145,7 @@
                     class="form-control inputStyles"
                     placeholder="ej. 20"
                     v-model="userData.age"
-                    v-validate="'max:3|required|min_value:1'"
+                    v-validate="'min_value:18|max:3|required|min_value:1'"
                     :class="{'has-error': errors.has('age_invalid')}"
                     name="age"
                   >
@@ -185,7 +185,7 @@
                   class="mb-2 mr-sm-2 mb-sm-0 squareInput inputStyles"
                   :value="null"
                   id="inline-form-custom-select-pref"
-                  v-model="indexChosedHood"
+                  v-model="hood"
                   v-validate="'required'"
                   :class="{'has-error': errors.has('hood_invalid')}"
                   name="hood"
@@ -194,7 +194,7 @@
                   <option slot="first" :value="null"></option>
                   <option
                     v-for="(location, index) in locations"
-                    :value="location.id"
+                    :value="location"
                     :key="index"
                   >{{ upcase(location.name) }}</option>
                 </b-form-select>
@@ -248,7 +248,7 @@ export default {
       userData: {},
       locations: [],
       chosedHood: "",
-      indexChosedHood: "",
+      hood: {},
       locationAuto: "",
       indexChosedChallenge: "",
       userCredentials: {}
@@ -320,9 +320,8 @@ export default {
       });
     },
     switchView() {
-      var i = this.indexChosedHood;
-      this.userData.location_id = this.indexChosedHood;
-      this.locationAuto = this.upcase(this.locations[i].hood);
+      this.userData.location_id = this.hood.id;
+      this.locationAuto = this.upcase(this.hood.hood.replace(/_/g, ' '));
     },
     upcase(str) {
       return api.utils.upcase(str);

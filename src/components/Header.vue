@@ -21,9 +21,11 @@
           <li>
             <router-link tag="a" class="nav-link" to="/">Inicio</router-link>
           </li>
-          <li>
-            <router-link v-if="stage_from(1) > 0" tag="a" class="nav-link" to="/retos">Retos</router-link>
-          </li>
+          <div v-if="stage_from(1)">
+            <li>
+              <router-link tag="a" class="nav-link" to="/retos">Retos</router-link>
+            </li>
+          </div>
           <div v-if="tokenExists == false">
             <li>
               <router-link tag="a" class="nav-link" to="/login">Ingresar</router-link>
@@ -42,7 +44,7 @@
               </a>
               <div :class="dropClass('dropdown-menu')" aria-labelledby="navbarDropdownMenuLink">
                 <div v-if="stage_from(1)">
-                <router-link tag="a" class="dropdown-item" to="/mis-ideas">Mis Ideas</router-link>
+                  <router-link tag="a" class="dropdown-item" to="/mis-ideas">Mis Ideas</router-link>
                 </div>
                 <router-link tag="a" class="dropdown-item" to="/perfil">Mi Perfil</router-link>
                 <a class="dropdown-item logout" @click="userLogout()">Cerrar sesión</a>
@@ -69,7 +71,8 @@ export default {
       tokenExists: false,
       fullname: "",
       expanded: false,
-      show: false
+      show: false,
+      stage: 0
     };
   },
   components: {
@@ -83,11 +86,11 @@ export default {
         location.reload();
       });
     },
-    stage(stage) {
-      return auth.storage.get("stage") == stage;
+    stage_is(stage) {
+      return this.stage == stage;
     },
     stage_from(stage) {
-      return auth.storage.get("stage") >= stage;
+      return this.stage >= stage;
     },
     getPic() {
       return auth.storage.get("picture");
@@ -114,6 +117,10 @@ export default {
   },
   created() {
     var loged = auth.storage.logged();
+    auth.session.stage().then(response => {
+      auth.storage.set_stage(response.data.number)
+      this.stage = response.data.number
+    });
     if (loged) {
       this.tokenExists = loged;
       api.user
@@ -125,25 +132,22 @@ export default {
           auth.storage.set_name(response.data.name, response.data.lastname);
           this.fullname = auth.storage.get("name");
           api.user.survey().then(response => {
-            if (response.data.complete_survey) {
+            if (response.data.prompt_survey) {
               this.$refs.survey.open();
             }
           });
-          auth.session.stage().then(response => {
-            auth.storage.set_stage(response.data.number);
-          });
         })
-        .catch((err) => {
+        .catch(err => {
           auth.storage.clear();
-          this.tokenExists = false
-          if ( err.response.data.authentication == 'user not found'){
-            this.$refs.alert.warning('Tu sesión ha caducado, vuelve a iniciar sesión')
+          this.tokenExists = false;
+          if (err.response.data.authentication == "user not found") {
+            this.$refs.alert.warning(
+              "Tu sesión ha caducado, vuelve a iniciar sesión"
+            );
           } else {
             this.$refs.alert.network_error();
           }
         });
-    } else {
-      auth.storage.clear();
     }
   },
   directives: {
@@ -171,7 +175,7 @@ export default {
   color: white;
   .navbar-brand {
     img {
-      height: 44px;
+      height: 70px;
       margin-left: 6%;
     }
   }

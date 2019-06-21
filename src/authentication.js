@@ -45,6 +45,9 @@ export default {
           return false
         }
       } else {
+        var stage = localStorage.getItem('stage')
+        localStorage.clear()
+        localStorage.setItem('stage', stage)
         return false
       }
     },
