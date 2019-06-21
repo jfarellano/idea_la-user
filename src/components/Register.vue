@@ -104,7 +104,7 @@
         <h5>Documento de identificación</h5>
         <div class="input-group">
           <input
-            type="text"
+            type="number"
             class="form-control inputStyles"
             placeholder="ej. 1234567890"
             v-model="userData.cc"
@@ -124,6 +124,7 @@
             ref="password"
             :class="{'has-error': errors.has('pass_required')}"
             name="password"
+            @keydown.space.prevent
           >
         </div>
         <p
@@ -225,6 +226,7 @@
 
 <script>
 import api from "../requests.js";
+import auth from "../authentication.js";
 import Alert from "./Alert.vue";
 export default {
   data() {
@@ -292,7 +294,22 @@ export default {
       api.user
         .create(fd)
         .then(() => {
-          this.$router.push("/login");
+          auth.session
+            .login({
+              email: this.userData.email,
+              password: this.userData.password
+            })
+            .then(response => {
+              auth.storage.set(
+                response.data.user.id,
+                response.data.secret,
+                response.data.expire_at
+              );
+              auth.session.stage().then(response => {
+                auth.storage.set_stage(response.data.number);
+              });
+              this.$router.push("/");
+            });
         })
         .catch(() => {
           this.$refs.alert.error(

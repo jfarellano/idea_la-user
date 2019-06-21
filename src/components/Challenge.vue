@@ -3,7 +3,7 @@
     <Header></Header>
     <Idea></Idea>
     <div class="main-container container-fluid">
-      <div class="row first">
+      <div :style="'background-image: url(' + challenge.challenge_pictures[0].url + ')'" class="row first">
         <div class="col-md-6 align-self-center main-image">
           <h1 class="main-title">{{challenge.title}}</h1>
         </div>
@@ -175,7 +175,7 @@ export default {
     padding: 50px;
     min-height: 400px;
     background-size: 100%;
-    background-image: url("../assets/group.svg");
+    // background-image: url("../assets/group.svg");
     background-repeat: no-repeat;
     background-position: right bottom;
   }

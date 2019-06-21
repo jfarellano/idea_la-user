@@ -19,8 +19,10 @@
             <div v-else>
               <div v-if="!successChange">
                 <p class="recuperar-pass">Recuperar contraseña</p>
-                <h3 class="input-title" id="email">Introduce tu nueva contraseña. <br>
-                Recuerda que debe contener mínimo 6 caracteres.</h3>
+                <h3 class="input-title" id="email">
+                  Introduce tu nueva contraseña.
+                  <br>Recuerda que debe contener mínimo 6 caracteres.
+                </h3>
 
                 <div class="input-group">
                   <input
@@ -31,12 +33,14 @@
                     v-validate="'required|min:6'"
                     :class="{'has-error': errors.has('password_invalid')}"
                     name="password"
-                    v-on:keyup.enter="userLogin()"
+                    @keydown.space.prevent
+                    ref="password"
                   >
                 </div>
-                <p v-if="errors.has('password')" class="incorrectInput">
-                  La contraseña debe ser minimo de 6 caracteres
-                </p>
+                <p
+                  v-if="errors.has('password')"
+                  class="incorrectInput"
+                >La contraseña debe ser minimo de 6 caracteres</p>
                 <div v-else>
                   <br>
                 </div>
@@ -46,23 +50,20 @@
                     type="password"
                     class="form-control inputStyles"
                     v-model="passwordConfirm"
-                    v-validate="'required'"
-                    :class="{'has-error': errors.has('password_invalid')}"
-                    name="password"
+                    v-validate="'required|confirmed:password'"
+                    :class="{'has-error': errors.has('password_confirm_invalid')}"
+                    name="password_confirm"
                     v-on:keyup.enter="userLogin()"
                   >
                 </div>
-                <p v-if="errors.has('password')" class="incorrectInput">
-                  Este campo es obligatorio.
-                </p>
-                
+                <p v-if="errors.has('password_confirm')" class="incorrectInput">Tu contraseña no coincide</p>
+
                 <button
                   type="button"
                   class="btn btn-primary btn-lg btn-block btnContinueStyle"
                   v-on:click.prevent="confirmPassword()"
                   :disabled="!validRecover()"
                 >Aceptar</button>
-
               </div>
               <div v-else>
                 <p class="recuperar-pass solicitud-ex">¡Cambio Exitoso!</p>
@@ -80,58 +81,60 @@
 
 <script>
 import api from "../requests.js";
-import Alert from './Alert.vue'
+import Alert from "./Alert.vue";
 export default {
-  data(){
+  data() {
     return {
-      password: '',
-      passwordConfirm: '',
+      password: "",
+      passwordConfirm: "",
       validToken: true,
       successChange: false,
-      token: ''
-    }
+      token: ""
+    };
   },
   components: {
     Alert
   },
-  created(){
+  created() {
     this.token = this.$route.params.token;
-    api.password.validate(
-      this.token
-    ).then(() => {
-      this.validToken = true;
-    }).catch(() => {
-      this.validToken = false;
-    })
+    api.password
+      .validate(this.token)
+      .then(() => {
+        this.validToken = true;
+      })
+      .catch(() => {
+        this.validToken = false;
+      });
   },
   methods: {
     validRecover() {
-      if (this.errors.count() == 0 && this.password != '' && this.passwordConfirm != '') {
+      if (
+        this.errors.count() == 0
+      ) {
         return true;
       } else {
         return false;
       }
     },
-    confirmPassword(){
-      if (this.passwordConfirm != this.password) {
-        this.$refs.alert.warning('Las contraseñas no coinciden')
-      } else {
-        api.password.change(this.token, {
+    confirmPassword() {
+      api.password
+        .change(this.token, {
           password: this.password
-        }).then(() => {
-          this.successChange = true;
-        }).catch(() => {
-          this.$refs.alert.network_error()
         })
-      }
+        .then(() => {
+          this.successChange = true;
+        })
+        .catch(() => {
+          this.$refs.alert.network_error();
+        });
     }
   }
-}
+};
 </script>
 
 <style scoped style lang="scss">
 .recoverPassword {
-  background-color: #0E2469;
+  background-color: #0e2469;
   height: 100%;
   text-align: center;
   .rowStyle {
@@ -140,7 +143,7 @@ export default {
   }
   .iconImage {
     margin-bottom: 15px;
-    fill:#0E2469;
+    fill: #0e2469;
   }
   @media (max-width: 800px) {
     .fieldsContainer {
@@ -152,7 +155,7 @@ export default {
     }
     .recuperar-pass {
       font-size: 31px !important;
-    } 
+    }
   }
   @media (max-width: 345px) {
     .input-title {
@@ -181,8 +184,8 @@ export default {
     width: 521px;
 
     border-radius: 6px;
-    background-color: #FFFFFF;
-    box-shadow: 0 0 14px 0 rgba(20,20,20,0.3);
+    background-color: #ffffff;
+    box-shadow: 0 0 14px 0 rgba(20, 20, 20, 0.3);
   }
   @media (max-width: 341px) {
     .btnContinueStyle {
@@ -192,44 +195,44 @@ export default {
   .btnContinueStyle {
     height: 50px;
     border-radius: 5px;
-    border-color: #0E2469;
-    background-color: #0E2469;
+    border-color: #0e2469;
+    background-color: #0e2469;
     margin-top: 17px;
     margin-bottom: 17px;
   }
   .btnCancelStyle {
     height: 50px;
     border-radius: 5px;
-    border-color: #0E2469;
-    color: #0E2469;
+    border-color: #0e2469;
+    color: #0e2469;
     background-color: white;
     margin-top: 17px;
     margin-bottom: 17px;
   }
   .inputStyles {
-    border: 1px solid #0E2469;
+    border: 1px solid #0e2469;
     border-radius: 5px;
     box-shadow: 0 0 2px 0 #ffffff;
     height: 50px;
     font-size: 21px;
-    color: #0E2469;
+    color: #0e2469;
     &:focus {
-      border: 2px solid #0E2469;
+      border: 2px solid #0e2469;
     }
   }
   .incorrectInput {
-    color: #ED1D24;
+    color: #ed1d24;
   }
   .recuperar-pass {
     height: 44px;
-    color: #0E2469;
+    color: #0e2469;
     font-size: 30px;
     font-weight: bold;
     line-height: 44px;
   }
   .input-title {
     height: 27px;
-    color: #6A6A6A;
+    color: #6a6a6a;
     font-size: 17px;
     font-weight: 300;
     line-height: 27px;
