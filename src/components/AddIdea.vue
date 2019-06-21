@@ -3,8 +3,7 @@
 </template>
 
 <script>
-  import auth from "../authentication.js"
-import { setTimeout } from 'timers';
+import auth from "../authentication.js"
   export default {
   data() {
     return {

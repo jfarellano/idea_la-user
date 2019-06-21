@@ -1,247 +1,231 @@
 <template>
-  <div class="registerComponent">
-    <div id="divStyle" class="container-fluid">
-      <div id="rowStyle" class="row align-items-center">
-        <div class="col align-self-center">
-          <div
-            class="fieldsContainer"
-            data-aos="zoom-in"
-            data-aos-duration="1000"
-            data-aos-delay="10"
-          >
-            <div class="row justify-content-start">
-              <router-link to="/">
-                <img src="../assets/CamaraBaq-Blue.svg" alt height="110px" class="iconImage">
-              </router-link>
-            </div>
-            <div class="row justify-content-start">
-              <h2 class="title">Registro nuevo usuario</h2>
-            </div>
-            <div class="space"></div>
-            <div class="row justify-content-between">
-              <div class="col-md">
-                <h5>Correo electrónico</h5>
-                <div class="input-group">
-                  <input
-                    type="email"
-                    class="form-control inputStyles"
-                    placeholder="ej. example@email.com"
-                    v-model="userData.email"
-                    v-validate="'required|email'"
-                    :class="{'has-error': errors.has('email_invalid')}"
-                    name="email"
-                  >
-                </div>
-                <p
-                  v-if="errors.has('email')"
-                  class="incorrectInput"
-                >El correo ingresado no es válido.</p>
-
-                <h5>Contraseña</h5>
-                <div class="input-group">
-                  <input
-                    type="password"
-                    class="form-control inputStyles"
-                    v-model="userData.password"
-                    v-validate="'required|min:6'"
-                    ref="password"
-                    :class="{'has-error': errors.has('pass_required')}"
-                    name="password"
-                  >
-                </div>
-                <p v-if="errors.has('password')" class="incorrectInput">La contraseña debe ser minimo de 6 caracteres</p>
-                <h5>Confirmar contraseña</h5>
-                <div class="input-group">
-                  <input
-                    type="password"
-                    class="form-control inputStyles"
-                    v-model="userData.password_confirm"
-                    v-validate="'required|confirmed:password'"
-                    :class="{'has-error': errors.has('pass_confirmed')}"
-                    name="password_conf"
-                  >
-                </div>
-                <p
-                  v-if="errors.has('password_conf')"
-                  class="incorrectInput"
-                >La contraseña no coincide</p>
-                <h5>Imagen de perfil</h5>
-                <b-button
-                  @click="$refs.fileInput.$el.querySelector('input[type=file]').click()"
-                  class="loadBtn"
-                  v-if="userData.image == null"
-                >Carga tu imagen</b-button>
-                <b-button-group class="loadBtn" v-else>
-                  <b-button
-                    class="text"
-                    @click="$refs.fileInput.$el.querySelector('input[type=file]').click()"
-                  >Cambia tu imagen</b-button>
-                  <b-button class="icon" @click="clearImage()">
-                    <font-awesome-icon icon="times"></font-awesome-icon>
-                  </b-button>
-                </b-button-group>
-                <b-form-file
-                  v-model="userData.image"
-                  accept="image/jpeg, image/png"
-                  style="display:none;"
-                  ref="fileInput"
-                  v-validate="'size:2000'"
-                  :class="{'has-error': errors.has('image_size')}"
-                  name="image"
-                />
-                <p v-if="userData.image != null" class="selectedImage">{{userData.image.name}}</p>
-                <p
-                  v-if="errors.has('image')"
-                  class="incorrectInput"
-                >La imagen es muy grande, el maximo son 2MB</p>
-              </div>
-              <div class="col-md">
-                <h5>Nombre</h5>
-                <div class="input-group">
-                  <input
-                    type="text"
-                    class="form-control inputStyles"
-                    placeholder="ej. Juan"
-                    v-model="userData.name"
-                    v-validate="'alpha_spaces|max:50|required'"
-                    :class="{'has-error': errors.has('name_invalid')}"
-                    name="name"
-                  >
-                </div>
-                <p v-if="errors.has('name')" class="incorrectInput">Nombre invalido</p>
-                <h5>Apellido</h5>
-                <div class="input-group">
-                  <input
-                    type="text"
-                    class="form-control inputStyles"
-                    placeholder="ej. Perez"
-                    v-model="userData.lastname"
-                    v-validate="'alpha_spaces|max:50|required'"
-                    :class="{'has-error': errors.has('lasname_invalid')}"
-                    name="lastname"
-                  >
-                </div>
-                <p v-if="errors.has('lastname')" class="incorrectInput">Apellido invalido</p>
-                <h5>Documento de identificación</h5>
-                <div class="input-group">
-                  <input
-                    type="text"
-                    class="form-control inputStyles"
-                    placeholder="ej. 1234567890"
-                    v-model="userData.cc"
-                    v-validate="'max:15|required|alpha_num'"
-                    :class="{'has-error': errors.has('cc_invalid')}"
-                    name="cc"
-                  >
-                </div>
-                <p
-                  v-if="errors.has('cc')"
-                  class="incorrectInput"
-                >Documento de identificación invalido</p>
-                <h5>Edad</h5>
-                <div class="input-group">
-                  <input
-                    type="number"
-                    class="form-control inputStyles"
-                    placeholder="ej. 20"
-                    v-model="userData.age"
-                    v-validate="'min_value:18|max:3|required|min_value:1'"
-                    :class="{'has-error': errors.has('age_invalid')}"
-                    name="age"
-                  >
-                </div>
-                <p v-if="errors.has('age')" class="incorrectInput">Edad invalida</p>
-              </div>
-              <div class="col-md">
-                <h5>Género</h5>
-                <b-form-select
-                  class="mb-2 mr-sm-2 mb-sm-0 squareInput inputStyles"
-                  :value="null"
-                  :options="{ 'male': 'Masculino', 'female': 'Femenino', 'other': 'Otro', 'i_prefer_not_to_say': 'Prefiero no decir'}"
-                  id="inline-form-custom-select-pref"
-                  v-model="userData.gender"
-                  v-validate="'required'"
-                  :class="{'has-error': errors.has('gender_invalid')}"
-                  name="gender"
-                >
-                  <option slot="first" :value="null"></option>
-                </b-form-select>
-                <p v-if="errors.has('gender')" class="incorrectInput">Selecciona tu género</p>
-                <h5>Télefono</h5>
-                <div class="input-group">
-                  <input
-                    type="number"
-                    class="form-control inputStyles"
-                    placeholder="ej. 300-123 4567"
-                    v-model="userData.phone"
-                    v-validate="'required'"
-                    :class="{'has-error': errors.has('phone_invalid')}"
-                    name="phone"
-                  >
-                </div>
-                <p v-if="errors.has('phone')" class="incorrectInput">Telefono invalido</p>
-                <h5>Barrio</h5>
-                <b-form-select
-                  class="mb-2 mr-sm-2 mb-sm-0 squareInput inputStyles"
-                  :value="null"
-                  id="inline-form-custom-select-pref"
-                  v-model="hood"
-                  v-validate="'required'"
-                  :class="{'has-error': errors.has('hood_invalid')}"
-                  name="hood"
-                  @change="switchView()"
-                >
-                  <option slot="first" :value="null"></option>
-                  <option
-                    v-for="(location, index) in locations"
-                    :value="location"
-                    :key="index"
-                  >{{ upcase(location.name) }}</option>
-                </b-form-select>
-                <p v-if="errors.has('hood')" class="incorrectInput">Selecciona tu barrio</p>
-                <h5>Localidad</h5>
-                <div class="input-group">
-                  <input
-                    type="text"
-                    class="form-control inputStyles"
-                    disabled
-                    v-model="locationAuto"
-                  >
-                </div>
-              </div>
-            </div>
-
-            <div class="spacer">
-              <div class="row justify-content-justify">
-                <b-button
-                  class="btn btn-primary btn-lg btn-block col"
-                  id="btnRegisterStyle"
-                  v-on:click.prevent="registerCheckFormData()"
-                >Registrar</b-button>
-                <router-link
-                  tag="b-button"
-                  to="/login"
-                  class="btn btn-primary btn-lg btn-block col cancel"
-                >cancelar</router-link>
-              </div>
-              <div class="row justify-content-end">
-                <p class="parag" id="registerStyle">
-                  ¿Ya tienes una cuenta?
-                  <router-link to="/login">Ingresa aquí.</router-link>
-                </p>
-              </div>
-            </div>
+  <div class="containter-fluid profile-container">
+    <Header></Header>
+    <div class="row justify-content-center align-items-center main-row">
+      <div class="col align-self-center profile-form">
+        <div class="row justify-content-center">
+          <router-link to="/">
+            <img src="../assets/CamaraBaq-Blue.svg" alt height="110px" class="iconImage">
+          </router-link>
+        </div>
+        <div class="row title">
+          <h2>Regístrate y ayuda a Barranquilla</h2>
+        </div>
+        <div class="row profile-pic justify-content-between align-items-center">
+          <div class="col-md-4">
+            <img v-if="userData.image != null" class="avatar" :src="getImage()">
+            <img
+              v-else-if="userData.image == null && userData.gender == 'male'"
+              class="avatar"
+              src="../assets/users/male.jpg"
+            >
+            <img
+              v-else-if="userData.image == null && userData.gender == 'female'"
+              class="avatar"
+              src="../assets/users/female.jpg"
+            >
+            <img
+              v-else-if="userData.image == null && userData.gender == 'other'"
+              class="avatar"
+              src="../assets/users/other.jpg"
+            >
+            <img v-else class="avatar" src="../assets/users/notsay.jpg">
+          </div>
+          <div class="col-md-8">
+            <b-button
+              @click="$refs.fileInput.$el.querySelector('input[type=file]').click()"
+              class="loadBtn"
+              v-if="userData.image == null"
+            >Carga tu imagen</b-button>
+            <b-button-group class="loadBtn" v-else>
+              <b-button
+                class="text"
+                @click="$refs.fileInput.$el.querySelector('input[type=file]').click()"
+              >Cambia tu imagen</b-button>
+              <b-button class="icon" @click="clearImage()">
+                <font-awesome-icon icon="times"></font-awesome-icon>
+              </b-button>
+            </b-button-group>
+            <b-form-file
+              v-model="userData.image"
+              accept="image/jpeg, image/png"
+              style="display:none;"
+              ref="fileInput"
+              v-validate="'size:2000'"
+              :class="{'has-error': errors.has('image_size')}"
+              name="image"
+            />
+            <p v-if="userData.image != null" class="selectedImage">{{userData.image.name}}</p>
+            <p
+              v-if="errors.has('image')"
+              class="incorrectInput"
+            >La imagen es muy grande, el maximo son 2MB</p>
           </div>
         </div>
+        <h5>Correo electrónico</h5>
+        <div class="input-group">
+          <input
+            type="email"
+            class="form-control inputStyles"
+            placeholder="ej. example@email.com"
+            v-model="userData.email"
+            v-validate="'required|email'"
+            :class="{'has-error': errors.has('email_invalid')}"
+            name="email"
+          >
+        </div>
+        <p v-if="errors.has('email')" class="incorrectInput">El correo ingresado no es válido.</p>
+        <h5>Nombre</h5>
+        <div class="input-group">
+          <input
+            type="text"
+            class="form-control inputStyles"
+            placeholder="ej. Juan"
+            v-model="userData.name"
+            v-validate="'alpha_spaces|max:50|required'"
+            :class="{'has-error': errors.has('name_invalid')}"
+            name="name"
+          >
+        </div>
+        <p v-if="errors.has('name')" class="incorrectInput">Nombre invalido</p>
+        <h5>Apellido</h5>
+        <div class="input-group">
+          <input
+            type="text"
+            class="form-control inputStyles"
+            placeholder="ej. Perez"
+            v-model="userData.lastname"
+            v-validate="'alpha_spaces|max:50|required'"
+            :class="{'has-error': errors.has('lasname_invalid')}"
+            name="lastname"
+          >
+        </div>
+        <p v-if="errors.has('lastname')" class="incorrectInput">Apellido invalido</p>
+        <h5>Documento de identificación</h5>
+        <div class="input-group">
+          <input
+            type="text"
+            class="form-control inputStyles"
+            placeholder="ej. 1234567890"
+            v-model="userData.cc"
+            v-validate="'max:15|required|alpha_num'"
+            :class="{'has-error': errors.has('cc_invalid')}"
+            name="cc"
+          >
+        </div>
+        <p v-if="errors.has('cc')" class="incorrectInput">Documento de identificación invalido</p>
+        <h5>Contraseña</h5>
+        <div class="input-group">
+          <input
+            type="password"
+            class="form-control inputStyles"
+            v-model="userData.password"
+            v-validate="'required|min:6'"
+            ref="password"
+            :class="{'has-error': errors.has('pass_required')}"
+            name="password"
+          >
+        </div>
+        <p
+          v-if="errors.has('password')"
+          class="incorrectInput"
+        >La contraseña debe ser minimo de 6 caracteres</p>
+        <h5>Confirmar contraseña</h5>
+        <div class="input-group">
+          <input
+            type="password"
+            class="form-control inputStyles"
+            v-model="userData.password_confirm"
+            v-validate="'required|confirmed:password'"
+            :class="{'has-error': errors.has('pass_confirmed')}"
+            name="password_conf"
+          >
+        </div>
+        <p v-if="errors.has('password_conf')" class="incorrectInput">La contraseña no coincide</p>
+        <h5>Edad</h5>
+        <div class="input-group">
+          <input
+            type="number"
+            class="form-control inputStyles"
+            placeholder="ej. 20"
+            v-model="userData.age"
+            v-validate="'max_value:125|required|min_value:18'"
+            :class="{'has-error': errors.has('age_invalid')}"
+            name="age"
+          >
+        </div>
+        <p v-if="errors.has('age')" class="incorrectInput">Edad invalida</p>
+        <h5>Género</h5>
+        <b-form-select
+          class="mb-2 mr-sm-2 mb-sm-0 squareInput inputStyles"
+          :value="null"
+          :options="{ 'male': 'Masculino', 'female': 'Femenino', 'other': 'Otro', 'i_prefer_not_to_say': 'Prefiero no decir'}"
+          id="inline-form-custom-select-pref"
+          v-model="userData.gender"
+          v-validate="'required'"
+          :class="{'has-error': errors.has('gender_invalid')}"
+          name="gender"
+        >
+          <option slot="first" :value="null"></option>
+        </b-form-select>
+        <p v-if="errors.has('gender')" class="incorrectInput">Selecciona tu género</p>
+        <h5>Télefono</h5>
+        <div class="input-group">
+          <input
+            type="number"
+            class="form-control inputStyles"
+            placeholder="ej. 300-123 4567"
+            v-model="userData.phone"
+            v-validate="'required'"
+            :class="{'has-error': errors.has('phone_invalid')}"
+            name="phone"
+          >
+        </div>
+        <p v-if="errors.has('phone')" class="incorrectInput">Telefono invalido</p>
+
+        <h5>Barrio</h5>
+        <b-form-select
+          class="mb-2 mr-sm-2 mb-sm-0 squareInput inputStyles"
+          :value="null"
+          id="inline-form-custom-select-pref"
+          v-model="hood"
+          v-validate="'required'"
+          :class="{'has-error': errors.has('hood_invalid')}"
+          name="hood"
+          @change="switchView()"
+        >
+          <option slot="first" :value="null"></option>
+          <option
+            v-for="(location, index) in locations"
+            :value="location"
+            :key="index"
+          >{{ upcase(location.name) }}</option>
+        </b-form-select>
+        <p v-if="errors.has('hood')" class="incorrectInput">Selecciona tu barrio</p>
+        <h5>Localidad</h5>
+        <div class="input-group">
+          <input type="text" class="form-control inputStyles" disabled v-model="locationAuto">
+        </div>
+
+        <b-button
+          class="btn btn-primary btn-lg btn-block col"
+          id="btnRegisterStyle"
+          v-on:click.prevent="registerCheckFormData()"
+        >Registrar</b-button>
+        <router-link
+          tag="b-button"
+          to="/login"
+          class="btn btn-primary btn-lg btn-block col cancel"
+        >cancelar</router-link>
       </div>
     </div>
-    <Alert ref="alert"></Alert >
+    <Alert ref="alert"></Alert>
   </div>
 </template>
 
 <script>
 import api from "../requests.js";
-import Alert from './Alert.vue'
+import Alert from "./Alert.vue";
 export default {
   data() {
     return {
@@ -288,7 +272,7 @@ export default {
         ageField == null ||
         genderField == null
       ) {
-        this.$refs.alert.form_error()
+        this.$refs.alert.form_error();
       } else {
         this.userRegister();
       }
@@ -303,7 +287,7 @@ export default {
       fd.append("lastname", this.userData.lastname);
       fd.append("age", this.userData.age);
       fd.append("gender", this.userData.gender);
-      if (this.userData.image != null ) fd.append("image", this.userData.image);
+      if (this.userData.image != null) fd.append("image", this.userData.image);
       fd.append("location_id", this.userData.location_id);
       api.user
         .create(fd)
@@ -311,7 +295,9 @@ export default {
           this.$router.push("/login");
         })
         .catch(() => {
-          this.$refs.alert.error('Hubo un error creando tu cuenta, intenta de nuevo mas tarde')
+          this.$refs.alert.error(
+            "Hubo un error creando tu cuenta, intenta de nuevo mas tarde"
+          );
         });
     },
     getLocations() {
@@ -321,10 +307,13 @@ export default {
     },
     switchView() {
       this.userData.location_id = this.hood.id;
-      this.locationAuto = this.upcase(this.hood.hood.replace(/_/g, ' '));
+      this.locationAuto = this.upcase(this.hood.hood.replace(/_/g, " "));
     },
     upcase(str) {
       return api.utils.upcase(str);
+    },
+    getImage() {
+      return URL.createObjectURL(this.userData.image);
     }
   },
   created() {
@@ -333,11 +322,33 @@ export default {
 };
 </script>
 
-<style scoped style lang="scss">
-.registerComponent {
-  // height: 100%;
-  text-align: center;
+<style lang="scss" scoped>
+.profile-container {
+  min-height: 100vh;
   background-color: #0e2469;
+  overflow-x: hidden;
+  .profile-pic {
+    text-align: center;
+  }
+  .profile-form {
+    border: none;
+    border-radius: 5px;
+    max-width: 800px;
+    width: 100%;
+    background-color: white;
+    margin: 20px;
+    padding: 40px 20px;
+  }
+  .main-row {
+    height: 100%;
+    min-height: 100vh;
+  }
+  .title {
+    text-align: center;
+    h2 {
+      width: 100%;
+    }
+  }
   h2 {
     padding-left: 15px;
     @media (max-width: 800px) {
@@ -349,6 +360,12 @@ export default {
     font-size: 17px;
     font-weight: 300;
     color: #6a6a6a;
+  }
+  .avatar {
+    width: 150px;
+    height: 150px;
+    border-radius: 50%;
+    margin: 10px;
   }
   .space {
     height: 20px;
@@ -381,12 +398,6 @@ export default {
       color: #0e2469;
       border: 0px;
     }
-    .icon {
-      background-color: #ff0000;
-      color: white;
-      border: 0px;
-      z-index: 0;
-    }
   }
   .selectedImage {
     color: #6a6a6a;
@@ -394,9 +405,9 @@ export default {
     margin: 0px;
   }
   .iconImage {
-    height: 54px;
+    height: 80px;
     margin-bottom: 15px;
-    padding-left: 15px;
+    text-align: center;
   }
   @media (max-width: 800px) {
     .fieldsContainer {
@@ -423,25 +434,17 @@ export default {
     background-color: #0e2469;
     border-radius: 5px;
     color: white;
-    @media (max-width: 800px) {
-      max-width: 100% !important;
-    }
+    margin-top: 10px;
   }
-  .cancel{
+  #cancel {
+    border: 1px #0e2469 solid;
     background-color: transparent;
-    border: solid 1px #0e2469;
     border-radius: 5px;
     color: #0e2469;
-    @media (max-width: 800px) {
-      max-width: 100% !important;
-    }
+    margin-top: 10px;
   }
   .spacer {
     padding-top: 10px;
-    button {
-      margin: 5px;
-      width: 100%;
-    }
     @media (max-width: 800px) {
       padding-left: 15px;
       padding-right: 15px;
