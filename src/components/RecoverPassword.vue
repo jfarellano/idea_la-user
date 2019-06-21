@@ -53,7 +53,7 @@
                     v-validate="'required|confirmed:password'"
                     :class="{'has-error': errors.has('password_confirm_invalid')}"
                     name="password_confirm"
-                    v-on:keyup.enter="userLogin()"
+                    v-on:keyup.enter="confirmPassword()"
                   >
                 </div>
                 <p v-if="errors.has('password_confirm')" class="incorrectInput">Tu contraseña no coincide</p>
