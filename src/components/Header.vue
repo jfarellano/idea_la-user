@@ -127,7 +127,7 @@ export default {
         .show(auth.storage.get("user_id"))
         .then(response => {
           if (response.data.picture != null)
-            auth.storage.setImage(response.data.picture.url);
+            auth.storage.setImage(response.data.picture);
           else auth.storage.setImage("http://placehold.it/30x30");
           auth.storage.set_name(response.data.name, response.data.lastname);
           this.fullname = auth.storage.get("name");
