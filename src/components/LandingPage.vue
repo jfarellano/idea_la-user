@@ -54,12 +54,12 @@
               <h3 class="support">Apoyan</h3>
             </div>
             <div class="row justify-content-arround">
-              <img class="logo col" src="../assets/landing/brands/BCV.svg">
               <img class="logo col" src="../assets/landing/brands/CCB.svg">
-              <img class="logo col" src="../assets/landing/brands/GS.svg">
-              <img class="logo col" src="../assets/landing/brands/JOO.svg">
               <img class="logo col" src="../assets/landing/brands/NA.svg">
+              <img class="logo col" src="../assets/landing/brands/JOO.svg">
               <img class="logo col" src="../assets/landing/brands/UN.svg">
+              <img class="logo col" src="../assets/landing/brands/BCV.svg">             
+              <img class="logo col" src="../assets/landing/brands/GS.svg">
             </div>
           </div>
         </div>
