@@ -64,12 +64,11 @@
       <div class="row comments">
         <b-button-group class="comment-box" v-for="comment in comments" :key="comment.id">
           <b-button class="user">
-            <b-img
-              rounded="circle"
-              class="avatar img-responsive"
-              :src="comment.user_profile_picture.url"
+            <img
+              class="avatar"
+              :src="getCPic(comment.user_profile_picture)"
               alt="Circle image"
-            ></b-img>
+            >
           </b-button>
           <div class="comment">
             <p class="name">{{comment.user_name}}</p>
@@ -113,6 +112,10 @@ export default {
         .catch(() => {
           this.$refs.alert.network_error();
         });
+    },
+    getCPic(pic){
+      if (typeof pic == 'object') return pic.url
+      else return pic
     },
     share(sn) {
       var url = ''
@@ -328,6 +331,10 @@ export default {
       .avatar {
         width: 34px;
         height: 34px;
+        border-radius: 50%;
+        img{
+          border-radius: 50%;
+        }
       }
       .extra {
         color: #6a6a6a;
@@ -368,6 +375,7 @@ export default {
       .avatar {
         width: 34px;
         height: 34px;
+        border-radius: 50%;
       }
     }
   }
