@@ -43,10 +43,10 @@
                 ></b-img>
               </a>
               <div :class="dropClass('dropdown-menu')" aria-labelledby="navbarDropdownMenuLink">
+                <router-link tag="a" class="dropdown-item" to="/perfil">Mi Perfil</router-link>
                 <div v-if="stage_from(1)">
                   <router-link tag="a" class="dropdown-item" to="/mis-ideas">Mis Ideas</router-link>
                 </div>
-                <router-link tag="a" class="dropdown-item" to="/perfil">Mi Perfil</router-link>
                 <a class="dropdown-item logout" @click="userLogout()">Cerrar sesión</a>
               </div>
             </li>
