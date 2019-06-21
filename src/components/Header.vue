@@ -126,9 +126,9 @@ export default {
       api.user
         .show(auth.storage.get("user_id"))
         .then(response => {
-          if (response.data.picture != null)
+          if (typeof response.data.picture == 'string')
             auth.storage.setImage(response.data.picture);
-          else auth.storage.setImage("http://placehold.it/30x30");
+          else auth.storage.setImage(response.data.picture.url);
           auth.storage.set_name(response.data.name, response.data.lastname);
           this.fullname = auth.storage.get("name");
           api.user.survey().then(response => {

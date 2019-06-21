@@ -216,7 +216,7 @@ export default {
     },
     getImage() {
       if (this.userData.image == null) {
-        if (this.userData.picture == null) return "http://placehold.it/30x30";
+        if (typeof this.userData.picture == 'string') return this.userData.picture;
         else return this.userData.picture.url;
       } else return URL.createObjectURL(this.userData.image);
     },
