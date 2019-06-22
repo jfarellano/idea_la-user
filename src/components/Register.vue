@@ -69,7 +69,7 @@
             class="form-control inputStyles"
             placeholder="ej. example@email.com"
             v-model="userData.email"
-            v-validate="'required|email'"
+            v-validate="'required|email|max:60'"
             :class="{'has-error': errors.has('email_invalid')}"
             name="email"
           >
@@ -82,9 +82,10 @@
             class="form-control inputStyles"
             placeholder="ej. Juan"
             v-model="userData.name"
-            v-validate="'alpha_spaces|max:50|required'"
+            v-validate="'alpha_spaces|max:100|required'"
             :class="{'has-error': errors.has('name_invalid')}"
             name="name"
+            
           >
         </div>
         <p v-if="errors.has('name')" class="incorrectInput">Nombre invalido</p>
@@ -95,7 +96,7 @@
             class="form-control inputStyles"
             placeholder="ej. Perez"
             v-model="userData.lastname"
-            v-validate="'alpha_spaces|max:50|required'"
+            v-validate="'alpha_spaces|max:100|required'"
             :class="{'has-error': errors.has('lasname_invalid')}"
             name="lastname"
           >
@@ -177,7 +178,7 @@
             class="form-control inputStyles"
             placeholder="ej. 300-123 4567"
             v-model="userData.phone"
-            v-validate="'required'"
+            v-validate="{required: true, regex: /^([+]?)[0-9]{1,16}$/}"
             :class="{'has-error': errors.has('phone_invalid')}"
             name="phone"
           >
