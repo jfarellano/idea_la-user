@@ -147,11 +147,11 @@ export default {
             fd.append(key, this.idea.image);
           } else {
             fd.append("image", this.idea.image);
-            fd.append("challenge_id", this.idea.challenge_id);
           }
         }
         fd.append("title", this.idea.title);
         fd.append("description", this.idea.description);
+        if (!this.edit) fd.append("challenge_id", this.idea.challenge_id);
         if (this.edit) {
           api.ideas
             .edit(this.$route.params.eId, fd)

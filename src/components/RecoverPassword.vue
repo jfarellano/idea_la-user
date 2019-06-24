@@ -30,7 +30,7 @@
                     type="password"
                     class="form-control inputStyles"
                     v-model="password"
-                    v-validate="'required|min:6'"
+                    v-validate="{required: true, regex: /^(?=.*\d).(?=.*[a-zA-Z]).{6,50}$/i}"
                     :class="{'has-error': errors.has('password_invalid')}"
                     name="password"
                     @keydown.space.prevent
@@ -69,6 +69,7 @@
                 <p class="recuperar-pass solicitud-ex">¡Cambio Exitoso!</p>
                 <p>Tu contraseña se ha cambiado exitosamente.</p>
                 <router-link to="/login">Ir a inicio de sesión.</router-link>
+                <router-link to="/">Volver a la pagina principal</router-link>
               </div>
             </div>
           </div>

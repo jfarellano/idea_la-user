@@ -203,7 +203,7 @@ export default {
         .update(this.userData.id, fd)
         .then(() => {
           this.$refs.alert.success('Tu información ha sido actualizada')
-          setTimeout(function(){ location.reload() }, 3300);
+          this.getUser()
         })
         .catch(() => {
           this.$refs.alert.error(

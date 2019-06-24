@@ -10,7 +10,7 @@
             data-aos-delay="10"
           >
             <router-link to="/">
-            <img src="../assets/CamaraBaq-Blue.svg" alt height="54px" class="iconImage">
+              <img src="../assets/CamaraBaq-Blue.svg" alt height="54px" class="iconImage">
             </router-link>
 
             <p class="iniciar-sesion">Iniciar Sesión</p>
@@ -28,9 +28,7 @@
                 @keydown.space.prevent
               >
             </div>
-            <p v-if="errors.has('email')" class="incorrectInput">
-              El correo ingresado no es válido.
-            </p>
+            <p v-if="errors.has('email')" class="incorrectInput">El correo ingresado no es válido.</p>
 
             <h3 class="input-title">Contraseña</h3>
             <div class="input-group">
@@ -44,16 +42,14 @@
                 @keyup.enter="userLogin()"
               >
             </div>
-            <p v-if="errors.has('password')" class="incorrectInput">
-              Este campo es obligatorio.
-            </p>
+            <p v-if="errors.has('password')" class="incorrectInput">Este campo es obligatorio.</p>
             <router-link to="/request-password-change">¿Has olvidado tu contraseña?</router-link>
-            
+            <p v-if="blocked">Estas bloqueado por {{time}} segundos</p>
             <button
               type="button"
               class="btn btn-primary btn-lg btn-block btnLoginStyle"
               v-on:click.prevent="userLogin()"
-              :disabled="!validLogin()"
+              :disabled="!validLogin() || !active || blocked"
             >Iniciar Sesión</button>
 
             <router-link
@@ -87,7 +83,7 @@
               <b-col>
                 <b-button @click="authenticate('twitter')">Twitter</b-button>
               </b-col>
-            </b-row> -->
+            </b-row>-->
           </div>
         </div>
       </div>
@@ -99,26 +95,43 @@
 
 <script>
 import auth from "../authentication.js";
-import Alert from './Alert.vue'
+import Alert from "./Alert.vue";
+import { setTimeout } from "timers";
 
 export default {
   data() {
     return {
-      userCredentials: {}
-    }
+      userCredentials: {},
+      active: true,
+      blocked: false,
+      time: 0
+    };
   },
   components: {
     Alert
   },
   methods: {
-    validLogin(){
-      if (this.errors.count() == 0 && this.userCredentials.email != null && this.userCredentials.password != null) {
-        return true;
-      } else {
+    validLogin() {
+      if(this.errors.items == null) return false
+      if (this.errors.items.length != 0 || this.userCredentials.email == ''|| this.userCredentials.password == '' || this.userCredentials.email == null|| this.userCredentials.password == null) {
         return false;
+      } else {
+        return true
       }
     },
+    blockedTime() {
+        setTimeout(() => {
+          this.blocked = auth.session.blocked();
+          if (!this.blocked){
+            this.active = true
+          }else{
+            this.time = Math.trunc(60.0 - ((Date.now() - this.blocked) / 1000))
+            this.blockedTime()
+          }
+        }, 1000);
+    },
     userLogin() {
+      this.active = false;
       auth.session
         .login({
           email: this.userCredentials.email,
@@ -129,42 +142,58 @@ export default {
             response.data.user.id,
             response.data.secret,
             response.data.expire_at
-          )
+          );
           auth.session.stage().then(response => {
             auth.storage.set_stage(response.data.number);
           });
           this.$router.push("/");
         })
         .catch(err => {
+          setTimeout(()=>{this.active = true;}, 1000)
           if (err.response == null) {
-            this.$refs.alert.network_error()
+            this.$refs.alert.network_error();
           } else {
-            if (err.response.data.single_authentication == "invalid credentials") {
-              this.$refs.alert.credentials_error()
-              this.userCredentials.password = ""
-            } else if (err.response.data.single_authentication == "user is blocked") {
-              this.$refs.alert.blocked_user()
+            auth.session.wrong_attempt()
+            this.blocked = auth.session.blocked()
+            if (!this.blocked){
+              this.time = Math.trunc(60.0 - ((Date.now() - this.blocked) / 1000))
+              this.blockedTime()
+            }
+            if (
+              err.response.data.single_authentication == "invalid credentials"
+            ) {
+              this.$refs.alert.credentials_error();
+              this.userCredentials.password = "";
+            } else if (
+              err.response.data.single_authentication == "user is blocked"
+            ) {
+              this.$refs.alert.blocked_user();
               this.userCredentials.username = "";
               this.userCredentials.password = "";
             } else {
-              this.$refs.alert.network_error()
+              this.$refs.alert.network_error();
             }
           }
         });
-    },
+    }
   },
-  created (){
+  created() {
+    this.userCredentials = {}
     if (auth.storage.logged()) this.$router.push("/");
+    this.blocked = auth.session.blocked();
+    if (this.blocked) {
+      this.active = false;
+      this.time = Math.trunc(60.0 - ((Date.now() - this.blocked) / 1000))
+      this.blockedTime()
+    }
   },
-  mounted () {
-
-  }
+  mounted() {}
 };
 </script>
 
 <style scoped style lang="scss">
 .loginComponent {
-  background-color: #0E2469;
+  background-color: #0e2469;
   height: 100%;
   text-align: center;
   .rowStyle {
@@ -173,7 +202,7 @@ export default {
   }
   .iconImage {
     margin-bottom: 15px;
-    fill:#0E2469;
+    fill: #0e2469;
   }
   @media (max-width: 800px) {
     .fieldsContainer {
@@ -186,7 +215,6 @@ export default {
     .iniciar-sesion {
       font-size: 31px !important;
     }
-    
   }
   @media (max-width: 365px) {
     .iniciar-sesion {
@@ -210,8 +238,8 @@ export default {
     width: 521px;
 
     border-radius: 6px;
-    background-color: #FFFFFF;
-    box-shadow: 0 0 14px 0 rgba(20,20,20,0.3);
+    background-color: #ffffff;
+    box-shadow: 0 0 14px 0 rgba(20, 20, 20, 0.3);
   }
   @media (max-width: 341px) {
     .btnLoginStyle {
@@ -221,45 +249,45 @@ export default {
   .btnLoginStyle {
     height: 50px;
     border-radius: 5px;
-    border-color: #0E2469;
-    background-color: #0E2469;
+    border-color: #0e2469;
+    background-color: #0e2469;
     margin-top: 17px;
     margin-bottom: 17px;
   }
   .cancel {
     height: 50px;
     border-radius: 5px;
-    border: solid 1px #0E2469;
+    border: solid 1px #0e2469;
     background-color: transparent;
-    color: #0E2469;
+    color: #0e2469;
     margin-top: 17px;
     margin-bottom: 17px;
   }
   .inputStyles {
-    border: 1px solid #0E2469;
+    border: 1px solid #0e2469;
     border-radius: 5px;
     box-shadow: 0 0 2px 0 #ffffff;
     height: 50px;
     font-size: 21px;
-    color: #0E2469;
+    color: #0e2469;
     &:focus {
-      border: 2px solid #0E2469;
+      border: 2px solid #0e2469;
     }
   }
-  
+
   .incorrectInput {
-    color: #ED1D24;
+    color: #ed1d24;
   }
   .iniciar-sesion {
     height: 44px;
-    color: #0E2469;
+    color: #0e2469;
     font-size: 35px;
     font-weight: bold;
     line-height: 44px;
   }
   .input-title {
     height: 27px;
-    color: #6A6A6A;
+    color: #6a6a6a;
     font-size: 21px;
     font-weight: 300;
     line-height: 27px;

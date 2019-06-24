@@ -69,6 +69,7 @@
             class="form-control inputStyles"
             placeholder="ej. example@email.com"
             v-model="userData.email"
+            maxlength="60"
             v-validate="'required|email|max:60'"
             :class="{'has-error': errors.has('email_invalid')}"
             name="email"
@@ -82,6 +83,7 @@
             class="form-control inputStyles"
             placeholder="ej. Juan"
             v-model="userData.name"
+            maxlength="100"
             v-validate="'alpha_spaces|max:100|required'"
             :class="{'has-error': errors.has('name_invalid')}"
             name="name"
@@ -152,6 +154,7 @@
             class="form-control inputStyles"
             placeholder="ej. 20"
             v-model="userData.age"
+            maxlength="3"
             v-validate="'max_value:125|required|min_value:18'"
             :class="{'has-error': errors.has('age_invalid')}"
             name="age"
@@ -179,7 +182,8 @@
             class="form-control inputStyles"
             placeholder="ej. 300-123 4567"
             v-model="userData.phone"
-            v-validate="{required: true, regex: /^([+]?)[0-9]{1,16}$/}"
+            maxlength="16"
+            v-validate="{required: true, regex: /^([+]?)[0-9]{1,15}$/i}"
             :class="{'has-error': errors.has('phone_invalid')}"
             name="phone"
           >
@@ -213,6 +217,7 @@
         <b-button
           class="btn btn-primary btn-lg btn-block col"
           id="btnRegisterStyle"
+          :disabled="active"
           v-on:click.prevent="registerCheckFormData()"
         >Registrar</b-button>
         <router-link
@@ -230,6 +235,7 @@
 import api from "../requests.js";
 import auth from "../authentication.js";
 import Alert from "./Alert.vue";
+import { setTimeout } from 'timers';
 export default {
   data() {
     return {
@@ -239,7 +245,8 @@ export default {
       hood: {},
       locationAuto: "",
       indexChosedChallenge: "",
-      userCredentials: {}
+      userCredentials: {},
+      active: true
     };
   },
   components: {
@@ -277,7 +284,10 @@ export default {
         genderField == null
       ) {
         this.$refs.alert.form_error();
+        this.active = false
+        setTimeout(() => {this.active = true}, 1000)
       } else {
+        this.active = false
         this.userRegister();
       }
     },
@@ -314,6 +324,7 @@ export default {
             });
         })
         .catch(() => {
+          this.active = true
           this.$refs.alert.error(
             "Hubo un error creando tu cuenta, intenta de nuevo mas tarde"
           );

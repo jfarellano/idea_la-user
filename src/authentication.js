@@ -17,6 +17,43 @@ export default {
     },
     stage: function() {
       return r.get(api.variable.URL + '/current_stage')
+    },
+    wrong_attempt: function() {
+      let attempts = localStorage.getItem('attempt')
+      let time = localStorage.getItem('time')
+      if ( attempts == null ) {
+        localStorage.setItem('attempt', 1)
+        localStorage.setItem('time', Date.now())
+      }else{
+        if (Date.now() - time < 60000){
+          if(attempts >= 9){
+            localStorage.setItem('blocked', true)
+            localStorage.setItem('blockTime', Date.now())
+            return false
+          }else{
+            localStorage.setItem('attempt', ++attempts)
+            return true
+          }
+        }else{
+          localStorage.setItem('time', Date.now())
+          localStorage.setItem('attempt', 1)
+          return true
+        }
+      }
+    },
+    blocked(){
+      let blocked = localStorage.getItem('blocked')
+      let blockTime = localStorage.getItem('blockTime')
+      if (blocked == null || !blocked){
+        return false
+      }else{
+        if (Date.now() - blockTime > 60000){
+          localStorage.setItem('blocked', false)
+          return false
+        }else{
+          return blockTime
+        }
+      }
     }
   },
   storage: {
@@ -36,7 +73,7 @@ export default {
       localStorage.setItem('stage', stage)
     },
     logged: function () {
-      if (localStorage.getItem('secret') != null && localStorage.getItem('admin')) {
+      if (localStorage.getItem('secret') != null) {
         var exp = new Date(localStorage.getItem('expire'))
         if (exp > Date.now()){
           return true
@@ -45,9 +82,6 @@ export default {
           return false
         }
       } else {
-        var stage = localStorage.getItem('stage')
-        localStorage.clear()
-        localStorage.setItem('stage', stage)
         return false
       }
     },
