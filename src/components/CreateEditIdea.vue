@@ -16,7 +16,7 @@
                 class="form-control inputStyles"
                 placeholder="ej. Mi idea"
                 v-model="idea.title"
-                v-validate="'alpha_spaces|max:50|required'"
+                v-validate="'max:50|required'"
                 :class="{'has-error': errors.has('title_invalid')}"
                 name="title"
               >
@@ -98,7 +98,7 @@
         </div>
         <div class="row">
           <div class="col-sm">
-            <b-button class="ideaButton title" @click.prevent="createIdea()">Aceptar</b-button>
+            <b-button class="ideaButton title" :disabled="validate()"  @click.prevent="createIdea()">Aceptar</b-button>
           </div>
           <div class="col-sm">
             <b-button class="cancel title" @click.prevent="cancelCreateIdea()">Cancelar</b-button>
@@ -128,53 +128,57 @@ export default {
     };
   },
   methods: {
-    createIdea() {
+    validate() {
       if (
-        this.idea.title != null ||
-        this.idea.description != null ||
-        this.idea.challenge_id != null ||
-        this.idea.title != "" ||
-        this.idea.description != "" ||
-        this.idea.challenge_id != ""
+        this.idea.title == null ||
+        this.idea.description == null ||
+        this.idea.challenge_id == null ||
+        this.idea.title == "" ||
+        this.idea.description == "" ||
+        this.idea.challenge_id == "" ||
+        this.errors.items.length != 0
       ) {
-        var fd = new FormData();
-        if (this.idea.image != null) {
-          if (this.edit) {
-            fd.append("update_img", true);
-            var key = "";
-            if (this.idea.idea_pictures.length == 0) key = "image_create";
-            else key = "image_" + this.idea.idea_pictures[0].id + "_update";
-            fd.append(key, this.idea.image);
-          } else {
-            fd.append("image", this.idea.image);
-          }
-        }
-        fd.append("title", this.idea.title);
-        fd.append("description", this.idea.description);
-        if (!this.edit) fd.append("challenge_id", this.idea.challenge_id);
-        if (this.edit) {
-          api.ideas
-            .edit(this.$route.params.eId, fd)
-            .then(response => {
-              this.$refs.alert.success("Tu idea se ha actualizado correctamente");
-              this.$router.push("/idea/" + response.data.id);
-            })
-            .catch(() => {
-              this.$refs.alert.network_error();
-            });
-        } else {
-          api.idea
-            .create(fd)
-            .then(response => {
-              this.$refs.alert.success("Tu idea se ha creado correctamente");
-              this.$router.push("/idea/" + response.data.id);
-            })
-            .catch(() => {
-              this.$refs.alert.network_error();
-            });
-        }
+        return true;
       } else {
-        this.$refs.alert.form_error();
+        return false;
+      }
+    },
+    createIdea() {
+      var fd = new FormData();
+      if (this.idea.image != null) {
+        if (this.edit) {
+          fd.append("update_img", true);
+          var key = "";
+          if (this.idea.idea_pictures.length == 0) key = "image_create";
+          else key = "image_" + this.idea.idea_pictures[0].id + "_update";
+          fd.append(key, this.idea.image);
+        } else {
+          fd.append("image", this.idea.image);
+        }
+      }
+      fd.append("title", this.idea.title);
+      fd.append("description", this.idea.description);
+      if (!this.edit) fd.append("challenge_id", this.idea.challenge_id);
+      if (this.edit) {
+        api.ideas
+          .edit(this.$route.params.eId, fd)
+          .then(response => {
+            this.$refs.alert.success("Tu idea se ha actualizado correctamente");
+            this.$router.push("/idea/" + response.data.id);
+          })
+          .catch(() => {
+            this.$refs.alert.network_error();
+          });
+      } else {
+        api.idea
+          .create(fd)
+          .then(response => {
+            this.$refs.alert.success("Tu idea se ha creado correctamente");
+            this.$router.push("/idea/" + response.data.id);
+          })
+          .catch(() => {
+            this.$refs.alert.network_error();
+          });
       }
     },
     cancelCreateIdea() {
