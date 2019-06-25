@@ -87,7 +87,6 @@
             v-validate="'alpha_spaces|max:100|required'"
             :class="{'has-error': errors.has('name_invalid')}"
             name="name"
-            
           >
         </div>
         <p v-if="errors.has('name')" class="incorrectInput">Nombre invalido</p>
@@ -163,7 +162,7 @@
         <p v-if="errors.has('age')" class="incorrectInput">Edad invalida</p>
         <h5>Género</h5>
         <b-form-select
-          class="mb-2 mr-sm-2 mb-sm-0 squareInput inputStyles"
+          class="mb-2 mr-sm-2 mb-sm-0 squareInput inputStyles minimal"
           :value="null"
           :options="{ 'male': 'Masculino', 'female': 'Femenino', 'other': 'Otro', 'i_prefer_not_to_say': 'Prefiero no decir'}"
           id="inline-form-custom-select-pref"
@@ -174,7 +173,7 @@
         >
           <option slot="first" :value="null"></option>
         </b-form-select>
-        <p v-if="errors.has('gender')" class="incorrectInput">Selecciona tu género</p>
+        <p v-if="errors.has('gender')" class="incorrectInput minimal">Selecciona tu género</p>
         <h5>Télefono</h5>
         <div class="input-group">
           <input
@@ -192,7 +191,7 @@
 
         <h5>Barrio</h5>
         <b-form-select
-          class="mb-2 mr-sm-2 mb-sm-0 squareInput inputStyles"
+          class="mb-2 mr-sm-2 mb-sm-0 squareInput inputStyles minimal"
           :value="null"
           id="inline-form-custom-select-pref"
           v-model="hood"
@@ -235,7 +234,7 @@
 import api from "../requests.js";
 import auth from "../authentication.js";
 import Alert from "./Alert.vue";
-import { setTimeout } from 'timers';
+import { setTimeout } from "timers";
 export default {
   data() {
     return {
@@ -257,7 +256,7 @@ export default {
       this.userData.image = null;
     },
     registerCheckFormData() {
-      if (this.errors.items == null ) return false
+      if (this.errors.items == null) return false;
       let emailField = this.userData.email;
       let passwordField = this.userData.password;
       let ccField = this.userData.cc;
@@ -266,7 +265,7 @@ export default {
       let lastnameField = this.userData.lastname;
       let ageField = this.userData.age;
       let genderField = this.userData.gender;
-      let location = this.userData.location_id
+      let location = this.userData.location_id;
       if (
         emailField == "" ||
         passwordField == "" ||
@@ -287,16 +286,16 @@ export default {
         ageField == null ||
         genderField == null ||
         location == null ||
-        !this.active || this.errors.items.length != 0
+        !this.active ||
+        this.errors.items.length != 0
       ) {
-        return false
-        
+        return false;
       } else {
-        return true
+        return true;
       }
     },
     userRegister() {
-      this.active = false
+      this.active = false;
       var fd = new FormData();
       fd.append("email", this.userData.email);
       fd.append("password", this.userData.password);
@@ -329,7 +328,9 @@ export default {
             });
         })
         .catch(() => {
-          setTimeout(() => {this.active = true}, 1000)
+          setTimeout(() => {
+            this.active = true;
+          }, 1000);
           this.$refs.alert.error(
             "Hubo un error creando tu cuenta, intenta de nuevo mas tarde"
           );
@@ -364,6 +365,14 @@ export default {
   overflow-x: hidden;
   .profile-pic {
     text-align: center;
+  }
+  select.minimal {
+    background-image: linear-gradient(45deg, transparent 50%, #0e2469 50%),
+      linear-gradient(135deg,#0e2469 50%, transparent 50%);
+    background-position: calc(100% - 15px) calc(1em + 2px),
+      calc(100% - 5px) calc(1em + 2px), 0.5em;
+    background-size: 10px 10px, 10px 10px, 1px 1.5em;
+    background-repeat: no-repeat;
   }
   .profile-form {
     border: none;
@@ -404,8 +413,8 @@ export default {
     font-size: 17px;
     font-weight: 300;
     color: #6a6a6a;
-    &::after{
-      content: '*';
+    &::after {
+      content: "*";
       color: red;
     }
   }
