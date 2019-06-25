@@ -15,7 +15,7 @@
             <div v-if="!emailValid">
 
               <p class="recuperar-pass">Recuperar contraseña</p>
-              <h3 class="input-title" id="email">Introduce tu dirección de correo electrónico para buscar tu cuenta.</h3>
+              <h3 class="input-title" id="email">Por favor ingresa correo electrónico.</h3>
               <div class="input-group">
                 <input
                   type="email"

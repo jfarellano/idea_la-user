@@ -178,12 +178,12 @@
         <h5>Télefono</h5>
         <div class="input-group">
           <input
-            type="number"
+            type="text"
             class="form-control inputStyles"
             placeholder="ej. 300-123 4567"
             v-model="userData.phone"
             maxlength="16"
-            v-validate="{required: true, regex: /^([+]?)[0-9]{1,15}$/i}"
+            v-validate="{required: true, regex: /^([+]?)[0-9]{1,15}$/mi}"
             :class="{'has-error': errors.has('phone_invalid')}"
             name="phone"
           >
