@@ -224,7 +224,7 @@
           tag="b-button"
           to="/login"
           class="btn btn-primary btn-lg btn-block col cancel"
-        >cancelar</router-link>
+        >Cancelar</router-link>
       </div>
     </div>
     <Alert ref="alert"></Alert>
@@ -373,6 +373,15 @@ export default {
     background-color: white;
     margin: 20px;
     padding: 40px 20px;
+    .cancel {
+      height: 50px;
+      border-radius: 5px;
+      border: solid 1px #0e2469;
+      background-color: transparent;
+      color: #0e2469;
+      margin-top: 17px;
+      margin-bottom: 17px;
+    }
   }
   .main-row {
     height: 100%;
