@@ -395,6 +395,10 @@ export default {
     font-size: 17px;
     font-weight: 300;
     color: #6a6a6a;
+    &::after{
+      content: '*';
+      color: red;
+    }
   }
   .avatar {
     width: 150px;
