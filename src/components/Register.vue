@@ -150,12 +150,12 @@
         <h5>Edad</h5>
         <div class="input-group">
           <input
-            type="number"
+            type="text"
             class="form-control inputStyles"
             placeholder="ej. 20"
             v-model="userData.age"
             maxlength="3"
-            v-validate="'max_value:125|required|min_value:18'"
+            v-validate="'max_value:125|required|min_value:18|numeric'"
             :class="{'has-error': errors.has('age_invalid')}"
             name="age"
           >
@@ -217,8 +217,8 @@
         <b-button
           class="btn btn-primary btn-lg btn-block col"
           id="btnRegisterStyle"
-          :disabled="active"
-          v-on:click.prevent="registerCheckFormData()"
+          :disabled="!registerCheckFormData()"
+          v-on:click.prevent="userRegister()"
         >Registrar</b-button>
         <router-link
           tag="b-button"
@@ -257,14 +257,16 @@ export default {
       this.userData.image = null;
     },
     registerCheckFormData() {
-      var emailField = this.userData.email;
-      var passwordField = this.userData.password;
-      var ccField = this.userData.cc;
-      var phoneField = this.userData.phone;
-      var nameField = this.userData.name;
-      var lastnameField = this.userData.lastname;
-      var ageField = this.userData.age;
-      var genderField = this.userData.gender;
+      if (this.errors.items == null ) return false
+      let emailField = this.userData.email;
+      let passwordField = this.userData.password;
+      let ccField = this.userData.cc;
+      let phoneField = this.userData.phone;
+      let nameField = this.userData.name;
+      let lastnameField = this.userData.lastname;
+      let ageField = this.userData.age;
+      let genderField = this.userData.gender;
+      let location = this.userData.location_id
       if (
         emailField == "" ||
         passwordField == "" ||
@@ -275,23 +277,26 @@ export default {
         ageField == "" ||
         genderField == "" ||
         emailField == "" ||
+        location == "" ||
+        emailField == null ||
         passwordField == null ||
         ccField == null ||
         phoneField == null ||
         nameField == null ||
         lastnameField == null ||
         ageField == null ||
-        genderField == null
+        genderField == null ||
+        location == null ||
+        !this.active || this.errors.items.length != 0
       ) {
-        this.$refs.alert.form_error();
-        this.active = false
-        setTimeout(() => {this.active = true}, 1000)
+        return false
+        
       } else {
-        this.active = false
-        this.userRegister();
+        return true
       }
     },
     userRegister() {
+      this.active = false
       var fd = new FormData();
       fd.append("email", this.userData.email);
       fd.append("password", this.userData.password);
@@ -324,7 +329,7 @@ export default {
             });
         })
         .catch(() => {
-          this.active = true
+          setTimeout(() => {this.active = true}, 1000)
           this.$refs.alert.error(
             "Hubo un error creando tu cuenta, intenta de nuevo mas tarde"
           );
