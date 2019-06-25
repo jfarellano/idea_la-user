@@ -6,7 +6,7 @@
         <font-awesome-icon @click="back()" icon="arrow-left"></font-awesome-icon>
       </div>
       <div class="row first">
-        <div class="col-md-6 align-self-center main-image">
+        <div class="col-md-6 align-self-end main-image">
           <img v-if="idea.idea_pictures != null" :src="idea.idea_pictures[0].url">
         </div>
         <div class="col-md-6 align-self-center">
@@ -202,9 +202,16 @@ export default {
   margin-top: 90px;
   .main-image {
     width: 100%;
+    height: calc(100vw * 0.3);
+    overflow: hidden;
     text-align: center;
+    position: relative;
     img {
+      overflow: hidden;
       width: 100%;
+      position: absolute;
+      bottom: 0px;
+      right: 0px;
     }
   }
   .title {
