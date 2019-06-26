@@ -3,11 +3,17 @@
     <Header></Header>
     <Idea></Idea>
     <div class="main-container container-fluid">
-      <div :style="'background-image: url(' + challenge.challenge_pictures[0].url + ')'" class="row first">
+      <div
+        :style="'background-image: url(' + challenge.challenge_pictures[0].url + ')'"
+        class="row first"
+      >
         <div class="col-md-6 align-self-center main-image">
           <h1 class="main-title">{{challenge.title}}</h1>
         </div>
       </div>
+      <router-link to='/retos' tag="div" class="row back">
+        <font-awesome-icon icon="arrow-left"></font-awesome-icon>
+      </router-link>
       <div class="short-description row justify-content-center">
         <div class="col-md-10">
           <h3>{{challenge.short_description}}</h3>
@@ -138,6 +144,17 @@ export default {
   .main-image {
     width: 100%;
     text-align: center;
+  }
+  .back {
+    text-align: center;
+    color: #0e2469;
+    font-size: 30px;
+    padding-top: 10px;
+    cursor: pointer;
+    padding-left: calc(100vw * 0.11);
+    @media (max-width: 768px) {
+      padding-left: 30px;
+    }
   }
   .inputStyles {
     border: 1px solid #0e2469;
