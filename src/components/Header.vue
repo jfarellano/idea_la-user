@@ -203,6 +203,7 @@ export default {
   }
   .logout {
     color: #ff0000;
+    cursor: pointer;
   }
   .dropdown-menu {
     top: 65px;
