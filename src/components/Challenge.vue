@@ -176,7 +176,6 @@ export default {
     min-height: 400px;
     background-size: 100%;
     height: calc(100vw * 0.33);
-    // background-image: url("../assets/group.svg");
     background-repeat: no-repeat;
     background-position: right bottom;
   }
