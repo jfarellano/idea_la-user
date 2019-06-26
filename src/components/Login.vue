@@ -43,7 +43,7 @@
               >
             </div>
             <p v-if="errors.has('password')" class="incorrectInput">Este campo es obligatorio.</p>
-            <router-link to="/request-password-change">¿Has olvidado tu contraseña?</router-link>
+            <router-link class="parag" to="/request-password-change">¿Olvidaste tu contraseña? No te preocupes, ya mismo lo solucionamos.</router-link>
             <p v-if="blocked">Estas bloqueado por {{time}} segundos</p>
             <button
               type="button"
@@ -58,7 +58,7 @@
               to="/"
             >Cancelar</router-link>
             <p class="parag" id="registerStyle">
-              ¿No tienes cuenta?
+              ¿No tienes cuenta?, solucionemos eso de inmediato. 
               <router-link to="/register">Registrate aquí.</router-link>
             </p>
 
@@ -192,6 +192,9 @@ export default {
 </script>
 
 <style scoped style lang="scss">
+.parag{
+  font-size: 16px;
+}
 .loginComponent {
   background-color: #0e2469;
   height: 100%;
