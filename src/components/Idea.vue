@@ -1,80 +1,90 @@
 <template>
   <section>
     <Header></Header>
-    <div class="main-container container-fluid">
-      <div class="row back">
-        <font-awesome-icon @click="back()" icon="arrow-left"></font-awesome-icon>
-      </div>
-      <div class="row first">
-        <div class="col-md-6 align-self-end main-image">
-          <img v-if="idea.idea_pictures != null" :src="idea.idea_pictures[0].url">
-        </div>
-        <div class="col-md-6 align-self-center">
-          <div class="row">
-            <h1 class="title">{{idea.title}}</h1>
-          </div>
-          <div class="row icons align-self-justify">
-            <div class="col wapp">
-              <font-awesome-icon @click="share('wap')" :icon="['fab', 'whatsapp']"></font-awesome-icon>
+    <div class="container-wraper container-fluid">
+      <div class="row justify-content-center">
+        <div class="main-col">
+          <div class="main-container container-fluid">
+            <div class="row back">
+              <font-awesome-icon @click="back()" icon="arrow-left"></font-awesome-icon>
             </div>
-            <div class="col face">
-              <font-awesome-icon @click="share('face')" :icon="['fab', 'facebook']"></font-awesome-icon>
+            <div class="row first">
+              <div class="col-md-6 align-self-end main-image">
+                <img v-if="idea.idea_pictures != null" :src="idea.idea_pictures[0].url">
+              </div>
+              <div class="col-md-6 align-self-center">
+                <div class="row">
+                  <h1 class="title">{{idea.title}}</h1>
+                </div>
+                <div class="row icons justify-content-center">
+                  <div class="col wapp">
+                    <font-awesome-icon @click="share('wap')" :icon="['fab', 'whatsapp']"></font-awesome-icon>
+                  </div>
+                  <div class="col face">
+                    <font-awesome-icon @click="share('face')" :icon="['fab', 'facebook']"></font-awesome-icon>
+                  </div>
+                  <div class="col tw">
+                    <font-awesome-icon @click="share('tw')" :icon="['fab', 'twitter']"></font-awesome-icon>
+                  </div>
+                </div>
+                <div v-if="stage(3)" class="row">
+                  <b-button @click="vote()" class="vote">Votar por esta idea</b-button>
+                </div>
+              </div>
             </div>
-            <div class="col tw">
-              <font-awesome-icon @click="share('tw')" :icon="['fab', 'twitter']"></font-awesome-icon>
+            <div class="row third">
+              <div class="container-desc">
+                <p class="parag jump">{{idea.description}}</p>
+              </div>
             </div>
-          </div>
-          <div v-if="stage(3)" class="row">
-            <b-button @click="vote()" class="vote">Votar por esta idea</b-button>
-          </div>
-        </div>
-      </div>
-      <div class="row third">
-        <div class="container-desc">
-          <p class="parag jump">{{idea.description}}</p>
-        </div>
-      </div>
 
-      <div class="row sixth">
-        <b-button-group class="comment-box" v-if="logged()">
-          <b-button class="user">
-            <b-img
-              rounded="circle"
-              class="avatar img-responsive"
-              :src="getPic()"
-              alt="Circle image"
-            ></b-img>
-          </b-button>
-          <div class="comment">
-            <input type="text" v-model="comment.description" placeholder="Escribe tu comentario">
-          </div>
-          <div class="opt-wrap">
-            <b-button
-              @click="commentIdea()"
-              class="option"
-              :disabled="comment.description == null || comment.description == ''"
-            >
-              <font-awesome-icon icon="paper-plane"></font-awesome-icon>
-            </b-button>
-          </div>
-        </b-button-group>
-        <h2 v-else>Si quieres poder comentar registate</h2>
-      </div>
+            <div class="row sixth">
+              <b-button-group class="comment-box" v-if="logged()">
+                <b-button class="user">
+                  <b-img
+                    rounded="circle"
+                    class="avatar img-responsive"
+                    :src="getPic()"
+                    alt="Circle image"
+                  ></b-img>
+                </b-button>
+                <div class="comment">
+                  <input
+                    type="text"
+                    v-model="comment.description"
+                    placeholder="Escribe tu comentario"
+                  >
+                </div>
+                <div class="opt-wrap">
+                  <b-button
+                    @click="commentIdea()"
+                    class="option"
+                    :disabled="comment.description == null || comment.description == ''"
+                  >
+                    <font-awesome-icon icon="paper-plane"></font-awesome-icon>
+                  </b-button>
+                </div>
+              </b-button-group>
+              <h2 v-else>Registrate y podras comentar</h2>
+            </div>
 
-      <div class="row comments">
-        <b-button-group class="comment-box" v-for="comment in comments" :key="comment.id">
-          <b-button class="user">
-            <img
-              class="avatar"
-              :src="getCPic(comment.user_profile_picture)"
-              alt="Circle image"
-            >
-          </b-button>
-          <div class="comment">
-            <p class="name">{{comment.user_name}}</p>
-            <p>{{comment.description}}</p>
+            <div class="row comments">
+              <b-button-group class="comment-box" v-for="comment in comments" :key="comment.id">
+                <b-button class="user">
+                  <img
+                    class="avatar"
+                    :src="getCPic(comment.user_profile_picture)"
+                    alt="Circle image"
+                  >
+                </b-button>
+                <div class="comment">
+                  <p class="name">{{comment.user_name}}</p>
+                  <p>{{comment.description}}</p>
+                </div>
+              </b-button-group>
+            </div>
           </div>
-        </b-button-group>
+        </div>
       </div>
     </div>
     <Alert ref="alert"></Alert>
@@ -113,12 +123,12 @@ export default {
           this.$refs.alert.network_error();
         });
     },
-    getCPic(pic){
-      if (typeof pic == 'object') return pic.url
-      else return pic
+    getCPic(pic) {
+      if (typeof pic == "object") return pic.url;
+      else return pic;
     },
     share(sn) {
-      var url = ''
+      var url = "";
       if (sn == "wap")
         url =
           "whatsapp://send?text=Te comparto esta idea de #ImaginaTuCiudá " +
@@ -185,9 +195,9 @@ export default {
     logged() {
       return auth.storage.logged();
     },
-    back(){
-      var route = '/reto/' + this.idea.challenge.id
-      this.$router.push(route)
+    back() {
+      var route = "/reto/" + this.idea.challenge.id;
+      this.$router.push(route);
     }
   },
   created() {
@@ -198,6 +208,14 @@ export default {
 </script>
 
 <style lang="scss" scoped>
+.container-wraper{
+  padding: 0px;
+}
+.main-col{
+  @media (min-width: 1100px) {
+    width: 1100px !important;
+  }
+}
 .main-container {
   margin-top: 90px;
   .main-image {
@@ -208,10 +226,20 @@ export default {
     position: relative;
     img {
       overflow: hidden;
-      width: 100%;
-      position: absolute;
-      bottom: 0px;
-      right: 0px;
+      width: calc(100% - 30px);
+    }
+    @media (max-width: 768px) {
+      height: auto !important;
+    }
+    @media (min-width: 768px) {
+      img {
+        position: absolute;
+        bottom: 0px;
+        right: 0px;
+      }
+    }
+    @media (min-width: 1100px) {
+      height: 293px !important;
     }
   }
   .title {
@@ -227,10 +255,17 @@ export default {
   .first {
     padding: 30px;
     padding-top: 10px;
+    .title {
+      margin: 10px 15px;
+    }
     .icons {
       text-align: center;
       font-size: 30px;
       cursor: pointer;
+      .col {
+        width: 30px;
+        flex-grow: unset;
+      }
       .wapp {
         color: #25d366 !important;
       }
@@ -243,6 +278,7 @@ export default {
     }
     .vote {
       width: 100%;
+      margin: 0px 15px;
       border-radius: 5px;
       border-color: #0e2469;
       background-color: #0e2469;
@@ -258,7 +294,7 @@ export default {
       padding: 30px;
     }
   }
-  .back{
+  .back {
     text-align: center;
     color: #0e2469;
     font-size: 30px;
@@ -339,7 +375,7 @@ export default {
         width: 34px;
         height: 34px;
         border-radius: 50%;
-        img{
+        img {
           border-radius: 50%;
         }
       }
