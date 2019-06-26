@@ -29,6 +29,9 @@
               <h3 class="title">{{challenge.title}}</h3>
               <p class="parag">{{challenge.short_description}}</p>
             </div>
+            <div class="row show-more">
+              <b-button>Ver más</b-button>
+            </div>
           </router-link>
         </div>
       </div>
@@ -40,10 +43,10 @@
   </section>
 </template>
 <script>
-import api from "../requests.js"
-import Alert from './Alert.vue'
-import Header from "./Header.vue"
-import Idea from "./AddIdea.vue"
+import api from "../requests.js";
+import Alert from "./Alert.vue";
+import Header from "./Header.vue";
+import Idea from "./AddIdea.vue";
 
 export default {
   components: {
@@ -64,7 +67,7 @@ export default {
           this.challenges = response.data;
         })
         .catch(() => {
-          this.$refs.alert.network_error()
+          this.$refs.alert.network_error();
         });
     }
   },
@@ -77,26 +80,26 @@ export default {
 <style lang="scss" scoped>
 .main-container {
   margin-top: 90px;
-  .main-image{
+  .main-image {
     width: 100%;
     text-align: center;
-    img{
+    img {
       width: 70%;
     }
   }
-  .main-title{
-    color: #0E2469;
-    margin:0px;
+  .main-title {
+    color: #0e2469;
+    margin: 0px;
   }
-  .title{
-    color: #0E2469;
+  .title {
+    color: #0e2469;
     font-size: 1.1rem;
-    margin:0px;
+    margin: 0px;
     width: 100%;
   }
-  .parag{
-    color: #9B9B9B;
-    margin:0px;
+  .parag {
+    color: #9b9b9b;
+    margin: 0px;
     white-space: normal;
     text-align: justify;
   }
@@ -109,11 +112,11 @@ export default {
     .challenge {
       margin: 10px;
       background-color: white;
-      border: 1px solid #EDEDED;
+      border: 1px solid #ededed;
       border-radius: 5px;
-      box-shadow: 0 0 15px 0 rgba(232,232,232,0.4);
+      box-shadow: 0 0 15px 0 rgba(232, 232, 232, 0.4);
       width: 300px;
-      height: 350px;
+      height: 420px;
       cursor: pointer;
       .image {
         border-top-left-radius: 5px;
@@ -129,7 +132,8 @@ export default {
         }
       }
       .data {
-        padding: 20px;
+        padding: 0px 20px;
+        height: 250px;
         padding-top: 0px;
         h3 {
           margin-top: 5px;
@@ -139,6 +143,15 @@ export default {
         p {
           margin-top: 5px;
           text-align: justify;
+        }
+      }
+      .show-more {
+        padding: 0px 20px;
+        button {
+          background-color: #0e2469;
+          color: white;
+          border-radius: 5px;
+          width: 100%;
         }
       }
     }
