@@ -43,7 +43,7 @@ export default {
       this.$snotify.error('Hubo un error en la red, intenta de nuevo', 'Error', this.params)
     },
     credentials_error: function() {
-      this.$snotify.warning('Credenciales inválidas, intenta de nuevo', 'Atención', this.params)
+      this.$snotify.warning('Tu usuario o contraseña no coinciden, revisa e intenta de nuevo.', 'Atención', this.params)
     },
     form_error: function() {
       this.$snotify.warning('El formulario no está completo o tiene un error, revisa de nuevo', 'Atención', this.params)
