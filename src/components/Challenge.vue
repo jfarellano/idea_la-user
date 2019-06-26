@@ -11,7 +11,7 @@
           <h1 class="main-title">{{challenge.title}}</h1>
         </div>
       </div>
-      <router-link to='/retos' tag="div" class="row back">
+      <router-link to="/retos" tag="div" class="row back">
         <font-awesome-icon icon="arrow-left"></font-awesome-icon>
       </router-link>
       <div class="short-description row justify-content-center">
@@ -35,24 +35,27 @@
         </div>
       </div>
       <div class="row second justify-content-center" v-if="ideas != ''">
-        <router-link
-          class="idea container-fluid"
-          v-for="(idea, index) in filter()"
-          tag="div"
-          :key="index"
-          :to="{name: 'Idea', params: { iId: idea.id } }"
-        >
-          <div class="row image">
-            <img v-bind:src="idea.idea_pictures[0].url">
+          <router-link
+            class="idea container-fluid"
+            v-for="(idea, index) in filter()"
+            tag="div"
+            :key="index"
+            :to="{name: 'Idea', params: { iId: idea.id } }"
+          >
+            <div class="row image">
+              <img v-bind:src="idea.idea_pictures[0].url">
+            </div>
+            <div class="row data">
+              <h3>{{idea.title}}</h3>
+              <p class="parag">{{getDescription(idea.description)}}</p>
+            </div>
+            <div class="row show-more">
+              <b-button>Ver más</b-button>
+            </div>
+          </router-link>
+          <div v-if='filter().length == 0'>
+            <h2>No encontramos ninguna idea que conicida</h2>
           </div>
-          <div class="row data">
-            <h3>{{idea.title}}</h3>
-            <p class="parag">{{getDescription(idea.description)}}</p>
-          </div>
-          <div class="row show-more">
-            <b-button>Ver más</b-button>
-          </div>
-        </router-link>
       </div>
       <div v-else>
         <h2 class="title">No se han encontrado ideas</h2>
