@@ -65,9 +65,21 @@
             <div class="col-md-6 align-self-center info order-2 order-md-1">
               <h1>Te necesitamos</h1>
               <p>Sabemos que tienes mucho que aportar. Tus ideas y experiencia nos ayudarán a encontrar soluciones más sostenibles y escalables para construir una mejor Barranquilla. ¡Conviértete hoy en un protagonista de tu ciudad y aporta tus ideas!</p>
+              <b-button href="http://www.camarabaq.org.co/desarrollo-regional/ideas/bases-imagina-tu-ciuda/" target="_blank">Descarga las bases</b-button>
             </div>
             <div class="col-md-6 align-self-center order-1 order-md-2">
               <img src="../assets/landing/Land3.svg" alt="ODS">
+            </div>
+          </div>
+        </div>
+      </div>
+      <div class="row blue">
+        <div class="section container-fluid">
+          <div class="row justify-content-center align-items-center">
+            <div class="col-md-8 align-self-center info order-2 order-md-1">
+              <img class="cc" src="../assets/landing/brands/CCB.svg">
+              <h3 style='text-align: center'>Conoce la Unidad de Desarrollo Regional en la Cámara de Comercio de Barranquilla</h3>
+              <b-button href="http://www.camarabaq.org.co/desarrollo-regional/ " target="_blank">Conocela aquí</b-button>
             </div>
           </div>
         </div>
@@ -158,6 +170,9 @@ export default {
         font-size: 2.5rem;
         color: #0e2469;
       }
+      h3{
+        color: #0e2469;
+      }
       p {
         white-space: normal;
         color: #282828;
@@ -165,8 +180,18 @@ export default {
         font-size: 1.3rem;
       }
     }
+    cc{
+      width: 60%;
+    }
     img {
       width: 100%;
+    }
+    a {
+      width: 100%;
+      background-color: #0e2469;
+      color: white;
+      border-radius: 5px;
+      cursor: pointer;
     }
     @media (max-width: 767.98px) {
       padding: 50px 50px !important;
@@ -177,6 +202,9 @@ export default {
       }
       img{
         width: 60%;
+      }
+      .cc{
+        width: 100%;
       }
     }
     @media (min-width: 1100px) {
