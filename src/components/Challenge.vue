@@ -54,7 +54,7 @@
             </div>
           </router-link>
           <div v-if='filter().length == 0'>
-            <h2>No encontramos ninguna idea que conicida</h2>
+            <h2>¡Anímate! Sé el primero en postular una idea.</h2>
           </div>
       </div>
       <div v-else>
