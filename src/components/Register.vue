@@ -75,7 +75,10 @@
             name="name"
           >
         </div>
-        <p v-if="errors.has('name')" class="incorrectInput">Ups, creo que tienes una letra invalida en tu nombre</p>
+        <p
+          v-if="errors.has('name')"
+          class="incorrectInput"
+        >Ups, creo que tienes una letra invalida en tu nombre</p>
         <h5>Apellidos</h5>
         <div class="input-group">
           <input
@@ -89,7 +92,10 @@
             name="lastname"
           >
         </div>
-        <p v-if="errors.has('lastname')" class="incorrectInput">Ups, creo que tienes una letra invalida en tu apellido</p>
+        <p
+          v-if="errors.has('lastname')"
+          class="incorrectInput"
+        >Ups, creo que tienes una letra invalida en tu apellido</p>
         <h5>Correo electrónico</h5>
         <div class="input-group">
           <input
@@ -103,7 +109,10 @@
             name="email"
           >
         </div>
-        <p v-if="errors.has('email')" class="incorrectInput">Creo que ese correo no existe, revisemos de nuevo</p>
+        <p
+          v-if="errors.has('email')"
+          class="incorrectInput"
+        >Creo que ese correo no existe, revisemos de nuevo</p>
         <h5>Documento de identificación</h5>
         <div class="input-group">
           <input
@@ -117,7 +126,10 @@
             name="cc"
           >
         </div>
-        <p v-if="errors.has('cc')" class="incorrectInput">Es necesario que nos digas tu documento de identificación</p>
+        <p
+          v-if="errors.has('cc')"
+          class="incorrectInput"
+        >Es necesario que nos digas tu documento de identificación</p>
         <h5>Contraseña</h5>
         <div class="input-group">
           <input
@@ -136,7 +148,9 @@
           class="incorrectInput"
         >Tu contraseña no es muy segura, debe ser minimo de 6 caracteres y un numero</p>
         <h5>Confirmar contraseña</h5>
-        <p class="ex">A ver, confiamos en tus métodos, pero para estar seguros escribe nuevamente tu contraseña.</p>
+        <p
+          class="ex"
+        >A ver, confiamos en tus métodos, pero para estar seguros escribe nuevamente tu contraseña.</p>
         <div class="input-group">
           <input
             type="password"
@@ -147,7 +161,10 @@
             name="password_conf"
           >
         </div>
-        <p v-if="errors.has('password_conf')" class="incorrectInput">Creo que tu contraseña no coincide con la de arriba</p>
+        <p
+          v-if="errors.has('password_conf')"
+          class="incorrectInput"
+        >Creo que tu contraseña no coincide con la de arriba</p>
         <h5>Edad</h5>
         <p class="ex">Esto te va a parecer raro, pero necesitamos saber si eres mayor de edad.</p>
         <div class="input-group">
@@ -162,7 +179,10 @@
             name="age"
           >
         </div>
-        <p v-if="errors.has('age')" class="incorrectInput">Wow, al parecer has vivido muchísimo o no eres mayor de edad, revisa nuevamente la edad en tu cédula y vuelve a intentarlo.</p>
+        <p
+          v-if="errors.has('age')"
+          class="incorrectInput"
+        >Wow, al parecer has vivido muchísimo o no eres mayor de edad, revisa nuevamente la edad en tu cédula y vuelve a intentarlo.</p>
         <h5>Género:</h5>
         <p class="ex">Sabemos que es una pregunta incómoda, pero ¿con qué género te identificas más?</p>
         <b-form-select
@@ -192,7 +212,10 @@
             name="phone"
           >
         </div>
-        <p v-if="errors.has('phone')" class="incorrectInput">Revisa tu télefono, parece que algo no anda bien</p>
+        <p
+          v-if="errors.has('phone')"
+          class="incorrectInput"
+        >Revisa tu télefono, parece que algo no anda bien</p>
         <h5>Barrio</h5>
         <b-form-select
           class="mb-2 mr-sm-2 mb-sm-0 squareInput inputStyles minimal"
@@ -213,10 +236,19 @@
         </b-form-select>
         <p v-if="errors.has('hood')" class="incorrectInput">Cuentanos tu barrio</p>
         <h5>Localidad</h5>
-        <p class="ex">Sólo tienes que elegir el barrio en el que vives, del resto nos encargamos nosotros.</p>
+        <p
+          class="ex"
+        >Sólo tienes que elegir el barrio en el que vives, del resto nos encargamos nosotros.</p>
         <div class="input-group">
           <input type="text" class="form-control inputStyles" disabled v-model="locationAuto">
         </div>
+        <b-form-checkbox
+          id="checkbox-1"
+          v-model="userData.terms"
+          name="terms"
+          value="accepted"
+          unchecked-value="not_accepted"
+        >Acepto los <a href="/#/terms" target="_blank">términos y condiciones</a></b-form-checkbox>
 
         <b-button
           class="btn btn-primary btn-lg btn-block col"
@@ -292,7 +324,8 @@ export default {
         genderField == null ||
         location == null ||
         !this.active ||
-        this.errors.items.length != 0
+        this.errors.items.length != 0 ||
+        this.userData.terms != 'accepted'
       ) {
         return false;
       } else {
@@ -373,7 +406,7 @@ export default {
   }
   select.minimal {
     background-image: linear-gradient(45deg, transparent 50%, #0e2469 50%),
-      linear-gradient(135deg,#0e2469 50%, transparent 50%);
+      linear-gradient(135deg, #0e2469 50%, transparent 50%);
     background-position: calc(100% - 15px) calc(1em + 2px),
       calc(100% - 5px) calc(1em + 2px), 0.5em;
     background-size: 10px 10px, 10px 10px, 1px 1.5em;
@@ -424,11 +457,11 @@ export default {
       color: red;
     }
   }
-  .ex{
-      font-size: 15px;
-      color: #9a9a9a;
-      margin-bottom: 3px;
-    }
+  .ex {
+    font-size: 15px;
+    color: #9a9a9a;
+    margin-bottom: 3px;
+  }
   .avatar {
     width: 150px;
     height: 150px;

@@ -12,6 +12,7 @@ import RecoverPassword from './components/RecoverPassword.vue'
 import RecoverPasswordRequest from './components/RecoverPasswordRequest.vue'
 import Profile from './components/Profile.vue'
 import MyIdeas from './components/MyIdeas.vue'
+import Terms from './components/terms.vue'
 
 Vue.use(Router)
 
@@ -71,6 +72,11 @@ export default new Router ({
             path: '/mis-ideas',
             name: 'MyIdeas',
             component: MyIdeas
+        },
+        {
+            path: '/terms',
+            name: 'Terms',
+            component: Terms
         }
     ]
 })
