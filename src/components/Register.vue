@@ -62,6 +62,34 @@
             >La imagen es muy grande, el maximo son 2MB</p>
           </div>
         </div>
+        <h5>Nombres</h5>
+        <div class="input-group">
+          <input
+            type="text"
+            class="form-control inputStyles"
+            placeholder="ej. Juan"
+            v-model="userData.name"
+            maxlength="100"
+            v-validate="'alpha_spaces|max:100|required'"
+            :class="{'has-error': errors.has('name_invalid')}"
+            name="name"
+          >
+        </div>
+        <p v-if="errors.has('name')" class="incorrectInput">Ups, creo que tienes una letra invalida en tu nombre</p>
+        <h5>Apellidos</h5>
+        <div class="input-group">
+          <input
+            type="text"
+            class="form-control inputStyles"
+            placeholder="ej. Perez"
+            v-model="userData.lastname"
+            maxlength="100"
+            v-validate="'alpha_spaces|max:100|required'"
+            :class="{'has-error': errors.has('lasname_invalid')}"
+            name="lastname"
+          >
+        </div>
+        <p v-if="errors.has('lastname')" class="incorrectInput">Ups, creo que tienes una letra invalida en tu apellido</p>
         <h5>Correo electrónico</h5>
         <div class="input-group">
           <input
@@ -75,35 +103,7 @@
             name="email"
           >
         </div>
-        <p v-if="errors.has('email')" class="incorrectInput">El correo ingresado no es válido.</p>
-        <h5>Nombre</h5>
-        <div class="input-group">
-          <input
-            type="text"
-            class="form-control inputStyles"
-            placeholder="ej. Juan"
-            v-model="userData.name"
-            maxlength="100"
-            v-validate="'alpha_spaces|max:100|required'"
-            :class="{'has-error': errors.has('name_invalid')}"
-            name="name"
-          >
-        </div>
-        <p v-if="errors.has('name')" class="incorrectInput">Nombre invalido</p>
-        <h5>Apellido</h5>
-        <div class="input-group">
-          <input
-            type="text"
-            class="form-control inputStyles"
-            placeholder="ej. Perez"
-            v-model="userData.lastname"
-            maxlength="100"
-            v-validate="'alpha_spaces|max:100|required'"
-            :class="{'has-error': errors.has('lasname_invalid')}"
-            name="lastname"
-          >
-        </div>
-        <p v-if="errors.has('lastname')" class="incorrectInput">Apellido invalido</p>
+        <p v-if="errors.has('email')" class="incorrectInput">Creo que ese correo no existe, revisemos de nuevo</p>
         <h5>Documento de identificación</h5>
         <div class="input-group">
           <input
@@ -117,7 +117,7 @@
             name="cc"
           >
         </div>
-        <p v-if="errors.has('cc')" class="incorrectInput">Documento de identificación invalido</p>
+        <p v-if="errors.has('cc')" class="incorrectInput">Es necesario que nos digas tu documento de identificación</p>
         <h5>Contraseña</h5>
         <div class="input-group">
           <input
@@ -134,8 +134,9 @@
         <p
           v-if="errors.has('password')"
           class="incorrectInput"
-        >La contraseña debe ser minimo de 6 caracteres</p>
+        >Tu contraseña no es muy segura, debe ser minimo de 6 caracteres y un numero</p>
         <h5>Confirmar contraseña</h5>
+        <p class="ex">A ver, confiamos en tus métodos, pero para estar seguros escribe nuevamente tu contraseña.</p>
         <div class="input-group">
           <input
             type="password"
@@ -146,8 +147,9 @@
             name="password_conf"
           >
         </div>
-        <p v-if="errors.has('password_conf')" class="incorrectInput">La contraseña no coincide</p>
+        <p v-if="errors.has('password_conf')" class="incorrectInput">Creo que tu contraseña no coincide con la de arriba</p>
         <h5>Edad</h5>
+        <p class="ex">Esto te va a parecer raro, pero necesitamos saber si eres mayor de edad.</p>
         <div class="input-group">
           <input
             type="text"
@@ -160,8 +162,9 @@
             name="age"
           >
         </div>
-        <p v-if="errors.has('age')" class="incorrectInput">Edad invalida</p>
-        <h5>Género</h5>
+        <p v-if="errors.has('age')" class="incorrectInput">Wow, al parecer has vivido muchísimo o no eres mayor de edad, revisa nuevamente la edad en tu cédula y vuelve a intentarlo.</p>
+        <h5>Género:</h5>
+        <p class="ex">Sabemos que es una pregunta incómoda, pero ¿con qué género te identificas más?</p>
         <b-form-select
           class="mb-2 mr-sm-2 mb-sm-0 squareInput inputStyles minimal"
           :value="null"
@@ -176,6 +179,7 @@
         </b-form-select>
         <p v-if="errors.has('gender')" class="incorrectInput minimal">Selecciona tu género</p>
         <h5>Télefono</h5>
+        <p class="ex">Tranquilo, no te vamos a llamar para venderte algo, solo son datos.</p>
         <div class="input-group">
           <input
             type="text"
@@ -188,8 +192,7 @@
             name="phone"
           >
         </div>
-        <p v-if="errors.has('phone')" class="incorrectInput">Telefono invalido</p>
-
+        <p v-if="errors.has('phone')" class="incorrectInput">Revisa tu télefono, parece que algo no anda bien</p>
         <h5>Barrio</h5>
         <b-form-select
           class="mb-2 mr-sm-2 mb-sm-0 squareInput inputStyles minimal"
@@ -208,8 +211,9 @@
             :key="index"
           >{{ upcase(location.name) }}</option>
         </b-form-select>
-        <p v-if="errors.has('hood')" class="incorrectInput">Selecciona tu barrio</p>
+        <p v-if="errors.has('hood')" class="incorrectInput">Cuentanos tu barrio</p>
         <h5>Localidad</h5>
+        <p class="ex">Sólo tienes que elegir el barrio en el que vives, del resto nos encargamos nosotros.</p>
         <div class="input-group">
           <input type="text" class="form-control inputStyles" disabled v-model="locationAuto">
         </div>
@@ -410,7 +414,8 @@ export default {
     }
   }
   h5 {
-    margin-bottom: 2px;
+    margin-bottom: 0px;
+    margin-top: 3px;
     font-size: 17px;
     font-weight: 300;
     color: #6a6a6a;
@@ -419,6 +424,11 @@ export default {
       color: red;
     }
   }
+  .ex{
+      font-size: 15px;
+      color: #9a9a9a;
+      margin-bottom: 3px;
+    }
   .avatar {
     width: 150px;
     height: 150px;
