@@ -35,27 +35,27 @@
         </div>
       </div>
       <div class="row second justify-content-center" v-if="ideas != ''">
-          <router-link
-            class="idea container-fluid"
-            v-for="(idea, index) in filter()"
-            tag="div"
-            :key="index"
-            :to="{name: 'Idea', params: { iId: idea.id } }"
-          >
-            <div class="row image">
-              <img v-bind:src="idea.idea_pictures[0].url">
-            </div>
-            <div class="row data">
-              <h3>{{idea.title}}</h3>
-              <p class="parag">{{getDescription(idea.description)}}</p>
-            </div>
-            <div class="row show-more">
-              <b-button>Ver más</b-button>
-            </div>
-          </router-link>
-          <div v-if='filter().length == 0'>
-            <h2>¡Anímate! Sé el primero en postular una idea.</h2>
+        <router-link
+          class="idea container-fluid"
+          v-for="(idea, index) in filter()"
+          tag="div"
+          :key="index"
+          :to="{name: 'Idea', params: { iId: idea.id } }"
+        >
+          <div class="row image">
+            <img v-bind:src="idea.idea_pictures[0].url">
           </div>
+          <div class="row data">
+            <h3>{{idea.title}}</h3>
+            <p class="parag">{{getDescription(idea.description)}}</p>
+          </div>
+          <div class="row show-more">
+            <b-button>Ver más</b-button>
+          </div>
+        </router-link>
+        <div v-if="filter().length == 0">
+          <h2>¡Anímate! Sé el primero en postular una idea.</h2>
+        </div>
       </div>
       <div v-else>
         <h2 class="title">No se han encontrado ideas</h2>
@@ -67,6 +67,7 @@
 
 <script>
 import api from "../requests.js";
+import auth from "../authentication.js";
 import Alert from "./Alert.vue";
 import Header from "./Header.vue";
 import Idea from "./AddIdea.vue";
@@ -83,7 +84,8 @@ export default {
       ideas: [],
       search: "",
       page: 1,
-      size: 10
+      size: 10,
+      stage: 0
     };
   },
   methods: {
@@ -124,17 +126,45 @@ export default {
     },
     getIdeas() {
       var challengeID = this.$route.params.cId;
-      api.challenge
-        .getIdeas(challengeID)
-        .then(response => {
-          this.ideas = response.data;
-        })
-        .catch(() => {
-          this.$refs.alert.network_error();
-        });
+      switch (this.stage) {
+        case '1':
+        case '2':
+          api.challenge
+            .getIdeas(challengeID)
+            .then(response => {
+              this.ideas = response.data;
+            })
+            .catch(() => {
+              this.$refs.alert.network_error();
+            });
+          break;
+        case '3':
+          api.idea
+            .picked(challengeID)
+            .then(response => {
+              this.ideas = response.data;
+            })
+            .catch(() => {
+              this.$refs.alert.network_error();
+            });
+          break;
+        case '4':
+          api.idea
+            .winers(challengeID)
+            .then(response => {
+              this.ideas = response.data;
+            })
+            .catch(() => {
+              this.$refs.alert.network_error();
+            });
+          break;
+        default:
+          break;
+      }
     }
   },
   created() {
+    this.stage = auth.storage.get("stage");
     this.getChallengeInfo();
     this.getIdeas();
   }

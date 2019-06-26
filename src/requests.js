@@ -69,7 +69,7 @@ export default {
       return r.get(SERVER_URL + '/ideas/' + ideaID)
     },
     vote: function(ideaID) {
-      return r.post(SERVER_URL + '/ideas/' + ideaID + '/vote')
+      return r.post(SERVER_URL + '/ideas/' + ideaID + '/votes', {}, getHeaders())
     },
     getComments: function(ideaID) {
       return r.get(SERVER_URL + '/ideas/' + ideaID + '/comments')
@@ -79,6 +79,12 @@ export default {
     },
     create: function(body){
       return r.post(SERVER_URL + '/ideas', body, getHeaders())
+    },
+    picked: function(c_id){
+      return r.get(SERVER_URL + '/challenges/' + c_id + '/picked_ideas')
+    },
+    winers: function(c_id){
+      return r.get(SERVER_URL + '/challenges/' + c_id + '/winner_ideas')
     }
   },
   myProfile: {

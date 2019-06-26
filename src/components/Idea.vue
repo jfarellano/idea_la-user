@@ -157,7 +157,32 @@ export default {
     },
     vote() {
       if (this.logged()) {
-        this.$refs.alert.success("Tu voto se ha enviado, gracias por votar");
+        this.$refs.alert.confirm(
+          "¿Estas seguro?",
+          "Recuerda que solo puedes votar por una idea en cada reto, y es irreversible el voto",
+          () => {
+            api.idea
+              .vote(this.idea.id)
+              .then(() => {
+                this.$refs.alert.success(
+                  "Tu voto se ha enviado, gracias por votar"
+                );
+              })
+              .catch(err => {
+                if (
+                  err.response.data.authorization ==
+                  "you already voted for this challenge!"
+                ) {
+                  this.$refs.alert.error(
+                    "Lo sentimos ya has votado por una idea de este reto"
+                  );
+                } else {
+                  this.$refs.alert.network_error();
+                }
+              });
+          },
+          () => {}
+        );
       } else {
         this.$router.push("/register");
       }
@@ -208,13 +233,13 @@ export default {
 </script>
 
 <style lang="scss" scoped>
-.container-wraper{
+.container-wraper {
   padding: 0px;
-  .main-row{
+  .main-row {
     margin: 0px;
   }
 }
-.main-col{
+.main-col {
   @media (min-width: 1100px) {
     width: 1100px !important;
   }

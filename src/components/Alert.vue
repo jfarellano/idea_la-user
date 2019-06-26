@@ -29,7 +29,7 @@ export default {
 		},
 		confirm: function(title, message, accept, deny) {
       this.$snotify.confirm(message, title, {
-        timeout: 2000,
+        timeout: 5000,
         showProgressBar: false,
         closeOnClick: true,
 				pauseOnHover: true,
