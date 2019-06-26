@@ -43,6 +43,9 @@
             <h3>{{idea.title}}</h3>
             <p class="parag">{{getDescription(idea.description)}}</p>
           </div>
+          <div class="row show-more">
+            <b-button>Ver más</b-button>
+          </div>
         </router-link>
       </div>
       <div v-else>
@@ -191,7 +194,7 @@ export default {
       color: #6d6d6d;
       border-radius: 5px;
       width: 300px;
-      height: 350px;
+      height: 390px;
       cursor: pointer;
       .parag {
         color: #020202;
@@ -210,6 +213,7 @@ export default {
       }
       .data {
         padding: 20px;
+        height: 180px;
         h3 {
           font-size: 1.3rem;
           color: #0e2469;
@@ -220,6 +224,15 @@ export default {
           margin-top: 5px;
           margin-bottom: 5px;
           text-align: justify;
+        }
+      }
+      .show-more {
+        padding: 0px 20px;
+        button {
+          background-color: #0e2469;
+          color: white;
+          border-radius: 5px;
+          width: 100%;
         }
       }
     }
