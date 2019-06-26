@@ -49,6 +49,7 @@
             <div v-else>
               <p class="recuperar-pass solicitud-ex">¡Solicitud Exitosa!</p>
               <p>Se ha enviado un correo electrónico a <b>{{ this.emailRecover }}</b> con un link para realizar el cambio de contraseña.</p>
+              <router-link to="/">Volver a la pagina principal</router-link>
             </div>
 
           </div>
@@ -62,11 +63,13 @@
 <script>
 import api from "../requests.js";
 import Alert from './Alert.vue'
+import { setTimeout } from 'timers';
 export default {
   data(){
     return {
       emailRecover: '',
-      emailValid: false
+      emailValid: false,
+      active: true
     }
   },
   components: {
@@ -78,18 +81,22 @@ export default {
   },
   methods: {
     validRecover() {
-      if (this.errors.count() == 0 && this.emailRecover != '') {
+      if (this.errors.count() == 0 && this.emailRecover != '' && this.active) {
         return true;
       } else {
         return false;
       }
     },
     continueRecover() {
+      this.active = false
       api.password.mail({
         email: this.emailRecover
       }).then(() => {
         this.emailValid = true;
       }).catch(err => {
+        setTimeout(() => {
+          this.active = true
+        }, 1000)
         if (err.response != null) {
           if (err.response.data.error == 'user not found') {
             this.$refs.alert.error('No hemos podido encontrar tu usuario')
