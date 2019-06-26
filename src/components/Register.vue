@@ -107,9 +107,10 @@
         <h5>Documento de identificación</h5>
         <div class="input-group">
           <input
-            type="number"
+            type="text"
             class="form-control inputStyles"
             placeholder="ej. 1234567890"
+            maxlength="15"
             v-model="userData.cc"
             v-validate="'max:15|required|alpha_num'"
             :class="{'has-error': errors.has('cc_invalid')}"

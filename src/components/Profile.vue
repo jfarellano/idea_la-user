@@ -57,7 +57,8 @@
             class="form-control inputStyles"
             placeholder="ej. Juan"
             v-model="userData.name"
-            v-validate="'alpha_spaces|max:50|required'"
+            maxlength="100"
+            v-validate="'alpha_spaces|max:100|required'"
             :class="{'has-error': errors.has('name_invalid')}"
             name="name"
           >
@@ -70,7 +71,8 @@
             class="form-control inputStyles"
             placeholder="ej. Perez"
             v-model="userData.lastname"
-            v-validate="'alpha_spaces|max:50|required'"
+            maxlength="100"
+            v-validate="'alpha_spaces|max:100|required'"
             :class="{'has-error': errors.has('lasname_invalid')}"
             name="lastname"
           >
@@ -89,11 +91,12 @@
         <h5>Edad</h5>
         <div class="input-group">
           <input
-            type="number"
+            type="text"
             class="form-control inputStyles"
             placeholder="ej. 20"
             v-model="userData.age"
-            v-validate="'max:3|required|min_value:1'"
+            maxlength="3"
+            v-validate="'max_value:125|required|min_value:18|numeric'"
             :class="{'has-error': errors.has('age_invalid')}"
             name="age"
           >
@@ -101,7 +104,7 @@
         <p v-if="errors.has('age')" class="incorrectInput">Edad invalida</p>
         <h5>Género</h5>
         <b-form-select
-          class="mb-2 mr-sm-2 mb-sm-0 squareInput inputStyles"
+          class="mb-2 mr-sm-2 mb-sm-0 squareInput inputStyles minimal"
           :value="null"
           :options="{ 'male': 'Masculino', 'female': 'Femenino', 'other': 'Otro', 'i_prefer_not_to_say': 'Prefiero no decir'}"
           id="inline-form-custom-select-pref"
@@ -116,11 +119,12 @@
         <h5>Télefono</h5>
         <div class="input-group">
           <input
-            type="number"
+            type="text"
             class="form-control inputStyles"
             placeholder="ej. 300-123 4567"
             v-model="userData.phone"
-            v-validate="'required'"
+            maxlength="16"
+            v-validate="{required: true, regex: /^([+]?)[0-9]{1,15}$/mi}"
             :class="{'has-error': errors.has('phone_invalid')}"
             name="phone"
           >
@@ -130,7 +134,8 @@
           type="button"
           class="btn btn-primary btn-lg btn-block"
           id="btnRegisterStyle"
-          v-on:click.prevent="save()"
+          :disabled="save()"
+          v-on:click.prevent="userSave()"
         >Guardar</b-button>
         <b-button
           type="button"
@@ -182,11 +187,11 @@ export default {
         nameField == null ||
         lastnameField == null ||
         ageField == null ||
-        genderField == null
+        genderField == null || this.errors.items.length != 0
       ) {
-        this.$refs.alert.form_error();
+        return true
       } else {
-        this.userSave();
+        return false
       }
     },
     userSave() {
@@ -264,6 +269,14 @@ export default {
     height: 100%;
     min-height: 100vh;
   }
+  select.minimal {
+    background-image: linear-gradient(45deg, transparent 50%, #0e2469 50%),
+      linear-gradient(135deg,#0e2469 50%, transparent 50%);
+    background-position: calc(100% - 15px) calc(1em + 2px),
+      calc(100% - 5px) calc(1em + 2px), 0.5em;
+    background-size: 10px 10px, 10px 10px, 1px 1.5em;
+    background-repeat: no-repeat;
+  }
   .title {
     text-align: center;
     h2 {
@@ -281,6 +294,10 @@ export default {
     font-size: 17px;
     font-weight: 300;
     color: #6a6a6a;
+    &::after {
+      content: "*";
+      color: red;
+    }
   }
   .avatar {
     width: 150px;
