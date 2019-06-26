@@ -48,7 +48,7 @@
             </div>
             <div v-else>
               <p class="recuperar-pass solicitud-ex">¡Solicitud Exitosa!</p>
-              <p>Se ha enviado un correo electrónico a <b>{{ this.emailRecover }}</b> con un link para realizar el cambio de contraseña.</p>
+              <p>Te hemos enviado un correo electrónico a <b>{{ this.emailRecover }}</b> con un enlace para que puedas recuperar tu contraseña.</p>
               <router-link to="/">Volver a la pagina principal</router-link>
             </div>
 
