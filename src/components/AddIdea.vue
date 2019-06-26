@@ -1,5 +1,5 @@
 <template>
-  <b-button v-if="active" class="add-button title" v-on:click.prevent="createIdea">Agrega nueva idea</b-button>
+  <b-button v-if="active" class="add-button title" v-on:click.prevent="createIdea">Postula tu idea</b-button>
 </template>
 
 <script>
