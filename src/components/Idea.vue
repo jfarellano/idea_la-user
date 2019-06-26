@@ -2,7 +2,7 @@
   <section>
     <Header></Header>
     <div class="container-wraper container-fluid">
-      <div class="row justify-content-center">
+      <div class="row justify-content-center main-row">
         <div class="main-col">
           <div class="main-container container-fluid">
             <div class="row back">
@@ -16,7 +16,7 @@
                 <div class="row">
                   <h1 class="title">{{idea.title}}</h1>
                 </div>
-                <div class="row icons justify-content-center">
+                <div class="row icons justify-content-left">
                   <div class="col wapp">
                     <font-awesome-icon @click="share('wap')" :icon="['fab', 'whatsapp']"></font-awesome-icon>
                   </div>
@@ -210,6 +210,9 @@ export default {
 <style lang="scss" scoped>
 .container-wraper{
   padding: 0px;
+  .main-row{
+    margin: 0px;
+  }
 }
 .main-col{
   @media (min-width: 1100px) {
