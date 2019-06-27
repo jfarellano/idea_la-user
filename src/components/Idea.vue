@@ -33,8 +33,10 @@
               </div>
             </div>
             <div class="row third">
-              <div class="container-desc">
-                <p class="parag jump">{{idea.description}}</p>
+              <div class="col-12">
+                <div class="container-desc">
+                  <p class="parag jump">{{idea.description}}</p>
+                </div>
               </div>
             </div>
 
@@ -318,8 +320,15 @@ export default {
   .third {
     padding: 0px 50px;
     .container-desc {
+      width: calc(100vw - 150px);
       box-shadow: 0 0 6px 0 rgba(188, 188, 188, 0.5);
       padding: 30px;
+      overflow: hidden;
+      word-wrap: break-word;
+      overflow-wrap: break-word;
+      @media (min-width: 1100px) {
+        width: auto;
+      }
     }
   }
   .back {

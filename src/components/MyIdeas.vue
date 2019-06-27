@@ -208,18 +208,24 @@ export default {
         }
       }
       .data {
+        word-wrap: break-word;
+        overflow-wrap: break-word;
+        width: 298px;
         padding: 20px;
+        height: 180px;
         h3 {
           font-size: 1.3rem;
           color: #0e2469;
           width: 100%;
         }
         p {
+          width: 258px;
+          word-wrap: break-word;
+          overflow-wrap: break-word;
           color: #262626;
           margin-top: 5px;
           margin-bottom: 5px;
           text-align: justify;
-          white-space: normal;
         }
       }
     }

@@ -20,7 +20,7 @@
         </div>
       </div>
       <div class="description row justify-content-center">
-        <div class="col-md-10">
+        <div class="col-md-10 description">
           <p class="jump">{{challenge.description}}</p>
         </div>
       </div>
@@ -127,8 +127,8 @@ export default {
     getIdeas() {
       var challengeID = this.$route.params.cId;
       switch (this.stage) {
-        case '1':
-        case '2':
+        case "1":
+        case "2":
           api.challenge
             .getIdeas(challengeID)
             .then(response => {
@@ -138,7 +138,7 @@ export default {
               this.$refs.alert.network_error();
             });
           break;
-        case '3':
+        case "3":
           api.idea
             .picked(challengeID)
             .then(response => {
@@ -148,7 +148,7 @@ export default {
               this.$refs.alert.network_error();
             });
           break;
-        case '4':
+        case "4":
           api.idea
             .winers(challengeID)
             .then(response => {
@@ -262,6 +262,9 @@ export default {
         }
       }
       .data {
+        word-wrap: break-word;
+        overflow-wrap: break-word;
+        width: 298px;
         padding: 20px;
         height: 180px;
         h3 {
@@ -270,6 +273,9 @@ export default {
           width: 100%;
         }
         p {
+          width: 258px;
+          word-wrap: break-word;
+          overflow-wrap: break-word;
           color: #262626;
           margin-top: 5px;
           margin-bottom: 5px;

@@ -20,7 +20,7 @@ export default {
     font-family: 'Rubik', sans-serif;
   }
   .jump{
-    white-space: pre-wrap;
+    white-space: pre-line;
   }
   #app {
     -webkit-font-smoothing: antialiased;
