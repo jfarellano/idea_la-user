@@ -215,7 +215,7 @@
         <div class="row">
           <div class="col">
             <div v-if="!edit">
-              <h5>¿Cómo te enteraste de la iniciativa? </h5>
+              <h5>¿Cómo te enteraste de la iniciativa?</h5>
               <b-form-select
                 class="mb-2 mr-sm-2 mb-sm-0 squareInput inputStyles"
                 :value="null"
@@ -234,23 +234,31 @@
               >
                 <option slot="first" :value="null"></option>
               </b-form-select>
-              <p
-                v-if="errors.has('info_found')"
-                class="incorrectInput"
-              >Cuentanos como te enteraste</p>
+              <p v-if="errors.has('info_found')" class="incorrectInput">Cuentanos como te enteraste</p>
             </div>
           </div>
         </div>
         <div class="row">
+          <div class="col">
+            <b-form-checkbox
+          id="checkbox-1"
+          v-model="idea.terms"
+          name="terms"
+          value="accepted"
+          unchecked-value="not_accepted"
+        >Acepto los <a href="http://www.camarabaq.org.co/desarrollo-regional/ideas/bases-imagina-tu-ciuda/" target="_blank">términos y condiciones</a></b-form-checkbox>
+          </div>
+        </div>
+        <div class="row buttons">
+          <div class="col-sm">
+            <b-button class="cancel title" @click.prevent="cancelCreateIdea()">Cancelar</b-button>
+          </div>
           <div class="col-sm">
             <b-button
               class="ideaButton title"
               :disabled="validate()"
               @click.prevent="createIdea()"
-            >Aceptar</b-button>
-          </div>
-          <div class="col-sm">
-            <b-button class="cancel title" @click.prevent="cancelCreateIdea()">Cancelar</b-button>
+            >¡Sube tu idea!</b-button>
           </div>
         </div>
       </div>
@@ -287,17 +295,17 @@ export default {
         this.idea.challenge_id == null ||
         this.idea.impact == null ||
         this.idea.problem == null ||
-        this.idea.companions == null ||
         this.idea.info_found == null ||
+        this.idea.terms == null ||
         this.idea.ods == null ||
         this.idea.title == "" ||
         this.idea.description == "" ||
         this.idea.challenge_id == "" ||
         this.idea.impact == "" ||
         this.idea.problem == "" ||
-        this.idea.companions == "" ||
         this.idea.info_found == "" ||
         this.idea.ods == "" ||
+        this.idea.terms == 'not_accepted' ||
         this.errors.items.length != 0
       ) {
         return true;
@@ -320,11 +328,11 @@ export default {
       }
       fd.append("title", this.idea.title);
       fd.append("description", this.idea.description);
-      fd.append('impact', this.idea.impact)
-      fd.append('problem', this.idea.problem)
-      fd.append('companions', this.idea.companions)
-      fd.append('info_found', this.idea.info_found)
-      fd.append('ods', this.idea.ods)
+      fd.append("impact", this.idea.impact);
+      fd.append("problem", this.idea.problem);
+      fd.append("companions", this.idea.companions);
+      fd.append("info_found", this.idea.info_found);
+      fd.append("ods", this.idea.ods);
 
       if (!this.edit) fd.append("challenge_id", this.idea.challenge_id);
       if (this.edit) {
@@ -394,6 +402,9 @@ export default {
 
 <style scoped style lang="scss">
 .createEditIdeaComponent {
+  .buttons{
+    margin-bottom: 30px;
+  }
   .titleStyle {
     margin-bottom: 30px;
   }
