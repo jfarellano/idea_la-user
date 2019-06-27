@@ -65,7 +65,7 @@
                   </b-button>
                 </div>
               </b-button-group>
-              <h2 v-else>Registrate y podras comentar</h2>
+              <h2 v-else>Regístrate y podrás comentar</h2>
             </div>
 
             <div class="row comments">
