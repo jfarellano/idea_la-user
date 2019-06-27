@@ -118,7 +118,7 @@ export default {
   created() {
     var loged = auth.storage.logged();
     auth.session.stage().then(response => {
-      auth.storage.set_stage(response.data.number)
+      auth.storage.set_stage(response.data.number, response.data.title, response.data.description)
       this.stage = response.data.number
     });
     if (loged) {

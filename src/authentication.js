@@ -69,8 +69,10 @@ export default {
     set_name: function (name, lastname) {
       localStorage.setItem('name', api.utils.upcase(name + ' ' + lastname))
     },
-    set_stage: function (stage) {
+    set_stage: function (stage, title, desc) {
       localStorage.setItem('stage', stage)
+      localStorage.setItem('title', title)
+      localStorage.setItem('desc', desc)
     },
     logged: function () {
       if (localStorage.getItem('secret') != null) {

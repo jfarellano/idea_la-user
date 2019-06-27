@@ -8,10 +8,8 @@
           <img src="../assets/challenges.png">
         </div>
         <div class="col-md-6 align-self-center">
-          <h1 class="main-title">Conoce los retos y ayuda a crecer a Barranquilla</h1>
-          <p
-            class="parag jump"
-          >Para lograrlo necesitamos que tú seas parte del cambio. Sabemos que tienesmucho que aportar. Tus ideas, experiencia y tiempo nos ayudarán a encontrarsoluciones sostenibles a los desafíos que afrontamos. ¡Todos podemosconvertirnos en protagonistas de nuestra ciudad!</p>
+          <h1 class="main-title">{{title}}</h1>
+          <p class="parag jump">{{desc}}</p>
         </div>
       </div>
       <!-- INICIO DE CHALLENGES -->
@@ -44,6 +42,7 @@
 </template>
 <script>
 import api from "../requests.js";
+import auth from "../authentication.js";
 import Alert from "./Alert.vue";
 import Header from "./Header.vue";
 import Idea from "./AddIdea.vue";
@@ -56,7 +55,9 @@ export default {
   },
   data() {
     return {
-      challenges: []
+      challenges: [],
+      title: "",
+      desc: ""
     };
   },
   methods: {
@@ -65,6 +66,8 @@ export default {
         .index()
         .then(response => {
           this.challenges = response.data;
+          this.title = auth.storage.get("title");
+          this.desc = auth.storage.get("desc");
         })
         .catch(() => {
           this.$refs.alert.network_error();
@@ -73,6 +76,8 @@ export default {
   },
   created() {
     this.getChallenges();
+    this.title = auth.storage.get("title");
+    this.desc = auth.storage.get("desc");
   }
 };
 </script>
