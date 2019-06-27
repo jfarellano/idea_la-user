@@ -15,6 +15,7 @@
               <div class="col-md-6 align-self-center">
                 <div class="row">
                   <h1 class="title">{{idea.title}}</h1>
+                  <p class="user">{{getName(idea.user)}}</p>
                 </div>
                 <div class="row icons justify-content-left">
                   <div class="col wapp">
@@ -35,7 +36,12 @@
             <div class="row third">
               <div class="col-12">
                 <div class="container-desc">
+                  <h4>La idea</h4>
                   <p class="parag jump">{{idea.description}}</p>
+                  <h4>El impacto</h4>
+                  <p class="parag jump">{{idea.impact}}</p>
+                  <h4>El problema que resuelve</h4>
+                  <p class="parag jump">{{idea.problem}}</p>
                 </div>
               </div>
             </div>
@@ -128,6 +134,9 @@ export default {
     getCPic(pic) {
       if (typeof pic == "object") return pic.url;
       else return pic;
+    },
+    getName(user){
+      return api.utils.upcase(user.name + ' ' + user.lastname)
     },
     share(sn) {
       var url = "";
@@ -246,6 +255,9 @@ export default {
     width: 1100px !important;
   }
 }
+.user{
+  margin-left: 15px;
+}
 .main-container {
   margin-top: 90px;
   .main-image {
@@ -319,6 +331,9 @@ export default {
   }
   .third {
     padding: 0px 50px;
+    h4{
+      color: #0e2469;
+    }
     .container-desc {
       width: calc(100vw - 150px);
       box-shadow: 0 0 6px 0 rgba(188, 188, 188, 0.5);
