@@ -213,7 +213,7 @@ export default {
         overflow-wrap: break-word;
         width: 298px;
         padding: 20px;
-        height: 180px;
+        height: 210px;
         h3 {
           font-size: 1.3rem;
           color: #0e2469;

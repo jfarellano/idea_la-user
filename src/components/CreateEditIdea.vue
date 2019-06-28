@@ -252,14 +252,14 @@
         </div>
         <div class="row buttons">
           <div class="col-sm">
-            <b-button class="cancel title" @click.prevent="cancelCreateIdea()">Cancelar</b-button>
-          </div>
-          <div class="col-sm">
             <b-button
               class="ideaButton title"
               :disabled="validate()"
               @click.prevent="createIdea()"
             >¡Sube tu idea!</b-button>
+          </div>
+          <div class="col-sm">
+            <b-button class="cancel title" @click.prevent="cancelCreateIdea()">Cancelar</b-button>
           </div>
         </div>
       </div>

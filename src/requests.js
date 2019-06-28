@@ -4,7 +4,7 @@
 const r = require('axios');
 const SERVER_URL = 'https://dev.jfarellano.xyz'
 // const WEB_URL = 'localhost:8080/#/'
-const WEB_URL = 'http://imagina.tu.ciuda.s3-website-us-east-1.amazonaws.com/#/'
+const WEB_URL = 'http://prod.imagina.tu.ciuda.s3-website-us-east-1.amazonaws.com/#/'
 
 import auth from './authentication.js'
 

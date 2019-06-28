@@ -15,7 +15,7 @@
               <div class="col-md-6 align-self-center">
                 <div class="row">
                   <h1 class="title">{{idea.title}}</h1>
-                  <p class="user">{{getName(idea.user)}}</p>
+                  <p class="user">{{getName(idea.user.name + ' ' + idea.user.lastname)}}</p>
                 </div>
                 <div class="row icons justify-content-left">
                   <div class="col wapp">
@@ -86,7 +86,7 @@
                   >
                 </b-button>
                 <div class="comment">
-                  <p class="name">{{comment.user_name}}</p>
+                  <p class="name">{{getName(comment.user_name)}}</p>
                   <p>{{comment.description}}</p>
                 </div>
               </b-button-group>
@@ -135,8 +135,8 @@ export default {
       if (typeof pic == "object") return pic.url;
       else return pic;
     },
-    getName(user){
-      return api.utils.upcase(user.name + ' ' + user.lastname)
+    getName(name){
+      return api.utils.upcase(name)
     },
     share(sn) {
       var url = "";
