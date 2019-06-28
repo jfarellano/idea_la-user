@@ -16,7 +16,7 @@
           >
         </div>
       </div>
-      <div class="row second justify-content-center" v-if="ideas != []">
+      <div class="row second justify-content-center" v-if="ideas.length != 0">
         <router-link
           class="idea container-fluid"
           v-for="(idea, index) in filter()"
@@ -38,7 +38,7 @@
         </router-link>
       </div>
       <div v-else>
-        <h2 class="title">No se han encontrado ideas</h2>
+        <h2 class="title">Parece que no tienes ideas, ¡anímate a postular!</h2>
       </div>
     </div>
     <Alert ref="alert"></Alert>
@@ -158,6 +158,7 @@ export default {
   .title {
     color: #0e2469;
     width: 100%;
+    text-align: center;
   }
   .parag {
     color: #020202;

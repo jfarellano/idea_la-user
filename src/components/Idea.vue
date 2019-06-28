@@ -288,6 +288,7 @@ export default {
     color: #0e2469;
     font-size: 37px;
     margin: 0px;
+    width: 100%;
   }
   .parag {
     color: #9b9b9b;
@@ -343,6 +344,12 @@ export default {
       overflow-wrap: break-word;
       @media (min-width: 1100px) {
         width: auto;
+      }
+    }
+    @media (max-width: 768px) {
+      padding: 0px 10px;
+      .container-desc{
+        width: calc(100vw - 50px);
       }
     }
   }

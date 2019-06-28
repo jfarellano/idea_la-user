@@ -146,7 +146,7 @@
         <p
           v-if="errors.has('password')"
           class="incorrectInput"
-        >Tu contraseña no es muy segura, debe ser minimo de 6 caracteres y un numero</p>
+        >Tu contraseña no es muy segura, debe ser minimo de 6 caracteres y debe contener por lo menos un numero y una letra</p>
         <h5>Confirmar contraseña</h5>
         <p
           class="ex"

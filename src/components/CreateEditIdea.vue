@@ -180,22 +180,23 @@
               <b-form-select
                 class="mb-2 mr-sm-2 mb-sm-0 squareInput inputStyles"
                 :value="null"
-                :options="{'Fin de la pobreza': 'Fin de la pobreza',
-                'Hambre cero': 'Hambre cero',
-                'Salud y bienestar': 'Salud y bienestar',
-                'Educación de calidad': 'Educación de calidad',
-                'Igualdad de género': 'Igualdad de género',
-                'Agua limpia y saneamiento': 'Agua limpia y saneamiento',
-                'Energía asequible y no contaminante': 'Agua limpia y saneamiento',
-                'Trabajo decente y crecimiento económico': 'Trabajo decente y crecimiento económico',
-                'Industria innovación e infraestructura': 'Industria innovación e infraestructura',
-                'Reducción de las desigualdades': 'Reducción de las desigualdades',
-                'Ciudades y comunidades sostenibles': 'Ciudades y comunidades sostenibles',
-                'Producción y consumo responsable': 'Producción y consumo responsable',
-                'Acción por el clima': 'Acción por el clima',
-                'Vida submarina': 'Vida submarina',
-                'Paz, justicia e instituciones sólidas': 'Paz, justicia e instituciones sólidas',
-                'Alianzas para lograr los objetivos': 'Alianzas para lograr los objetivos'
+                :options="{'1. Fin de la pobreza': '1. Fin de la pobreza',
+                '2. Hambre cero': '2. Hambre cero',
+                '3. Salud y bienestar': '3. Salud y bienestar',
+                '4. Educación de calidad': '4. Educación de calidad',
+                '5. Igualdad de género': '5. Igualdad de género',
+                '6. Agua limpia y saneamiento': '6. Agua limpia y saneamiento',
+                '7. Energía asequible y no contaminante': '7. Energía asequible y no contaminante',
+                '8. Trabajo decente y crecimiento económico': '8. Trabajo decente y crecimiento económico',
+                '9. Industria innovación e infraestructura': '9. Industria innovación e infraestructura',
+                '10. Reducción de las desigualdades': '10. Reducción de las desigualdades',
+                '11. Ciudades y comunidades sostenibles': '11. Ciudades y comunidades sostenibles',
+                '12. Producción y consumo responsable': '12. Producción y consumo responsable',
+                '13. Acción por el clima': '13. Acción por el clima',
+                '14. Vida submarina': '14. Vida submarina',
+                '15. Vida de ecosistemas terrestres': '15. Vida de ecosistemas terrestres',
+                '16. Paz, justicia e instituciones sólidas': '16. Paz, justicia e instituciones sólidas',
+                '17. Alianzas para lograr los objetivos': '17. Alianzas para lograr los objetivos'
                 }"
                 id="inline-form-custom-select-pref"
                 v-model="idea.ods"
@@ -222,7 +223,7 @@
                 :options="{'Por la Cámara de Comercio de Barranquilla': 'Por la Cámara de Comercio de Barranquilla',
                   'Por las organizaciones aliadas': 'Por las organizaciones aliadas',
                   'Redes sociales': 'Redes sociales',
-                  'Mailing': 'Mailing',
+                  'Correo electrónico': 'Correo electrónico',
                   'Medios de prensa': 'Medios de prensa',
                   'Otros': 'Otros'
                 }"
@@ -246,7 +247,7 @@
           name="terms"
           value="accepted"
           unchecked-value="not_accepted"
-        >Acepto los <a href="http://www.camarabaq.org.co/desarrollo-regional/ideas/bases-imagina-tu-ciuda/" target="_blank">términos y condiciones</a></b-form-checkbox>
+        >Acepto las <a href="http://www.camarabaq.org.co/desarrollo-regional/ideas/bases-imagina-tu-ciuda/" target="_blank">bases de la convocatoria</a></b-form-checkbox>
           </div>
         </div>
         <div class="row buttons">
