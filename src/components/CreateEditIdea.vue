@@ -349,7 +349,7 @@ export default {
         api.idea
           .create(fd)
           .then(response => {
-            this.$refs.alert.success("Tu idea se ha creado correctamente");
+            this.$refs.alert.success("¡Que buena idea! Gracias por postularla");
             this.$router.push("/idea/" + response.data.id);
           })
           .catch(() => {

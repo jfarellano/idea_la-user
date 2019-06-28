@@ -54,11 +54,11 @@
           </div>
         </router-link>
         <div v-if="filter().length == 0">
-          <h2>¡Anímate! Sé el primero en postular una idea.</h2>
+          <h2>Ups no hay ideas que coincidan con tu busqueda</h2>
         </div>
       </div>
       <div v-else>
-        <h2 class="title">No se han encontrado ideas</h2>
+        <h2 class="title">¡Anímate! Sé el primero en postular una idea.</h2>
       </div>
     </div>
     <Alert ref="alert"></Alert>

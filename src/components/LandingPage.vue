@@ -78,8 +78,8 @@
           <div class="row justify-content-center align-items-center">
             <div class="col-md-8 align-self-center info order-2 order-md-1">
               <img class="cc" src="../assets/landing/brands/CCB.svg">
-              <h3 style='text-align: center'>Conoce la Unidad de Desarrollo Regional en la Cámara de Comercio de Barranquilla</h3>
-              <b-button href="http://www.camarabaq.org.co/desarrollo-regional/ " target="_blank">Conocela aquí</b-button>
+              <h3 style='text-align: center'>Conoce mas sobre nuestras iniciativas</h3>
+              <b-button href="http://www.camarabaq.org.co/desarrollo-regional/ " target="_blank">Conocenos</b-button>
             </div>
           </div>
         </div>
