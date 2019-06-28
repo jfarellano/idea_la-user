@@ -5,7 +5,7 @@
     <div class="main-container container-fluid">
       <div class="row first">
         <div class="col-md-6 align-self-center main-image">
-          <img src="../assets/challenges.png">
+          <img src="../assets/challenges.svg">
         </div>
         <div class="col-md-6 align-self-center">
           <h1 class="main-title">{{title}}</h1>
