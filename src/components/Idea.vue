@@ -195,7 +195,7 @@ export default {
           () => {}
         );
       } else {
-        this.$router.push("/register");
+        this.$router.push("/login");
       }
     },
     loadComments() {
