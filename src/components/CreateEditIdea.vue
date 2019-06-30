@@ -44,7 +44,7 @@
         </div>
         <div class="row">
           <div class="col">
-            <h5>Nombre de tu idea</h5>
+            <h5 class="req">Nombre de tu idea</h5>
             <div class="input-group">
               <input
                 type="text"
@@ -64,7 +64,7 @@
         </div>
         <div class="row">
           <div class="col">
-            <h5>Cuéntanos sobre tu idea</h5>
+            <h5 class="req">Cuéntanos sobre tu idea</h5>
             <div class="input-group">
               <b-form-textarea
                 rows="7"
@@ -85,7 +85,7 @@
         </div>
         <div class="row">
           <div class="col">
-            <h5>¿Qué impacto positivo tiene o tendría tu idea en tu comunidad?</h5>
+            <h5 class="req">¿Qué impacto positivo tiene o tendría tu idea en tu comunidad?</h5>
             <div class="input-group">
               <b-form-textarea
                 rows="7"
@@ -106,7 +106,7 @@
         </div>
         <div class="row">
           <div class="col">
-            <h5>Problema que resuelve tu idea</h5>
+            <h5 class="req">Problema que resuelve tu idea</h5>
             <div class="input-group">
               <b-form-textarea
                 rows="7"
@@ -149,7 +149,7 @@
         <div class="row">
           <div class="col">
             <div v-if="!edit">
-              <h5>Elige el reto en el que deseas postular tu idea</h5>
+              <h5 class="req">Elige el reto en el que deseas postular tu idea</h5>
               <b-form-select
                 class="mb-2 mr-sm-2 mb-sm-0 squareInput inputStyles"
                 :value="null"
@@ -176,7 +176,7 @@
         <div class="row">
           <div class="col">
             <div v-if="!edit">
-              <h5>Elige el ODS con el que se vincula tu propuesta</h5>
+              <h5 class="req">Elige el ODS con el que se vincula tu propuesta</h5>
               <b-form-select
                 class="mb-2 mr-sm-2 mb-sm-0 squareInput inputStyles"
                 :value="null"
@@ -216,7 +216,7 @@
         <div class="row">
           <div class="col">
             <div v-if="!edit">
-              <h5>¿Cómo te enteraste de la iniciativa?</h5>
+              <h5 class="req">¿Cómo te enteraste de la iniciativa?</h5>
               <b-form-select
                 class="mb-2 mr-sm-2 mb-sm-0 squareInput inputStyles"
                 :value="null"
@@ -247,6 +247,7 @@
           name="terms"
           value="accepted"
           unchecked-value="not_accepted"
+          class="req"
         >Acepto las <a href="http://www.camarabaq.org.co/desarrollo-regional/ideas/bases-imagina-tu-ciuda/" target="_blank">bases de la convocatoria</a></b-form-checkbox>
           </div>
         </div>
@@ -411,6 +412,12 @@ export default {
   }
   .idea-create {
     margin-top: 130px;
+  }
+  .req{
+    &::after {
+      content: "*";
+      color: red;
+    }
   }
   .idea-image {
     height: 200px;
