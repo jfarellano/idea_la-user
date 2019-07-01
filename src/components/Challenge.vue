@@ -36,12 +36,13 @@
       </div>
       <div class="row second justify-content-center" v-if="ideas != ''">
         <router-link
-          class="idea container-fluid"
+          :class="ideaClass('idea container-fluid')"
           v-for="(idea, index) in filter()"
           tag="div"
           :key="index"
           :to="{name: 'Idea', params: { iId: idea.id } }"
         >
+          <font-awesome-icon class="icon" icon='star'></font-awesome-icon>
           <div class="row image">
             <img v-bind:src="idea.idea_pictures[0].url">
           </div>
@@ -103,6 +104,10 @@ export default {
         .catch(() => {
           this.$refs.alert.network_error();
         });
+    },
+    ideaClass(cls) {
+      if (this.stage == "4") return cls + " win";
+      else return cls;
     },
     filter() {
       var list = [];
@@ -237,6 +242,17 @@ export default {
     padding-top: 0px;
     background-color: white;
 
+    .win {
+      &:first-child {
+        -webkit-box-shadow: 0px 0px 61px -3px rgba(14, 52, 105, 0.75);
+        -moz-box-shadow: 0px 0px 61px -3px rgba(14, 52, 105, 0.75);
+        box-shadow: 0px 0px 61px -3px rgba(14, 52, 105, 0.75);
+        .icon{
+          display: inline;
+        }
+      }
+    }
+
     .idea {
       margin: 10px;
       background-color: white;
@@ -245,10 +261,20 @@ export default {
       border-radius: 5px;
       width: 300px;
       height: 390px;
+      position: relative;
       cursor: pointer;
       .parag {
         color: #020202;
         text-align: justify;
+      }
+      .icon{
+        display: none;
+        position: absolute;
+        top: -20px;
+        right: -20px;
+        font-size: 50px;
+        transform: rotate(25deg);
+        color: #0e2469;
       }
 
       .image {
