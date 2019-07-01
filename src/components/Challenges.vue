@@ -4,10 +4,20 @@
     <Idea></Idea>
     <div class="main-container container-fluid">
       <div class="row first">
-        <div class="col-md-6 align-self-center main-image">
-          <img src="../assets/challenges.svg">
+        <div
+          data-aos="zoom-in"
+          data-aos-duration="1000"
+          data-aos-delay="10"
+          class="col-md-6 align-self-center main-image"
+        >
+          <img src="../assets/challenges.svg" />
         </div>
-        <div class="col-md-6 align-self-center">
+        <div
+          data-aos="zoom-in"
+          data-aos-duration="1000"
+          data-aos-delay="100"
+          class="col-md-6 align-self-center"
+        >
           <h1 class="main-title">{{title}}</h1>
           <p class="parag jump">{{desc}}</p>
         </div>
@@ -16,12 +26,15 @@
       <div v-if="challenges != ''" class="row second justify-content-center">
         <div v-for="(challenge, index) in challenges" :key="index">
           <router-link
+            data-aos="zoom-in"
+            data-aos-duration="1000"
+            data-aos-delay="100"
             tag="div"
             :to="{name: 'Challenge', params: { cId: challenge.id } }"
             class="challenge container-fluid"
           >
             <div class="row image">
-              <img :src="challenge.challenge_pictures[0].url" alt="Imagen de reto">
+              <img :src="challenge.challenge_pictures[0].url" alt="Imagen de reto" />
             </div>
             <div class="row data">
               <h3 class="title">{{challenge.title}}</h3>

@@ -2,7 +2,9 @@
   <div class="createEditIdeaComponent">
     <Header></Header>
 
-    <div class="container-fluid idea-create">
+    <div data-aos="zoom-in"
+          data-aos-duration="500"
+          data-aos-delay="100" class="container-fluid idea-create">
       <div class="row justify-content-center">
         <h1 class="title titleStyle">Postula tu idea</h1>
       </div>

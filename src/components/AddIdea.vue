@@ -1,5 +1,7 @@
 <template>
-  <b-button v-if="active" class="add-button title" v-on:click.prevent="createIdea">Postula tu idea</b-button>
+  <b-button data-aos="zoom-in"
+          data-aos-duration="500"
+          data-aos-delay="100" v-if="active" class="add-button title" v-on:click.prevent="createIdea">Postula tu idea</b-button>
 </template>
 
 <script>

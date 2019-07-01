@@ -2,8 +2,10 @@
   <div class="containter-fluid profile-container">
     <Header></Header>
     <div class="row justify-content-center align-items-center main-row">
-      <div class="col align-self-center profile-form">
-        <div class="row justify-content-center">
+      <div data-aos="zoom-in"
+          data-aos-duration="500"
+          data-aos-delay="100" class="col align-self-center profile-form">
+        <div  class="row justify-content-center">
           <router-link to="/">
             <img src="../assets/CamaraBaq-Blue.svg" alt height="110px" class="iconImage">
           </router-link>

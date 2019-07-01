@@ -14,6 +14,9 @@
       <div v-if="selected.length != challenges.length">
         <p class="parag">Selecciona en orden cuales retos te parecen mas importantes</p>
         <b-button
+          data-aos="zoom-in"
+          data-aos-duration="500"
+          data-aos-delay="100"
           @click="selectChallenge(challenge)"
           class="challenge"
           v-for="challenge in availableChallenges()"
@@ -25,7 +28,9 @@
       <div v-else>
         <p>Este fue el orden que elegiste:</p>
         <ol>
-          <li v-for="(challenge, i) in selected" :key="i">{{getElement(challenge).title}}</li>
+          <li data-aos="zoom-in"
+          data-aos-duration="500"
+          data-aos-delay="100" v-for="(challenge, i) in selected" :key="i">{{getElement(challenge).title}}</li>
         </ol>
         <b-button @click="clear()" class="clear">Reorganizar retos</b-button>
         <b-button @click="save()" class="challenge">Guardar mi selección</b-button>

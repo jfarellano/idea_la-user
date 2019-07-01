@@ -2,102 +2,143 @@
   <section>
     <Header></Header>
     <div class="main-container container-fluid">
-      <div class="first row justify-content-end align-items-center">
+      <div
+        data-aos="zoom-in"
+        data-aos-duration="1000"
+        data-aos-delay="10"
+        class="first row justify-content-end align-items-center"
+      >
         <div class="col-md-6">
-          <img src="../assets/CamaraBaq-Blue.svg">
+          <img src="../assets/CamaraBaq-Blue.svg" />
         </div>
       </div>
       <div class="row">
-        <div class="section container-fluid">
+        <div
+          data-aos="zoom-in"
+          data-aos-duration="1000"
+          data-aos-delay="100"
+          class="section container-fluid"
+        >
           <div class="row justify-content-center align-items-center">
             <div class="col-md-6 align-self-center info order-2 order-md-1">
               <h1>La iniciativa</h1>
               <p>Imagina Tu Ciudá es un espacio de co-creación ciudadana en el que todos podemos ser parte de la construcción de la ciudad que soñamos, priorizando los grandes desafíos que afronta nuestro territorio frente a los Objetivos de Desarrollo Sostenible y formulando soluciones innovadoras a éstos.</p>
             </div>
             <div class="col-md-6 align-self-center order-1 order-md-2">
-              <img src="../assets/landing/Land1.svg" alt="ODS">
+              <img src="../assets/landing/Land1.svg" alt="ODS" />
             </div>
           </div>
         </div>
       </div>
       <div class="row blue">
-        <div class="section left container-fluid">
+        <div
+          data-aos="zoom-in"
+          data-aos-duration="1000"
+          data-aos-delay="100"
+          class="section left container-fluid"
+        >
           <div class="row justify-content-center align-items-center">
             <div class="col-md-6 align-self-center info order-2 order-md-2">
               <h1>Comprometidos con los ODS</h1>
               <p>Los 17 Objetivos de Desarrollo Sostenible – ODS, son un llamado universal a la adopción de medidas para poner fin a la pobreza, luchar contra el cambio climático y reducir las desigualdades. Trabajar para alcanzar los ODS en nuestra ciudad requiere de la colaboración de todos. Empresas privadas, instituciones públicas, entidades educativas y organizaciones de la sociedad civil conectadas con la ciudadanía para asegurar que dejaremos una mejor ciudad a las generaciones futuras, sin dejar a nadie atrás.</p>
             </div>
             <div class="col-md-6 align-self-center order-1 order-md-1">
-              <img src="../assets/landing/Land2.svg" alt="ODS">
+              <img src="../assets/landing/Land2.svg" alt="ODS" />
             </div>
           </div>
         </div>
       </div>
       <div class="row">
-        <div class="section container-fluid">
+        <div
+          data-aos="zoom-in"
+          data-aos-duration="1000"
+          data-aos-delay="100"
+          class="section container-fluid"
+        >
           <div class="row justify-content-center align-items-center">
             <div class="col-md-6 align-self-center info order-2 order-md-1">
               <h1>Los aliados</h1>
               <p>Es por esto que la Cámara de Comercio de Barranquilla, la Universidad del Norte, NativApps, Joonik, Barranquilla Cómo Vamos y Global Shapers Barranquilla, decidieron trabajar colaborativamente para incentivar la participación ciudadana en un proceso de construcción de ciudad, haciendo uso de la tecnología.</p>
             </div>
             <div class="col-md-6 align-self-center order-1 order-md-2">
-              <img src="../assets/landing/United.svg" alt="ODS">
+              <img src="../assets/landing/United.svg" alt="ODS" />
             </div>
           </div>
         </div>
       </div>
       <div class="row blue">
-        <div class="section left container-fluid">
+        <div
+          data-aos="zoom-in"
+          data-aos-duration="1000"
+          data-aos-delay="100"
+          class="section left container-fluid"
+        >
           <div class="row justify-content-center align-items-center">
             <div class="col-md-6 align-self-center info order-2 order-md-2">
               <h1>Los Hackers</h1>
               <p>Los desarrolladores de esta plataforma son 5 estudiantes de la Universidad del Norte que resultaron ganadores de la Hackathon - Imagina Tu Ciudá, en la que participaron 52 estudiantes de 6 universidades diferentes, durante el mes de abril 2019. Ellos son Juan Felipe Arellano, Andrés Concha, Maximiliam García, John Barbosa, estudiantes de Ingeniería de Sistemas y Jhon Muñoz, estudiante de Ciencia Política y Gobierno.</p>
             </div>
             <div class="col-md-6 align-self-center order-1 order-md-1">
-              <img src="../assets/landing/Hacker.svg" alt="ODS">
+              <img src="../assets/landing/Hacker.svg" alt="ODS" />
             </div>
           </div>
         </div>
       </div>
       <div class="row">
-        <div class="section container-fluid">
+        <div
+          data-aos="zoom-in"
+          data-aos-duration="1000"
+          data-aos-delay="100"
+          class="section container-fluid"
+        >
           <div class="row justify-content-center align-items-center">
             <div class="col-md-6 align-self-center info order-2 order-md-1">
               <h1>Te necesitamos</h1>
               <p>Sabemos que tienes mucho que aportar. Tus ideas y experiencia nos ayudarán a encontrar soluciones más sostenibles y escalables para construir una mejor Barranquilla. ¡Conviértete hoy en un protagonista de tu ciudad y aporta tus ideas!</p>
-              <b-button href="http://www.camarabaq.org.co/desarrollo-regional/ideas/bases-imagina-tu-ciuda/" target="_blank">Descarga las bases</b-button>
+              <b-button
+                href="http://www.camarabaq.org.co/desarrollo-regional/ideas/bases-imagina-tu-ciuda/"
+                target="_blank"
+              >Descarga las bases</b-button>
             </div>
             <div class="col-md-6 align-self-center order-1 order-md-2">
-              <img src="../assets/landing/Land3.svg" alt="ODS">
+              <img src="../assets/landing/Land3.svg" alt="ODS" />
             </div>
           </div>
         </div>
       </div>
       <div class="row blue">
-        <div class="section container-fluid">
+        <div
+          data-aos="zoom-in"
+          data-aos-duration="1000"
+          data-aos-delay="100"
+          class="section container-fluid"
+        >
           <div class="row justify-content-center align-items-center">
             <div class="col-md-8 align-self-center info order-2 order-md-1">
-              <img class="cc" src="../assets/landing/brands/CCB.svg">
-              <h3 style='text-align: center'>Conoce mas sobre nuestras iniciativas</h3>
-              <b-button href="http://www.camarabaq.org.co/desarrollo-regional/ " target="_blank">Conocenos</b-button>
+              <img class="cc" src="../assets/landing/brands/CCB.svg" />
+              <h3 style="text-align: center">Conoce mas sobre nuestras iniciativas</h3>
+              <b-button
+                href="http://www.camarabaq.org.co/desarrollo-regional/ "
+                target="_blank"
+              >Conocenos</b-button>
             </div>
           </div>
         </div>
       </div>
 
       <div class="row justify-content-center">
-        <div class="brands col">
+        <div data-aos="zoom-in" data-aos-duration="1000" data-aos-delay="100" class="brands col">
           <div class="container-fluid container-flex">
             <div class="row">
               <h3 class="support">Apoyan</h3>
             </div>
             <div class="row justify-content-arround">
-              <img class="logo col" src="../assets/landing/brands/CCB.svg">
-              <img class="logo col" src="../assets/landing/brands/NA.svg">
-              <img class="logo col" src="../assets/landing/brands/JOO.svg">
-              <img class="logo col" src="../assets/landing/brands/UN.svg">
-              <img class="logo col" src="../assets/landing/brands/BCV.svg">             
-              <img class="logo col" src="../assets/landing/brands/GS.svg">
+              <img class="logo col" src="../assets/landing/brands/CCB.svg" />
+              <img class="logo col" src="../assets/landing/brands/NA.svg" />
+              <img class="logo col" src="../assets/landing/brands/JOO.svg" />
+              <img class="logo col" src="../assets/landing/brands/UN.svg" />
+              <img class="logo col" src="../assets/landing/brands/BCV.svg" />
+              <img class="logo col" src="../assets/landing/brands/GS.svg" />
             </div>
           </div>
         </div>
@@ -151,7 +192,7 @@ export default {
       height: calc(100vw * 0.5);
     }
   }
-  .blue{
+  .blue {
     background-color: #e2f3fd;
   }
   .section {
@@ -170,7 +211,7 @@ export default {
         font-size: 2.5rem;
         color: #0e2469;
       }
-      h3{
+      h3 {
         color: #0e2469;
       }
       p {
@@ -180,7 +221,7 @@ export default {
         font-size: 1.3rem;
       }
     }
-    cc{
+    cc {
       width: 60%;
     }
     img {
@@ -200,10 +241,10 @@ export default {
       h1 {
         text-align: center !important;
       }
-      img{
+      img {
         width: 60%;
       }
-      .cc{
+      .cc {
         width: 100%;
       }
     }
@@ -213,7 +254,7 @@ export default {
       min-height: 660px !important;
     }
   }
-  .left{
+  .left {
     padding-left: 15px !important;
     padding-right: 45px !important;
     @media (max-width: 767.98px) {

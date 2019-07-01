@@ -2,7 +2,9 @@
   <section>
     <Header></Header>
     <Idea></Idea>
-    <div class="main-container container-fluid">
+    <div data-aos="zoom-in"
+          data-aos-duration="1000"
+          data-aos-delay="100" class="main-container container-fluid">
       <div
         :style="'background-image: url(' + challenge.challenge_pictures[0].url + ')'"
         class="row first"
@@ -38,6 +40,9 @@
         <router-link
           :class="ideaClass('idea container-fluid')"
           v-for="(idea, index) in filter()"
+          data-aos="zoom-in"
+          data-aos-duration="500"
+          data-aos-delay="100"
           tag="div"
           :key="index"
           :to="{name: 'Idea', params: { iId: idea.id } }"

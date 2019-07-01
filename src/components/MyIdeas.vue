@@ -20,6 +20,9 @@
         <router-link
           class="idea container-fluid"
           v-for="(idea, index) in filter()"
+          data-aos="zoom-in"
+          data-aos-duration="500"
+          data-aos-delay="100"
           tag="div"
           :key="index"
           :to="{name: 'Idea', params: { iId: idea.id } }"

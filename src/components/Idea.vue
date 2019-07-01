@@ -9,10 +9,20 @@
               <font-awesome-icon @click="back()" icon="arrow-left"></font-awesome-icon>
             </div>
             <div class="row first">
-              <div class="col-md-6 align-self-end main-image">
-                <img v-if="idea.idea_pictures != null" :src="idea.idea_pictures[0].url">
+              <div
+                data-aos="zoom-in"
+                data-aos-duration="1000"
+                data-aos-delay="100"
+                class="col-md-6 align-self-end main-image"
+              >
+                <img v-if="idea.idea_pictures != null" :src="idea.idea_pictures[0].url" />
               </div>
-              <div class="col-md-6 align-self-center">
+              <div
+                data-aos="zoom-in"
+                data-aos-duration="1000"
+                data-aos-delay="100"
+                class="col-md-6 align-self-center"
+              >
                 <div class="row">
                   <h1 class="title">{{idea.title}}</h1>
                   <p class="user">{{getName(idea.user.name + ' ' + idea.user.lastname)}}</p>
@@ -33,7 +43,7 @@
                 </div>
               </div>
             </div>
-            <div class="row third">
+            <div data-aos="zoom-in" data-aos-duration="1000" data-aos-delay="100" class="row third">
               <div class="col-12">
                 <div class="container-desc">
                   <h4>La idea</h4>
@@ -47,7 +57,13 @@
             </div>
 
             <div class="row sixth">
-              <b-button-group class="comment-box" v-if="logged()">
+              <b-button-group
+                data-aos="zoom-in"
+                data-aos-duration="1000"
+                data-aos-delay="100"
+                class="comment-box"
+                v-if="logged()"
+              >
                 <b-button class="user">
                   <b-img
                     rounded="circle"
@@ -61,7 +77,7 @@
                     type="text"
                     v-model="comment.description"
                     placeholder="Escribe tu comentario"
-                  >
+                  />
                 </div>
                 <div class="opt-wrap">
                   <b-button
@@ -77,13 +93,20 @@
             </div>
 
             <div class="row comments">
-              <b-button-group class="comment-box" v-for="comment in comments" :key="comment.id">
+              <b-button-group
+                data-aos="zoom-in"
+                data-aos-duration="500"
+                data-aos-delay="100"
+                class="comment-box"
+                v-for="comment in comments"
+                :key="comment.id"
+              >
                 <b-button class="user">
                   <img
                     class="avatar"
                     :src="getCPic(comment.user_profile_picture)"
                     alt="Circle image"
-                  >
+                  />
                 </b-button>
                 <div class="comment">
                   <p class="name">{{getName(comment.user_name)}}</p>
@@ -135,8 +158,8 @@ export default {
       if (typeof pic == "object") return pic.url;
       else return pic;
     },
-    getName(name){
-      return api.utils.upcase(name)
+    getName(name) {
+      return api.utils.upcase(name);
     },
     share(sn) {
       var url = "";
@@ -255,7 +278,7 @@ export default {
     width: 1100px !important;
   }
 }
-.user{
+.user {
   margin-left: 15px;
 }
 .main-container {
@@ -334,7 +357,7 @@ export default {
   }
   .third {
     padding: 0px 50px;
-    h4{
+    h4 {
       color: #0e2469;
     }
     .container-desc {
@@ -350,7 +373,7 @@ export default {
     }
     @media (max-width: 768px) {
       padding: 0px 10px;
-      .container-desc{
+      .container-desc {
         width: calc(100vw - 50px);
       }
     }
