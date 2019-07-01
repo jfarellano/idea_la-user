@@ -307,6 +307,8 @@ export default {
       cursor: pointer;
       .col {
         width: 30px;
+        margin-left: 10px;
+        margin-right: 10px;
         flex-grow: unset;
       }
       .wapp {
