@@ -3,9 +3,9 @@
     <Header></Header>
     <div class="main-container container-fluid">
       <div
-        data-aos="zoom-in"
+        data-aos="fade-in"
         data-aos-duration="1000"
-        data-aos-delay="10"
+        data-aos-delay="30"
         class="first row justify-content-end align-items-center"
       >
         <div class="col-md-6">
@@ -13,84 +13,76 @@
         </div>
       </div>
       <div class="row">
-        <div
-          data-aos="zoom-in"
-          data-aos-duration="1000"
-          data-aos-delay="100"
-          class="section container-fluid"
-        >
+        <div class="section container-fluid">
           <div class="row justify-content-center align-items-center">
             <div class="col-md-6 align-self-center info order-2 order-md-1">
               <h1>La iniciativa</h1>
               <p>Imagina Tu Ciudá es un espacio de co-creación ciudadana en el que todos podemos ser parte de la construcción de la ciudad que soñamos, priorizando los grandes desafíos que afronta nuestro territorio frente a los Objetivos de Desarrollo Sostenible y formulando soluciones innovadoras a éstos.</p>
             </div>
-            <div class="col-md-6 align-self-center order-1 order-md-2">
+            <div 
+              data-aos="zoom-in"
+              data-aos-duration="2000"
+              data-aos-delay="50"
+              class="col-md-6 align-self-center order-1 order-md-2">
               <img src="../assets/landing/Land1.svg" alt="ODS" />
             </div>
           </div>
         </div>
       </div>
       <div class="row blue">
-        <div
-          data-aos="zoom-in"
-          data-aos-duration="1000"
-          data-aos-delay="100"
-          class="section left container-fluid"
-        >
+        <div class="section left container-fluid">
           <div class="row justify-content-center align-items-center">
             <div class="col-md-6 align-self-center info order-2 order-md-2">
               <h1>Comprometidos con los ODS</h1>
               <p>Los 17 Objetivos de Desarrollo Sostenible – ODS, son un llamado universal a la adopción de medidas para poner fin a la pobreza, luchar contra el cambio climático y reducir las desigualdades. Trabajar para alcanzar los ODS en nuestra ciudad requiere de la colaboración de todos. Empresas privadas, instituciones públicas, entidades educativas y organizaciones de la sociedad civil conectadas con la ciudadanía para asegurar que dejaremos una mejor ciudad a las generaciones futuras, sin dejar a nadie atrás.</p>
             </div>
-            <div class="col-md-6 align-self-center order-1 order-md-1">
+            <div 
+              data-aos="zoom-in"
+              data-aos-duration="2000"
+              data-aos-delay="50"
+              class="col-md-6 align-self-center order-1 order-md-1">
               <img src="../assets/landing/Land2.svg" alt="ODS" />
             </div>
           </div>
         </div>
       </div>
       <div class="row">
-        <div
-          data-aos="zoom-in"
-          data-aos-duration="1000"
-          data-aos-delay="100"
-          class="section container-fluid"
-        >
+        <div class="section container-fluid">
           <div class="row justify-content-center align-items-center">
             <div class="col-md-6 align-self-center info order-2 order-md-1">
               <h1>Los aliados</h1>
               <p>Es por esto que la Cámara de Comercio de Barranquilla, la Universidad del Norte, NativApps, Joonik, Barranquilla Cómo Vamos y Global Shapers Barranquilla, decidieron trabajar colaborativamente para incentivar la participación ciudadana en un proceso de construcción de ciudad, haciendo uso de la tecnología.</p>
             </div>
-            <div class="col-md-6 align-self-center order-1 order-md-2">
+            <div 
+              class="col-md-6 align-self-center order-1 order-md-2"
+              data-aos="zoom-in"
+              data-aos-duration="2000"
+              data-aos-delay="50"
+              >
               <img src="../assets/landing/United.svg" alt="ODS" />
             </div>
           </div>
         </div>
       </div>
       <div class="row blue">
-        <div
-          data-aos="zoom-in"
-          data-aos-duration="1000"
-          data-aos-delay="100"
-          class="section left container-fluid"
-        >
+        <div class="section left container-fluid">
           <div class="row justify-content-center align-items-center">
             <div class="col-md-6 align-self-center info order-2 order-md-2">
               <h1>Los Hackers</h1>
               <p>Los desarrolladores de esta plataforma son 5 estudiantes de la Universidad del Norte que resultaron ganadores de la Hackathon - Imagina Tu Ciudá, en la que participaron 52 estudiantes de 6 universidades diferentes, durante el mes de abril 2019. Ellos son Juan Felipe Arellano, Andrés Concha, Maximiliam García, John Barbosa, estudiantes de Ingeniería de Sistemas y Jhon Muñoz, estudiante de Ciencia Política y Gobierno.</p>
             </div>
-            <div class="col-md-6 align-self-center order-1 order-md-1">
+            <div 
+              data-aos="zoom-in"
+              data-aos-duration="2000"
+              data-aos-delay="50"
+              class="col-md-6 align-self-center order-1 order-md-1">
               <img src="../assets/landing/Hacker.svg" alt="ODS" />
             </div>
           </div>
         </div>
       </div>
       <div class="row">
-        <div
-          data-aos="zoom-in"
-          data-aos-duration="1000"
-          data-aos-delay="100"
-          class="section container-fluid"
-        >
+        <div class="section container-fluid">
           <div class="row justify-content-center align-items-center">
             <div class="col-md-6 align-self-center info order-2 order-md-1">
               <h1>Te necesitamos</h1>
@@ -100,24 +92,26 @@
                 target="_blank"
               >Descarga las bases</b-button>
             </div>
-            <div class="col-md-6 align-self-center order-1 order-md-2">
+            <div 
+              data-aos="zoom-in"
+              data-aos-duration="2000"
+              data-aos-delay="50"
+              class="col-md-6 align-self-center order-1 order-md-2">
               <img src="../assets/landing/Land3.svg" alt="ODS" />
             </div>
           </div>
         </div>
       </div>
       <div class="row blue">
-        <div
-          data-aos="zoom-in"
-          data-aos-duration="1000"
-          data-aos-delay="100"
-          class="section container-fluid"
-        >
+        <div class="section container-fluid">
           <div class="row justify-content-center align-items-center">
             <div class="col-md-8 align-self-center info order-2 order-md-1">
               <img class="cc" src="../assets/landing/brands/CCB.svg" />
               <h3 style="text-align: center">Conoce mas sobre nuestras iniciativas</h3>
               <b-button
+                data-aos="zoom-up"
+                data-aos-duration="2000"
+                data-aos-delay="50"
                 href="http://www.camarabaq.org.co/desarrollo-regional/ "
                 target="_blank"
               >Conócenos</b-button>
