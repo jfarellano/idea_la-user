@@ -85,6 +85,9 @@ export default {
     },
     winers: function(c_id){
       return r.get(SERVER_URL + '/challenges/' + c_id + '/winner_ideas')
+    },
+    all_winners: function(){
+      return r.get(SERVER_URL + '/winner_ideas')
     }
   },
   myProfile: {
