@@ -61,7 +61,7 @@
             <p
               v-if="errors.has('image')"
               class="incorrectInput"
-            >La imagen es muy grande, el maximo son 2MB</p>
+            >La imagen es muy grande, el máximo son 2MB</p>
           </div>
         </div>
         <h5>Nombres</h5>
@@ -80,7 +80,7 @@
         <p
           v-if="errors.has('name')"
           class="incorrectInput"
-        >Ups, creo que tienes una letra invalida en tu nombre</p>
+        >Ups, creo que tienes una letra inválida en tu nombre</p>
         <h5>Apellidos</h5>
         <div class="input-group">
           <input
@@ -97,7 +97,7 @@
         <p
           v-if="errors.has('lastname')"
           class="incorrectInput"
-        >Ups, creo que tienes una letra invalida en tu apellido</p>
+        >Ups, creo que tienes una letra inválida en tu apellido</p>
         <h5>Correo electrónico</h5>
         <div class="input-group">
           <input
@@ -148,7 +148,7 @@
         <p
           v-if="errors.has('password')"
           class="incorrectInput"
-        >Tu contraseña no es muy segura, debe ser minimo de 6 caracteres y debe contener por lo menos un numero y una letra</p>
+        >Tu contraseña no es muy segura, debe ser mínimo de 6 caracteres y debe contener por lo menos un número y una letra</p>
         <h5>Confirmar contraseña</h5>
         <p
           class="ex"
@@ -201,7 +201,7 @@
         </b-form-select>
         <p v-if="errors.has('gender')" class="incorrectInput minimal">Selecciona tu género</p>
         <h5>Télefono</h5>
-        <p class="ex">Tranquilo, no te vamos a llamar para venderte algo, solo son datos.</p>
+        <p class="ex">Tranquilo, no te vamos a llamar para venderte algo, sólo son datos.</p>
         <div class="input-group">
           <input
             type="text"
@@ -236,7 +236,7 @@
             :key="index"
           >{{ upcase(location.name) }}</option>
         </b-form-select>
-        <p v-if="errors.has('hood')" class="incorrectInput">Cuentanos tu barrio</p>
+        <p v-if="errors.has('hood')" class="incorrectInput">Cuéntanos tu barrio</p>
         <h5>Localidad</h5>
         <p
           class="ex"
@@ -372,7 +372,7 @@ export default {
             this.active = true;
           }, 1000);
           this.$refs.alert.error(
-            "Hubo un error creando tu cuenta, intenta de nuevo mas tarde"
+            "Hubo un error creando tu cuenta, intenta de nuevo más tarde"
           );
         });
     },

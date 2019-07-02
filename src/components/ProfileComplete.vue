@@ -39,7 +39,7 @@
       <p
         v-if="errors.has('image')"
         class="incorrectInput"
-      >La imagen es muy grande, el maximo son 2MB</p>
+      >La imagen es muy grande, el máximo son 2MB</p>
       <h5>Nombre</h5>
       <div class="input-group">
         <input
@@ -52,7 +52,7 @@
           name="name"
         >
       </div>
-      <p v-if="errors.has('name')" class="incorrectInput">Nombre invalido</p>
+      <p v-if="errors.has('name')" class="incorrectInput">Nombre inválido</p>
       <h5>Apellido</h5>
       <div class="input-group">
         <input
@@ -65,7 +65,7 @@
           name="lastname"
         >
       </div>
-      <p v-if="errors.has('lastname')" class="incorrectInput">Apellido invalido</p>
+      <p v-if="errors.has('lastname')" class="incorrectInput">Apellido inválido</p>
       <h5>Documento de identificación</h5>
       <div class="input-group">
         <input
@@ -78,7 +78,7 @@
           name="cc"
         >
       </div>
-      <p v-if="errors.has('cc')" class="incorrectInput">Documento de identificación invalido</p>
+      <p v-if="errors.has('cc')" class="incorrectInput">Documento de identificación inválido</p>
       <h5>Edad</h5>
       <div class="input-group">
         <input
@@ -91,7 +91,7 @@
           name="age"
         >
       </div>
-      <p v-if="errors.has('age')" class="incorrectInput">Edad invalida</p>
+      <p v-if="errors.has('age')" class="incorrectInput">Edad inválida</p>
       <h5>Género</h5>
       <b-form-select
         class="mb-2 mr-sm-2 mb-sm-0 squareInput inputStyles"
@@ -118,7 +118,7 @@
           name="phone"
         >
       </div>
-      <p v-if="errors.has('phone')" class="incorrectInput">Telefono invalido</p>
+      <p v-if="errors.has('phone')" class="incorrectInput">Telefono inválido</p>
       <h5>Barrio</h5>
       <b-form-select
         class="mb-2 mr-sm-2 mb-sm-0 squareInput inputStyles"

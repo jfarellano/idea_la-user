@@ -120,7 +120,7 @@
               <b-button
                 href="http://www.camarabaq.org.co/desarrollo-regional/ "
                 target="_blank"
-              >Conocenos</b-button>
+              >Conócenos</b-button>
             </div>
           </div>
         </div>

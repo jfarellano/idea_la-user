@@ -41,7 +41,7 @@
             <p
               v-if="errors.has('image')"
               class="incorrectInput"
-            >La imagen es muy grande, el maximo son 2MB</p>
+            >La imagen es muy grande, el máximo son 2MB</p>
           </div>
         </div>
         <div class="row">
@@ -61,7 +61,7 @@
             <p
               v-if="errors.has('title')"
               class="incorrectInput"
-            >El nombre lo necesitamos y debe ser maximo de 50 caracteres</p>
+            >El nombre lo necesitamos y debe ser máximo de 50 caracteres</p>
           </div>
         </div>
         <div class="row">
@@ -82,7 +82,7 @@
             <p
               v-if="errors.has('description')"
               class="incorrectInput"
-            >Cuentanos un poco mas acerca de tu idea, recuerda debe ser minimo de 400 caracteres y maximo de 1500</p>
+            >Cuéntanos un poco más acerca de tu idea, recuerda debe ser mínimo de 400 caracteres y máximo de 1500</p>
           </div>
         </div>
         <div class="row">
@@ -103,7 +103,7 @@
             <p
               v-if="errors.has('impact')"
               class="incorrectInput"
-            >Queremos saber cual es el impacto de tu idea, asegurate que sea de 500 characteres o menos</p>
+            >Queremos saber cuál es el impacto de tu idea, asegúrate que sea de 500 caracteres o menos</p>
           </div>
         </div>
         <div class="row">
@@ -124,7 +124,7 @@
             <p
               v-if="errors.has('problem')"
               class="incorrectInput"
-            >Cuentanos que problema resuelve tu idea, asegurate que sea de 200 characteres o menos</p>
+            >Cuéntanos qué problema resuelve tu idea, asegúrate que sea de 200 caracteres o menos</p>
           </div>
         </div>
         <div class="row">
@@ -145,7 +145,7 @@
             <p
               v-if="errors.has('companions')"
               class="incorrectInput"
-            >Estan un poco largos los correos de tus compañeros, todos deben tener maximo 300 caracteres</p>
+            >Están un poco largos los correos de tus compañeros, todos deben tener máximo 300 caracteres</p>
           </div>
         </div>
         <div class="row">
@@ -237,7 +237,7 @@
               >
                 <option slot="first" :value="null"></option>
               </b-form-select>
-              <p v-if="errors.has('info_found')" class="incorrectInput">Cuentanos como te enteraste</p>
+              <p v-if="errors.has('info_found')" class="incorrectInput">Cuéntanos cómo te enteraste</p>
             </div>
           </div>
         </div>

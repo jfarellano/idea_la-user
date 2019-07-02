@@ -40,7 +40,7 @@
                 <p
                   v-if="errors.has('password')"
                   class="incorrectInput"
-                >La contraseña debe ser minimo de 6 caracteres</p>
+                >La contraseña debe ser mínimo de 6 caracteres</p>
                 <div v-else>
                   <br>
                 </div>
@@ -69,7 +69,7 @@
                 <p class="recuperar-pass solicitud-ex">¡Cambio Exitoso!</p>
                 <p>Tu contraseña se ha cambiado exitosamente.</p>
                 <router-link to="/login">Ir a inicio de sesión.</router-link>
-                <router-link to="/">Volver a la pagina principal</router-link>
+                <router-link to="/">Volver a la página principal</router-link>
               </div>
             </div>
           </div>

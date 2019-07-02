@@ -44,7 +44,7 @@
             </div>
             <p v-if="errors.has('password')" class="incorrectInput">Este campo es obligatorio.</p>
             <router-link class="parag" to="/request-password-change">¿Olvidaste tu contraseña? No te preocupes, ya mismo lo solucionamos.</router-link>
-            <p v-if="blocked">Estas bloqueado por {{time}} segundos</p>
+            <p v-if="blocked">Estás bloqueado por {{time}} segundos</p>
             <button
               type="button"
               class="btn btn-primary btn-lg btn-block btnLoginStyle"
@@ -61,29 +61,6 @@
               ¿No tienes cuenta?, solucionemos eso de inmediato. 
               <router-link to="/register">Registrate aquí.</router-link>
             </p>
-
-            <!-- <b-row>
-              <b-col>
-                <hr>
-              </b-col>
-              <b-col cols="1" class="orSocialMedia align-items-center">
-                <p>o</p>
-              </b-col>
-              <b-col>
-                <hr>
-              </b-col>
-            </b-row>
-            <b-row>
-              <b-col>
-                <b-button @click="facebookOauth()">Facebook</b-button>
-              </b-col>
-              <b-col>
-                <b-button @click="authenticate('google')">Google</b-button>
-              </b-col>
-              <b-col>
-                <b-button @click="authenticate('twitter')">Twitter</b-button>
-              </b-col>
-            </b-row>-->
           </div>
         </div>
       </div>

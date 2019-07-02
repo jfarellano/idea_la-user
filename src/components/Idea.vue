@@ -165,7 +165,7 @@ export default {
       var url = "";
       if (sn == "wap")
         url =
-          "whatsapp://send?text=Te comparto esta idea de #ImaginaTuCiudá " +
+          "whatsapp://send?text=Te comparto ésta idea de #ImaginaTuCiudá " +
           api.variable.WEB +
           "idea/" +
           this.$route.params.iId;
@@ -192,7 +192,7 @@ export default {
     vote() {
       if (this.logged()) {
         this.$refs.alert.confirm(
-          "¿Estas seguro?",
+          "¿Estás seguro?",
           "Recuerda que solo puedes votar por una idea en cada reto, y es irreversible el voto",
           () => {
             api.idea
@@ -208,7 +208,7 @@ export default {
                   "you already voted for this challenge!"
                 ) {
                   this.$refs.alert.error(
-                    "Lo sentimos ya has votado por una idea de este reto"
+                    "Lo sentimos, ya has votado por una idea de este reto"
                   );
                 } else {
                   this.$refs.alert.network_error();
@@ -247,7 +247,7 @@ export default {
         })
         .catch(() => {
           this.$refs.alert.error(
-            "No pudimos enviar tu comentario intenta de nuevo mas tarde"
+            "No pudimos enviar tu comentario, intenta de nuevo mas tarde"
           );
         });
     },

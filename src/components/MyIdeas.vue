@@ -35,7 +35,6 @@
             <p class="parag">{{getDescription(idea.description)}}</p>
           </div>
           <div v-if="stage(1)" class="row modifiy align-self-justify">
-            <!-- <font-awesome-icon v-if='idea.edition < 2' @click.prevent="edit(idea.id)" class="col" icon="pencil-alt"></font-awesome-icon> -->
             <font-awesome-icon @click.prevent="erase(idea.id)" class="col" icon="trash-alt"></font-awesome-icon>
           </div>
         </router-link>
@@ -74,7 +73,7 @@ export default {
     erase(id) {
       this.$refs.alert.confirm(
         "Borrar",
-        "¿Estas seguro que quieres borrar tu idea?",
+        "¿Estás seguro que quieres borrar tu idea?",
         () => {
           api.ideas
             .erase(id)

@@ -36,7 +36,7 @@
             <p
               v-if="errors.has('image')"
               class="incorrectInput"
-            >La imagen es muy grande, el maximo son 2MB</p>
+            >La imagen es muy grande, el máximo son 2MB</p>
           </div>
         </div>
         <h5>Correo electrónico</h5>
@@ -63,7 +63,7 @@
             name="name"
           >
         </div>
-        <p v-if="errors.has('name')" class="incorrectInput">Nombre invalido</p>
+        <p v-if="errors.has('name')" class="incorrectInput">Nombre inválido</p>
         <h5>Apellido</h5>
         <div class="input-group">
           <input
@@ -77,7 +77,7 @@
             name="lastname"
           >
         </div>
-        <p v-if="errors.has('lastname')" class="incorrectInput">Apellido invalido</p>
+        <p v-if="errors.has('lastname')" class="incorrectInput">Apellido inválido</p>
         <h5>Documento de identificación</h5>
         <div class="input-group">
           <input
@@ -101,7 +101,7 @@
             name="age"
           >
         </div>
-        <p v-if="errors.has('age')" class="incorrectInput">Edad invalida</p>
+        <p v-if="errors.has('age')" class="incorrectInput">Edad inválida</p>
         <h5>Género</h5>
         <b-form-select
           class="mb-2 mr-sm-2 mb-sm-0 squareInput inputStyles minimal"
@@ -129,7 +129,7 @@
             name="phone"
           >
         </div>
-        <p v-if="errors.has('phone')" class="incorrectInput">Telefono invalido</p>
+        <p v-if="errors.has('phone')" class="incorrectInput">Teléfono inválido</p>
         <b-button
           type="button"
           class="btn btn-primary btn-lg btn-block"
@@ -233,7 +233,7 @@ export default {
         })
         .catch(() => {
           this.$refs.aletr.error(
-            "Hubo un error encontrando tu informacion porfavor intenta de nuevo"
+            "Hubo un error encontrando tu información, por favor intenta de nuevo"
           );
         });
     },

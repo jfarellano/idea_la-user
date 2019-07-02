@@ -15,7 +15,7 @@
             <div v-if="!emailValid">
 
               <p class="recuperar-pass">Recuperar contraseña</p>
-              <h3 class="input-title" id="email">Por favor ingresa correo electrónico.</h3>
+              <h3 class="input-title" id="email">Por favor ingresa tu correo electrónico.</h3>
               <div class="input-group">
                 <input
                   type="email"
@@ -49,7 +49,7 @@
             <div v-else>
               <p class="recuperar-pass solicitud-ex">¡Solicitud Exitosa!</p>
               <p>Te hemos enviado un correo electrónico a <b>{{ this.emailRecover }}</b> con un enlace para que puedas recuperar tu contraseña.</p>
-              <router-link to="/">Volver a la pagina principal</router-link>
+              <router-link to="/">Volver a la página principal</router-link>
             </div>
 
           </div>
@@ -76,8 +76,7 @@ export default {
     Alert
   },
   created(){
-    //COMANDO PARA GUARDAR EL CURREN PATH
-    // console.log(this.$router.currentRoute.fullPath)
+
   },
   methods: {
     validRecover() {
@@ -147,11 +146,6 @@ export default {
       margin-bottom: 50px !important;
     }
   }
-  // @media (max-width: 321px) {
-  //   #email {
-  //     margin-bottom: 40px !important;
-  //   }
-  // }
   .fieldsContainer {
     text-align: left;
     padding: 23px;

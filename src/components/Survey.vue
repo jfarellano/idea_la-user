@@ -12,7 +12,7 @@
       @hide="prevent"
     >
       <div v-if="selected.length != challenges.length">
-        <p class="parag">Selecciona en orden cuales retos te parecen mas importantes</p>
+        <p class="parag">Selecciona en orden cuáles retos te parecen más importantes</p>
         <b-button
           data-aos="zoom-in"
           data-aos-duration="500"
