@@ -17,7 +17,7 @@ import auth from "../authentication.js"
       if (auth.storage.get('secret') == null) {
         this.$router.push("/login");
       } else {
-        this.$router.push("/creareditaridea/new");
+        this.$router.push("/creareditaridea");
       }
     }
   },

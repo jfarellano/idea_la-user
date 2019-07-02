@@ -386,20 +386,21 @@ export default {
       .catch(() => {
         this.$refs.alert.network_error();
       });
-    var id = this.$route.params.eId;
-    if (id != "new") {
-      this.edit = true;
-      api.idea
-        .getInfo(id)
-        .then(response => {
-          this.idea = response.data;
-        })
-        .catch(() => {
-          this.$refs.alert.network_error();
-        });
-    } else {
-      this.edit = false;
-    }
+      this.edit = false
+    // var id = this.$route.params.eId;
+    // if (id != "new") {
+    //   this.edit = true;
+    //   api.idea
+    //     .getInfo(id)
+    //     .then(response => {
+    //       this.idea = response.data;
+    //     })
+    //     .catch(() => {
+    //       this.$refs.alert.network_error();
+    //     });
+    // } else {
+    //   this.edit = false;
+    // }
   }
 };
 </script>

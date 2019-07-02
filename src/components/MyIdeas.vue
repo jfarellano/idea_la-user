@@ -91,7 +91,7 @@ export default {
       );
 		},
 		edit(id){
-			this.$router.push('/creareditaridea/' + id)
+			this.$router.push('/creareditaridea')
 		},
     filter() {
       var list = [];

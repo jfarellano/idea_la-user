@@ -49,7 +49,7 @@ export default new Router ({
             component: Idea
         },
         {
-            path: '/creareditaridea/:eId',
+            path: '/creareditaridea',
             name: 'CreateEditIdea',
             component: CreateEditIdea
         },
