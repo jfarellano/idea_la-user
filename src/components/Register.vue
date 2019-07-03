@@ -373,10 +373,10 @@ export default {
           }, 1000);
           let errs = err.response.data
           Object.entries(errs).map(([key, value]) => {
-            if (key == 'cc') this.$refs.alert.error(
+            if (key == 'cc' && value == 'has already been taken') this.$refs.alert.error(
             "Lo sentimos ya existe un usuario con tu cedula"
           );
-            else if (key == 'email') this.$refs.alert.error(
+            else if (key == 'email' && value == 'has already been taken') this.$refs.alert.error(
             "Lo sentimos ya existe un usuario con tu correo electronico"
           );
             else this.$refs.alert.error(
