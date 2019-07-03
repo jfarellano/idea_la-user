@@ -60,7 +60,7 @@
           </div>
         </router-link>
         <div v-if="filter().length == 0">
-          <h2>Ups no hay ideas que coincidan con tu busqueda</h2>
+          <h2>Ups no hay ideas que coincidan con tu búsqueda</h2>
         </div>
       </div>
       <div v-else>
