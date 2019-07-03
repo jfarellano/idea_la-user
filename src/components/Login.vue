@@ -44,7 +44,7 @@
             </div>
             <p v-if="errors.has('password')" class="incorrectInput">Este campo es obligatorio.</p>
             <router-link class="parag" to="/request-password-change">¿Olvidaste tu contraseña? No te preocupes, ya mismo lo solucionamos.</router-link>
-            <p v-if="blocked">Estás bloqueado por {{time}} segundos</p>
+            <p style="color: red;" v-if="blocked">Estás bloqueado por {{time}} segundos</p>
             <button
               type="button"
               class="btn btn-primary btn-lg btn-block btnLoginStyle"
@@ -98,6 +98,7 @@ export default {
     },
     blockedTime() {
         setTimeout(() => {
+          auth.session.blocked();
           this.blocked = auth.session.blocked();
           if (!this.blocked){
             this.active = true
@@ -132,9 +133,10 @@ export default {
           } else {
             auth.session.wrong_attempt()
             this.blocked = auth.session.blocked()
-            if (!this.blocked){
-              this.time = Math.trunc(60.0 - ((Date.now() - this.blocked) / 1000))
+            if (this.blocked){
+              this.active = false
               this.blockedTime()
+              this.time = Math.trunc(60.0 - ((Date.now() - this.blocked) / 1000))
             }
             if (
               err.response.data.single_authentication == "invalid credentials"

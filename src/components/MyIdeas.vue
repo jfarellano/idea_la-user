@@ -83,7 +83,7 @@ export default {
             })
             .catch(() => {
               this.$refs.alert.error(
-                "No se pudo borrar tu reto intenta de nuevo"
+                "No se pudo borrar tu idea intenta de nuevo"
               );
             });
         },
