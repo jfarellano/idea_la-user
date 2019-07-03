@@ -367,13 +367,22 @@ export default {
               this.$router.push("/");
             });
         })
-        .catch(() => {
+        .catch((err) => {
           setTimeout(() => {
             this.active = true;
           }, 1000);
-          this.$refs.alert.error(
+          let errs = err.response.data
+          Object.entries(errs).map(([key, value]) => {
+            if (key == 'cc') this.$refs.alert.error(
+            "Lo sentimos ya existe un usuario con tu cedula"
+          );
+            else if (key == 'email') this.$refs.alert.error(
+            "Lo sentimos ya existe un usuario con tu correo electronico"
+          );
+            else this.$refs.alert.error(
             "Hubo un error creando tu cuenta, intenta de nuevo más tarde"
           );
+          })
         });
     },
     getLocations() {
