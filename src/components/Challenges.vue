@@ -5,17 +5,14 @@
     <div class="main-container container-fluid">
       <div class="row first">
         <div
-          data-aos="zoom-in"
+          data-aos="fade-in"
           data-aos-duration="1000"
-          data-aos-delay="10"
+          data-aos-delay="100"
           class="col-md-6 align-self-center main-image"
         >
           <img src="../assets/challenges.svg" />
         </div>
         <div
-          data-aos="zoom-in"
-          data-aos-duration="1000"
-          data-aos-delay="100"
           class="col-md-6 align-self-center"
         >
           <h1 class="main-title">{{title}}</h1>
@@ -51,6 +48,7 @@
       </div>
     </div>
     <Alert ref="alert"></Alert>
+    <Foot></Foot>
   </section>
 </template>
 <script>
@@ -59,12 +57,14 @@ import auth from "../authentication.js";
 import Alert from "./Alert.vue";
 import Header from "./Header.vue";
 import Idea from "./AddIdea.vue";
+import Foot from "./Foot.vue";
 
 export default {
   components: {
     Header,
     Idea,
-    Alert
+    Alert,
+    Foot
   },
   data() {
     return {

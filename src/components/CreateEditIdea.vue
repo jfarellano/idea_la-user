@@ -268,6 +268,7 @@
       </div>
     </div>
     <Alert ref="alert"></Alert>
+    <Foot></Foot>
   </div>
 </template>
 
@@ -275,11 +276,13 @@
 import api from "../requests.js";
 import Alert from "./Alert.vue";
 import Header from "./Header.vue";
+import Foot from "./Foot.vue";
 
 export default {
   components: {
     Header,
-    Alert
+    Alert,
+    Foot
   },
   data() {
     return {

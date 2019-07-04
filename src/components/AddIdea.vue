@@ -1,7 +1,10 @@
 <template>
-  <b-button data-aos="zoom-in"
+  <b-button data-aos="fade-left"
           data-aos-duration="500"
-          data-aos-delay="100" v-if="active" class="add-button title" v-on:click.prevent="createIdea">Postula tu idea</b-button>
+          data-aos-delay="1000" 
+          v-if="active" 
+          class="add-button title" 
+          v-on:click.prevent="createIdea">Postula tu idea</b-button>
 </template>
 
 <script>

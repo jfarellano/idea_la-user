@@ -146,6 +146,7 @@
       </div>
     </div>
     <Alert ref="alert"></Alert>
+    <Foot></Foot>
   </div>
 </template>
 
@@ -154,6 +155,8 @@ import api from "../requests.js";
 import auth from "../authentication.js";
 import Alert from "./Alert.vue";
 import Header from "./Header.vue";
+import Foot from "./Foot.vue";
+
 export default {
   data() {
     return {
@@ -162,7 +165,8 @@ export default {
   },
   components: {
     Alert,
-    Header
+    Header,
+    Foot
   },
   methods: {
     save() {

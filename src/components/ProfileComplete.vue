@@ -144,12 +144,18 @@
       </div>
     </b-modal>
     <b-button @click="open()">Open</b-button>
+    <Foot></Foot>
   </div>
 </template>
 
 <script>
 import api from "../requests.js";
+import Foot from "./Foot.vue";
+
 export default {
+  components: {
+    Foot
+  },
   data() {
     return {
       userData: {},

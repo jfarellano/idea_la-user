@@ -68,6 +68,7 @@
       </div>
     </div>
     <Alert ref="alert"></Alert>
+    <Foot></Foot>
   </section>
 </template>
 
@@ -77,12 +78,14 @@ import auth from "../authentication.js";
 import Alert from "./Alert.vue";
 import Header from "./Header.vue";
 import Idea from "./AddIdea.vue";
+import Foot from "./Foot.vue";
 
 export default {
   components: {
     Header,
     Idea,
-    Alert
+    Alert,
+    Foot
   },
   data() {
     return {

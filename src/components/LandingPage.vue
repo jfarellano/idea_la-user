@@ -4,7 +4,7 @@
     <div class="main-container container-fluid">
       <div
         data-aos="fade-in"
-        data-aos-duration="1000"
+        data-aos-duration="2000"
         data-aos-delay="30"
         class="first row justify-content-end align-items-center"
       >
@@ -107,6 +107,13 @@
             <div class="col-md-6 align-self-center info order-2 order-md-2">
               <h1>Los Hackers</h1>
               <p>Los desarrolladores de esta plataforma son 5 estudiantes de la Universidad del Norte que resultaron ganadores de la Hackathon - Imagina Tu Ciudá, en la que participaron 52 estudiantes de 6 universidades diferentes, durante el mes de abril 2019. Ellos son Juan Felipe Arellano, Andrés Concha, Maximiliam García, John Barbosa, estudiantes de Ingeniería de Sistemas y Jhon Muñoz, estudiante de Ciencia Política y Gobierno.</p>
+              <b-button
+                data-aos="fade-in"
+                data-aos-duration="2000"
+                data-aos-delay="200"
+                href="https://idea-la.com/"
+                target="_blank"
+              >Conoce al equipo</b-button>
             </div>
             <div
               data-aos="zoom-in"
@@ -126,6 +133,9 @@
               <h1>Te necesitamos</h1>
               <p>Sabemos que tienes mucho que aportar. Tus ideas y experiencia nos ayudarán a encontrar soluciones más sostenibles y escalables para construir una mejor Barranquilla. ¡Conviértete hoy en un protagonista de tu ciudad y aporta tus ideas!</p>
               <b-button
+                data-aos="fade-in"
+                data-aos-duration="2000"
+                data-aos-delay="200"
                 href="http://www.camarabaq.org.co/desarrollo-regional/ideas/bases-imagina-tu-ciuda/"
                 target="_blank"
               >Descarga las bases</b-button>
@@ -148,7 +158,7 @@
               <img class="cc" src="../assets/landing/brands/CCB.svg" />
               <h3 style="text-align: center">Conoce mas sobre nuestras iniciativas</h3>
               <b-button
-                data-aos="zoom-up"
+                data-aos="fade-in"
                 data-aos-duration="2000"
                 data-aos-delay="50"
                 href="http://www.camarabaq.org.co/desarrollo-regional/ "
@@ -160,12 +170,16 @@
       </div>
 
       <div class="row justify-content-center">
-        <div data-aos="zoom-in" data-aos-duration="1000" data-aos-delay="100" class="brands col">
+        <div class="brands col">
           <div class="container-fluid container-flex">
             <div class="row">
               <h3 class="support">Apoyan</h3>
             </div>
-            <div class="row justify-content-arround">
+            <div class="row justify-content-arround"
+              data-aos="fade-in"
+              data-aos-duration="1500"
+              data-aos-delay="100" 
+            >
               <img class="logo col" src="../assets/landing/brands/CCB.svg" />
               <img class="logo col" src="../assets/landing/brands/NA.svg" />
               <img class="logo col" src="../assets/landing/brands/JOO.svg" />
@@ -177,17 +191,20 @@
         </div>
       </div>
     </div>
+    <Foot></Foot>
   </section>
 </template>
 
 <script>
 import Header from "./Header.vue";
+import Foot from "./Foot.vue";
 import api from "../requests.js";
 import auth from "../authentication.js";
 
 export default {
   components: {
-    Header
+    Header,
+    Foot
   },
   data() {
     return {
@@ -313,7 +330,9 @@ export default {
   }
   .brands {
     width: 100%;
-    margin-top: 0px;
+    margin-top: 30px;
+    padding-left: 200px;
+    padding-right: 200px;
     background-color: white;
     text-align: center;
     .support {
@@ -322,8 +341,12 @@ export default {
       width: 100%;
     }
     .logo {
-      height: 100px;
+      height: 140px;
       text-align: center;
+    }
+    @media (max-width: 767.98px) {
+      padding-left: 0px !important;
+      padding-right: 0px;
     }
     @media (min-width: 1100px) {
       width: 1100px !important;
