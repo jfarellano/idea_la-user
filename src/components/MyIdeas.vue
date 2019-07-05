@@ -140,8 +140,10 @@ export default {
 </script>
 
 <style lang="scss" scoped>
+
 .main-container {
   margin-top: 120px;
+  min-height: calc( 100vh - 377px );
   .inputStyles {
     border: 1px solid #0e2469;
     border-radius: 5px;

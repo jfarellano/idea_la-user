@@ -34,11 +34,11 @@ export default {
   width: 200px;
 }
 .footer-style {
-  background: #0e2469;
+  background: #081641;
   color: white;
   margin: 0px;
   margin-top: 40px;
-  padding: 30px;
+  padding: 20px;
   padding-left: 270px;
   padding-right: 270px;
   @media (max-width: 767.98px) {
