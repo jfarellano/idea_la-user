@@ -156,7 +156,7 @@
           <div class="row justify-content-center align-items-center">
             <div class="col-md-8 align-self-center info order-2 order-md-1">
               <img class="cc" src="../assets/landing/brands/CCB.svg" />
-              <h3 style="text-align: center">Conoce mas sobre nuestras iniciativas</h3>
+              <h3 style="text-align: center">Conoce más sobre nuestras iniciativas</h3>
               <b-button
                 data-aos="fade-in"
                 data-aos-duration="2000"

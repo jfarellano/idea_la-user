@@ -20,12 +20,9 @@
         </div>
       </div>
       <!-- INICIO DE CHALLENGES -->
-      <div v-if="challenges != ''" class="row second justify-content-center">
+      <div v-if="challenges != '' && challengesReceived" class="row second justify-content-center">
         <div v-for="(challenge, index) in challenges" :key="index">
           <router-link
-            data-aos="zoom-in"
-            data-aos-duration="1000"
-            data-aos-delay="100"
             tag="div"
             :to="{name: 'Challenge', params: { cId: challenge.id } }"
             class="challenge container-fluid"
@@ -44,7 +41,10 @@
         </div>
       </div>
       <div v-else>
-        <h2 class="title">No se han encontrado retos</h2>
+        <b-col v-if="!challengesReceived" align="center">
+          <b-spinner v-if="challenges == ''" class="d-flex align-items-center" label="Loading..."></b-spinner>
+        </b-col>
+        <h2 v-else class="title">No se han encontrado retos</h2>
       </div>
     </div>
     <Alert ref="alert"></Alert>
@@ -70,7 +70,8 @@ export default {
     return {
       challenges: [],
       title: "",
-      desc: ""
+      desc: "",
+      challengesReceived: false
     };
   },
   methods: {
@@ -81,6 +82,7 @@ export default {
           this.challenges = response.data;
           this.title = auth.storage.get("title");
           this.desc = auth.storage.get("desc");
+          this.challengesReceived = true
         })
         .catch(() => {
           this.$refs.alert.network_error();

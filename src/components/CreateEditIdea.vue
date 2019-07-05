@@ -190,7 +190,7 @@
                 '6. Agua limpia y saneamiento': '6. Agua limpia y saneamiento',
                 '7. Energía asequible y no contaminante': '7. Energía asequible y no contaminante',
                 '8. Trabajo decente y crecimiento económico': '8. Trabajo decente y crecimiento económico',
-                '9. Industria innovación e infraestructura': '9. Industria innovación e infraestructura',
+                '9. Industria, innovación e infraestructura': '9. Industria innovación e infraestructura',
                 '10. Reducción de las desigualdades': '10. Reducción de las desigualdades',
                 '11. Ciudades y comunidades sostenibles': '11. Ciudades y comunidades sostenibles',
                 '12. Producción y consumo responsable': '12. Producción y consumo responsable',

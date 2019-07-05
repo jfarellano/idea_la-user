@@ -14,7 +14,7 @@
         </div>
       </div>
       <router-link to="/retos" tag="div" class="row back">
-        <font-awesome-icon icon="arrow-left"></font-awesome-icon>
+        <font-awesome-icon icon="arrow-left" class="arrow-back"></font-awesome-icon>
       </router-link>
       <div class="short-description row justify-content-center">
         <div class="col-md-10">
@@ -36,7 +36,7 @@
           >
         </div>
       </div>
-      <div class="row second justify-content-center" v-if="ideas != ''">
+      <div class="row second justify-content-center" v-if="ideas != '' && ideasReceived">
         <router-link
           :class="ideaClass('idea container-fluid')"
           v-for="(idea, index) in filter()"
@@ -64,6 +64,9 @@
         </div>
       </div>
       <div v-else>
+        <b-col v-if="!ideasReceived" align="center">
+          <b-spinner v-if="ideas == ''" class="d-flex align-items-center" label="Loading..."></b-spinner>
+        </b-col>
         <h2 class="title">¡Anímate! Sé el primero en postular una idea.</h2>
       </div>
     </div>
@@ -94,7 +97,8 @@ export default {
       search: "",
       page: 1,
       size: 10,
-      stage: 0
+      stage: 0,
+      ideasReceived: false
     };
   },
   methods: {
@@ -146,6 +150,7 @@ export default {
             .getIdeas(challengeID)
             .then(response => {
               this.ideas = response.data;
+              this.ideasReceived = true
             })
             .catch(() => {
               this.$refs.alert.network_error();
@@ -156,6 +161,7 @@ export default {
             .picked(challengeID)
             .then(response => {
               this.ideas = response.data;
+              this.ideasReceived = true
             })
             .catch(() => {
               this.$refs.alert.network_error();
@@ -166,6 +172,7 @@ export default {
             .winers(challengeID)
             .then(response => {
               this.ideas = response.data;
+              this.ideasReceived = true
             })
             .catch(() => {
               this.$refs.alert.network_error();
@@ -185,6 +192,9 @@ export default {
 </script>
 
 <style lang="scss" scoped>
+.arrow-back {
+  cursor: pointer;
+}
 .main-container {
   margin-top: 90px;
   .main-image {
@@ -196,7 +206,6 @@ export default {
     color: #0e2469;
     font-size: 30px;
     padding-top: 10px;
-    cursor: pointer;
     padding-left: calc(100vw * 0.11);
     @media (max-width: 768px) {
       padding-left: 30px;

@@ -116,6 +116,8 @@ export default {
     }
   },
   created() {
+    this.$snotify.clear()
+
     var loged = auth.storage.logged();
     auth.session.stage().then(response => {
       auth.storage.set_stage(response.data.number, response.data.title, response.data.description)

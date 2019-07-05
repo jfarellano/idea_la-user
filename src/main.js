@@ -27,7 +27,12 @@ library.add(fas, fab, far)
 Vue.component('font-awesome-icon', FontAwesomeIcon)
 
 Vue.use(VeeValidate);
-Vue.use(Snotify)
+Vue.use(Snotify, {
+  global: {
+    maxOnScreen: 2,
+    preventDuplicates: true,
+  },
+})
 Vue.use(BootstrapVue)
 Vue.config.productionTip = false
 

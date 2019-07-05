@@ -7,14 +7,6 @@
           <a class="link-terms" href="https://idea-la.com/">www.idea-la.com</a>
       </b-col>
     </b-row>
-    <!-- <b-row>
-      <b-col>
-
-      </b-col>
-      <b-col>
-
-      </b-col>
-    </b-row> -->
     <br>
     <b-row>
       <b-col>
@@ -39,8 +31,7 @@ export default {
 
 <style lang="scss" scoped>
 .logo-ideala {
-  // height: 140px;
-  width: 400px;
+  width: 200px;
 }
 .footer-style {
   background: #0e2469;

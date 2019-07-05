@@ -35,7 +35,7 @@ import auth from "../authentication.js"
   position: fixed;
   padding: 20px;
   z-index: 1000;
-  border: none;
+  border-color: white;
   background-color: #0E2469;
   color: white;
   border-radius: 5px;

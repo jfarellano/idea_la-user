@@ -6,7 +6,7 @@
         <div class="main-col">
           <div class="main-container container-fluid">
             <div class="row back">
-              <font-awesome-icon @click="back()" icon="arrow-left"></font-awesome-icon>
+              <font-awesome-icon @click="back()" icon="arrow-left" class="back-arrow"></font-awesome-icon>
             </div>
             <div class="row first">
               <div
@@ -270,6 +270,10 @@ export default {
 </script>
 
 <style lang="scss" scoped>
+.back-arrow {
+  cursor: pointer;
+  margin-bottom: 10px;
+}
 .container-wraper {
   padding: 0px;
   .main-row {
