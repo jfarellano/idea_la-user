@@ -187,7 +187,8 @@
               <img class="logo col" src="../assets/landing/brands/ADN.svg" />
               <img class="logo col" src="../assets/landing/brands/DOL.svg" />
               <img class="logo col" src="../assets/landing/brands/TM.svg" />
-              <img class="logo col" src="../assets/landing/brands/US.svg" />
+              <img class="logo col" src="../assets/landing/brands/SB.svg" />
+              <img class="logo col" src="../assets/landing/brands/ML.svg" />
               <img class="logo col" src="../assets/landing/brands/UC.svg" />
               <img class="logo col" src="../assets/landing/brands/UN.svg" />
               <img class="logo col" src="../assets/landing/brands/UA.svg" />
