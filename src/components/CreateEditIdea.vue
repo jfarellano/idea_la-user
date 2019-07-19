@@ -108,6 +108,30 @@
         </div>
         <div class="row">
           <div class="col">
+            <div v-if="!edit">
+              <h5 class="req">¿En qué etapa de implementación está tu idea?</h5>
+              <b-form-select
+                class="mb-2 mr-sm-2 mb-sm-0 squareInput inputStyles"
+                :value="null"
+                :options="{'Tenemos una idea que aún no desarrollamos': 'Tenemos una idea que aún no desarrollamos',
+                  'Tenemos una idea que ya validamos con usuarios': 'Tenemos una idea que ya validamos con usuarios',
+                  'Hemos implementado un prototipo de esta idea': 'Hemos implementado un prototipo de esta idea',
+                  'Ya tenemos el proyecto en marcha': 'Ya tenemos el proyecto en marcha'
+                }"
+                id="inline-form-custom-select-pref"
+                v-model="idea.implementation"
+                v-validate="'required'"
+                :class="{'has-error': errors.has('implementation_invalid')}"
+                name="implementation"
+              >
+                <option slot="first" :value="null"></option>
+              </b-form-select>
+              <p v-if="errors.has('implementation')" class="incorrectInput">Cuentanos en que etapa está tu idea</p>
+            </div>
+          </div>
+        </div>
+        <div class="row">
+          <div class="col">
             <h5 class="req">Problema que resuelve tu idea</h5>
             <div class="input-group">
               <b-form-textarea
@@ -339,6 +363,7 @@ export default {
       fd.append("problem", this.idea.problem);
       fd.append("companions", this.idea.companions);
       fd.append("info_found", this.idea.info_found);
+      fd.append("implementation", this.idea.implementation)
       fd.append("ods", this.idea.ods);
 
       if (!this.edit) fd.append("challenge_id", this.idea.challenge_id);
