@@ -13,6 +13,7 @@
             class="form-control inputStyles"
             placeholder="Buscar ideas"
             v-model="search"
+            v-if="ideas.length != 0"
           >
         </div>
       </div>
@@ -109,7 +110,6 @@ export default {
       } else {
         list = this.ideas;
       }
-      // return list.slice(0, this.page * this.size)
       return list;
     },
     getDescription(desc) {
@@ -143,7 +143,7 @@ export default {
 
 .main-container {
   margin-top: 120px;
-  min-height: calc( 100vh - 377px );
+  min-height: calc( 100vh - 353px );
   .inputStyles {
     border: 1px solid #0e2469;
     border-radius: 5px;

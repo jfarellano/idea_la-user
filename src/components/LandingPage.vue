@@ -183,8 +183,16 @@
               <img class="logo col" src="../assets/landing/brands/CCB.svg" />
               <img class="logo col" src="../assets/landing/brands/NA.svg" />
               <img class="logo col" src="../assets/landing/brands/JOO.svg" />
-              <img class="logo col" src="../assets/landing/brands/UN.svg" />
               <img class="logo col" src="../assets/landing/brands/BCV.svg" />
+              <img class="logo col" src="../assets/landing/brands/ADN.svg" />
+              <img class="logo col" src="../assets/landing/brands/DOL.svg" />
+              <img class="logo col" src="../assets/landing/brands/TM.svg" />
+              <img class="logo col" src="../assets/landing/brands/US.svg" />
+              <img class="logo col" src="../assets/landing/brands/UC.svg" />
+              <img class="logo col" src="../assets/landing/brands/UN.svg" />
+              <img class="logo col" src="../assets/landing/brands/UA.svg" />
+              <img class="logo col" src="../assets/landing/brands/CU.svg" />
+              <img class="logo col" src="../assets/landing/brands/PEP.svg" />
               <img class="logo col" src="../assets/landing/brands/GS.svg" />
             </div>
           </div>
@@ -265,7 +273,6 @@ export default {
   .section {
     min-height: 60vh;
     width: 100%;
-    // padding: 30px 0px 0px 80px;
     margin-top: 0px;
     padding-left: 45px;
     text-align: center;

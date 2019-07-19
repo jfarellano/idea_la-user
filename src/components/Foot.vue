@@ -31,7 +31,7 @@ export default {
 
 <style lang="scss" scoped>
 .logo-ideala {
-  width: 200px;
+  width: 190px;
 }
 .footer-style {
   background: #081641;

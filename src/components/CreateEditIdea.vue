@@ -390,20 +390,6 @@ export default {
         this.$refs.alert.network_error();
       });
       this.edit = false
-    // var id = this.$route.params.eId;
-    // if (id != "new") {
-    //   this.edit = true;
-    //   api.idea
-    //     .getInfo(id)
-    //     .then(response => {
-    //       this.idea = response.data;
-    //     })
-    //     .catch(() => {
-    //       this.$refs.alert.network_error();
-    //     });
-    // } else {
-    //   this.edit = false;
-    // }
   }
 };
 </script>
@@ -453,6 +439,9 @@ export default {
   }
   .form {
     width: 85%;
+    h5 {
+      margin-top: 10px;
+    }
   }
   .loadBtn {
     border: 1px solid #0e2469;
