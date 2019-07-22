@@ -88,7 +88,7 @@
           <div class="row justify-content-center align-items-center">
             <div class="col-md-6 align-self-center info order-2 order-md-1">
               <h1>Los aliados</h1>
-              <p>Es por esto que la Cámara de Comercio de Barranquilla, la Universidad del Norte, NativApps, Joonik, Barranquilla Cómo Vamos y Global Shapers Barranquilla, decidieron trabajar colaborativamente para incentivar la participación ciudadana en un proceso de construcción de ciudad, haciendo uso de la tecnología.</p>
+              <p> Es por esto que la Cámara de Comercio de Barranquilla, NativApps, Joonik, Barranquilla Cómo Vamos, ADN, Dolmen, Transmetro, Universidad Simón Bolívar-MacondoLab , Universidad de la Costa, Universidad del Norte, Universidad Autónoma del Caribe, Corporación Universitaria Americana, Corporación PEP y Global Shapers decidieron trabajar colaborativamente para incentivar la participación ciudadana en un proceso de construcción de ciudad, haciendo uso de la tecnología.</p>
             </div>
             <div
               class="col-md-6 align-self-center order-1 order-md-2"
@@ -175,7 +175,7 @@
             <div class="row">
               <h3 class="support">Apoyan</h3>
             </div>
-            <div class="row justify-content-arround"
+            <div class="row justify-content-center"
               data-aos="fade-in"
               data-aos-duration="1500"
               data-aos-delay="100" 
@@ -351,6 +351,7 @@ export default {
     .logo {
       height: 140px;
       text-align: center;
+      max-width: 280px;
     }
     @media (max-width: 767.98px) {
       padding-left: 0px !important;
