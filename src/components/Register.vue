@@ -53,7 +53,7 @@
               accept="image/jpeg, image/png"
               style="display:none;"
               ref="fileInput"
-              v-validate="'size:2000'"
+              v-validate="'size:5000'"
               :class="{'has-error': errors.has('image_size')}"
               name="image"
             />
@@ -61,7 +61,7 @@
             <p
               v-if="errors.has('image')"
               class="incorrectInput"
-            >La imagen es muy grande, el máximo son 2MB</p>
+            >La imagen es muy grande, el máximo son 5MB</p>
           </div>
         </div>
         <h5>Nombres</h5>
