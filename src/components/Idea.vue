@@ -40,9 +40,11 @@
                 </div>
                 <div v-if="stage(3)" class="row" style="text-align: center;">
                   <div class="col">
-                    <h4 class="votes">Votos: {{idea.votes}}</h4>
+                    <h4 class="votes" v-if="idea.picked">Votos: {{idea.votes}}</h4>
+                    <h4 class="votes" style="color: red;" v-else>Esta idea no ha sido elegida para votación</h4>
                   </div>
-                  <b-button @click="vote()" class="vote">Votar por esta idea</b-button>
+
+                  <b-button @click="vote()" class="vote" :disabled="!idea.picked">Votar por esta idea</b-button>
                 </div>
               </div>
             </div>

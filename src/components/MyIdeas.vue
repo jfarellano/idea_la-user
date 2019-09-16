@@ -94,7 +94,7 @@ export default {
         function() {}
       );
 		},
-		edit(id){
+		edit(){
 			this.$router.push('/creareditaridea')
 		},
     filter() {
