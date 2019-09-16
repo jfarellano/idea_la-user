@@ -53,6 +53,7 @@
           </div>
           <div class="row data">
             <h3>{{idea.title}}</h3>
+            <h6>Votos: {{idea.votes}}</h6>
             <p class="parag">{{getDescription(idea.description)}}</p>
           </div>
           <div class="row show-more">
@@ -277,7 +278,7 @@ export default {
       color: #6d6d6d;
       border-radius: 5px;
       width: 300px;
-      height: 390px;
+      height: 420px;
       position: relative;
       cursor: pointer;
       .parag {
@@ -309,7 +310,7 @@ export default {
         overflow-wrap: break-word;
         width: 298px;
         padding: 20px;
-        height: 180px;
+        height: 210px;
         h3 {
           font-size: 1.3rem;
           color: #0e2469;

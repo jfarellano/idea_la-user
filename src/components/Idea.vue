@@ -38,7 +38,10 @@
                     <font-awesome-icon @click="share('tw')" :icon="['fab', 'twitter']"></font-awesome-icon>
                   </div>
                 </div>
-                <div v-if="stage(3)" class="row">
+                <div v-if="stage(3)" class="row" style="text-align: center;">
+                  <div class="col">
+                    <h4 class="votes">Votos: {{idea.votes}}</h4>
+                  </div>
                   <b-button @click="vote()" class="vote">Votar por esta idea</b-button>
                 </div>
               </div>
