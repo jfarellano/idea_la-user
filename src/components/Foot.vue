@@ -2,9 +2,9 @@
   <section class="footer-style">
     <b-row>
       <b-col align="center">
-          <img class="logo-ideala col" href="https://idea-la.com/" src="../assets/ideala.png"/>
-          <br>
-          <a class="link-terms" href="https://idea-la.com/">www.idea-la.com</a>
+        <img class="logo-ideala col" href="https://idea-la.com/" src="../assets/ideala.png"/>
+        <br>
+        <a class="link-terms" href="https://idea-la.com/">www.idea-la.com</a>
       </b-col>
     </b-row>
     <br>
@@ -42,8 +42,8 @@ export default {
   padding-left: 270px;
   padding-right: 270px;
   @media (max-width: 767.98px) {
-    padding-left: 0px !important;
-    padding-right: 0px;
+    padding-left: 4px !important;
+    padding-right: 4px;
   }
 }
 .link-terms {
