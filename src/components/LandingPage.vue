@@ -10,13 +10,13 @@
       >
         <div class="col-md-6">
           <img src="../assets/CamaraBaq-Blue.svg" />
-          <router-link 
-            v-if="stage == 3" 
-            class="btn-action-vote"
-            tag="b-button"
-            to="/retos"
-          >¡Vota ya por tu idea favorita!</router-link>
         </div>
+        <router-link
+          v-if="stage == 3"
+          class="btn-action-vote"
+          tag="b-button"
+          to="/retos"
+        >¡Vota ya por tu idea favorita!</router-link>
       </div>
       <div v-if="stage == '4'" class="row blue">
         <div class="winners container-fluid">
@@ -94,7 +94,7 @@
           <div class="row justify-content-center align-items-center">
             <div class="col-md-6 align-self-center info order-2 order-md-1">
               <h1>Los aliados</h1>
-              <p> Es por esto que la Cámara de Comercio de Barranquilla, NativApps, Joonik, Barranquilla Cómo Vamos, ADN, Dolmen, Transmetro, Universidad Simón Bolívar-MacondoLab , Universidad de la Costa, Universidad del Norte, Universidad Autónoma del Caribe, Corporación Universitaria Americana, Corporación PEP y Global Shapers decidieron trabajar colaborativamente para incentivar la participación ciudadana en un proceso de construcción de ciudad, haciendo uso de la tecnología.</p>
+              <p>Es por esto que la Cámara de Comercio de Barranquilla, NativApps, Joonik, Barranquilla Cómo Vamos, ADN, Dolmen, Transmetro, Universidad Simón Bolívar-MacondoLab , Universidad de la Costa, Universidad del Norte, Universidad Autónoma del Caribe, Corporación Universitaria Americana, Corporación PEP y Global Shapers decidieron trabajar colaborativamente para incentivar la participación ciudadana en un proceso de construcción de ciudad, haciendo uso de la tecnología.</p>
             </div>
             <div
               class="col-md-6 align-self-center order-1 order-md-2"
@@ -181,10 +181,11 @@
             <div class="row">
               <h3 class="support">Apoyan</h3>
             </div>
-            <div class="row justify-content-center"
+            <div
+              class="row justify-content-center"
               data-aos="fade-in"
               data-aos-duration="1500"
-              data-aos-delay="100" 
+              data-aos-delay="100"
             >
               <img class="logo col" src="../assets/landing/brands/CCB.svg" />
               <img class="logo col" src="../assets/landing/brands/NA.svg" />
@@ -275,20 +276,15 @@ export default {
       height: calc(100vw * 0.5);
     }
     .btn-action-vote {
-      background-color: #F77B17;
+      background-color: #f77b17;
       border: none;
-      font-size: 1.5vw;
+      font-size: 1.3rem;
       border-radius: 25px;
       position: absolute;
-      left: 36%;
-      bottom: -10%;
-      height: 16%;
-      @media (max-width: 768px) {
-        bottom: -53% !important;
-        left: 15% !important;
-        font-size: 5vw !important;
-        height: 30%;
-      }
+      left: calc(50% - 150px);
+      bottom: -35px;
+      height: 70px;
+      width: 300px;
     }
   }
   .blue {
