@@ -53,7 +53,7 @@
           </div>
           <div class="row data">
             <h3>{{idea.title}}</h3>
-            <h6>Votos: {{idea.votes}}</h6>
+            <h6 v-if="stage == 3">Votos: {{idea.votes}}</h6>
             <p class="parag">{{getDescription(idea.description)}}</p>
           </div>
           <div class="row show-more">

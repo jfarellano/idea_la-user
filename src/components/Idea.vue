@@ -40,7 +40,7 @@
                 </div>
                 <div v-if="stage(3)" class="row" style="text-align: center;">
                   <div class="col">
-                    <h4 class="votes" v-if="idea.picked">Votos: {{idea.votes}}</h4>
+                    <h4 class="votes" v-if="idea.picked && stage == 3">Votos: {{idea.votes}}</h4>
                     <h4 class="votes" style="color: red;" v-else>Esta idea no ha sido elegida para votación</h4>
                   </div>
 

@@ -10,6 +10,12 @@
       >
         <div class="col-md-6">
           <img src="../assets/CamaraBaq-Blue.svg" />
+          <router-link 
+            v-if="stage == 3" 
+            class="btn-action-vote"
+            tag="b-button"
+            to="/retos"
+          >¡Vota ya por tu idea favorita!</router-link>
         </div>
       </div>
       <div v-if="stage == '4'" class="row blue">
@@ -258,6 +264,7 @@ export default {
 .main-container {
   margin-top: 90px;
   .first {
+    position: relative;
     background-color: white;
     height: calc(100vw * 0.33);
     background-image: url("../assets/landing/Land-f.svg");
@@ -266,6 +273,22 @@ export default {
     background-size: 100vw;
     @media (max-width: 768px) {
       height: calc(100vw * 0.5);
+    }
+    .btn-action-vote {
+      background-color: #F77B17;
+      border: none;
+      font-size: 1.5vw;
+      border-radius: 25px;
+      position: absolute;
+      left: 36%;
+      bottom: -10%;
+      height: 16%;
+      @media (max-width: 768px) {
+        bottom: -53% !important;
+        left: 15% !important;
+        font-size: 5vw !important;
+        height: 30%;
+      }
     }
   }
   .blue {
