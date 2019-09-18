@@ -123,7 +123,7 @@
             placeholder="ej. 1234567890"
             maxlength="15"
             v-model="userData.cc"
-            v-validate="'max:15|required|alpha_num'"
+            v-validate="'max:15|required|numeric'"
             :class="{'has-error': errors.has('cc_invalid')}"
             name="cc"
           >

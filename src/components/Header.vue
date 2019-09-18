@@ -197,6 +197,7 @@ export default {
   .nav-link {
     color: white;
     font-size: 22px;
+    cursor: pointer;
   }
   .user-drop {
     span {
