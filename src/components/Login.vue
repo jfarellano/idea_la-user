@@ -81,7 +81,8 @@ export default {
       userCredentials: {},
       active: true,
       blocked: false,
-      time: 0
+      time: 0,
+      lastIdeaID: ''
     };
   },
   components: {
@@ -124,7 +125,13 @@ export default {
           auth.session.stage().then(response => {
             auth.storage.set_stage(response.data.number);
           });
-          this.$router.push("/");
+          if (localStorage.getItem('lastPath') === null) {
+            this.$router.push("/");
+          } else {
+            var lastPath = localStorage.getItem('lastPath');
+            localStorage.removeItem('lastPath');
+            this.$router.push(lastPath);
+          }
         })
         .catch(err => {
           setTimeout(()=>{this.active = true;}, 1000)
@@ -154,7 +161,7 @@ export default {
             }
           }
         });
-    }
+    },
   },
   created() {
     this.userCredentials = {}

@@ -80,8 +80,10 @@ export default {
         .index()
         .then(response => {
           this.challenges = response.data;
-          this.title = auth.storage.get("title");
-          this.desc = auth.storage.get("desc");
+          setTimeout(function(){
+            this.title = auth.storage.get("title");
+            this.desc = auth.storage.get("desc");
+          }, 500);
           this.challengesReceived = true
         })
         .catch(() => {

@@ -226,6 +226,8 @@ export default {
           () => {}
         );
       } else {
+        var lastPath = window.location.hash;
+        localStorage.setItem('lastPath', lastPath.substr(1));
         this.$router.push("/login");
       }
     },

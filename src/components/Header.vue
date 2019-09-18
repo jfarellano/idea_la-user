@@ -28,7 +28,7 @@
           </div>
           <div v-if="tokenExists == false">
             <li>
-              <router-link tag="a" class="nav-link" to="/login">Ingresar</router-link>
+              <a class="nav-link" @click="saveLastPath()">Ingresar</a>
             </li>
           </div>
           <div v-else>
@@ -80,6 +80,11 @@ export default {
     Alert
   },
   methods: {
+    saveLastPath(){
+      var lastPath = window.location.hash;
+      localStorage.setItem('lastPath', lastPath.substr(1));
+      this.$router.push('/login');
+    },
     userLogout() {
       auth.session.logout().then(() => {
         auth.storage.clear();
