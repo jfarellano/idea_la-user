@@ -20,6 +20,7 @@
     "core-js": "^2.6.5",
     "vee-validate": "^2.2.10",
     "vue": "^2.6.10",
+    "vue-recaptcha": "^1.2.0",
     "vue-resource": "^1.5.1",
     "vue-router": "^3.0.6",
     "vue-snotify": "^3.2.1"

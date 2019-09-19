@@ -2,12 +2,15 @@
   <div class="containter-fluid profile-container">
     <Header></Header>
     <div class="row justify-content-center align-items-center main-row">
-      <div data-aos="zoom-in"
-          data-aos-duration="500"
-          data-aos-delay="100" class="col align-self-center profile-form">
-        <div  class="row justify-content-center">
+      <div
+        data-aos="zoom-in"
+        data-aos-duration="500"
+        data-aos-delay="100"
+        class="col align-self-center profile-form"
+      >
+        <div class="row justify-content-center">
           <router-link to="/">
-            <img src="../assets/CamaraBaq-Blue.svg" alt height="110px" class="iconImage">
+            <img src="../assets/CamaraBaq-Blue.svg" alt height="110px" class="iconImage" />
           </router-link>
         </div>
         <div class="row title">
@@ -15,23 +18,23 @@
         </div>
         <div class="row profile-pic justify-content-between align-items-center">
           <div class="col-md-4">
-            <img v-if="userData.image != null" class="avatar" :src="getImage()">
+            <img v-if="userData.image != null" class="avatar" :src="getImage()" />
             <img
               v-else-if="userData.image == null && userData.gender == 'male'"
               class="avatar"
               src="../assets/users/male.jpg"
-            >
+            />
             <img
               v-else-if="userData.image == null && userData.gender == 'female'"
               class="avatar"
               src="../assets/users/female.jpg"
-            >
+            />
             <img
               v-else-if="userData.image == null && userData.gender == 'other'"
               class="avatar"
               src="../assets/users/other.jpg"
-            >
-            <img v-else class="avatar" src="../assets/users/notsay.jpg">
+            />
+            <img v-else class="avatar" src="../assets/users/notsay.jpg" />
           </div>
           <div class="col-md-8">
             <b-button
@@ -75,7 +78,7 @@
             v-validate="'alpha_spaces|max:100|required'"
             :class="{'has-error': errors.has('name_invalid')}"
             name="name"
-          >
+          />
         </div>
         <p
           v-if="errors.has('name')"
@@ -92,7 +95,7 @@
             v-validate="'alpha_spaces|max:100|required'"
             :class="{'has-error': errors.has('lasname_invalid')}"
             name="lastname"
-          >
+          />
         </div>
         <p
           v-if="errors.has('lastname')"
@@ -109,7 +112,7 @@
             v-validate="'required|email|max:60'"
             :class="{'has-error': errors.has('email_invalid')}"
             name="email"
-          >
+          />
         </div>
         <p
           v-if="errors.has('email')"
@@ -126,7 +129,7 @@
             v-validate="'max:15|required|numeric'"
             :class="{'has-error': errors.has('cc_invalid')}"
             name="cc"
-          >
+          />
         </div>
         <p
           v-if="errors.has('cc')"
@@ -143,7 +146,7 @@
             :class="{'has-error': errors.has('pass_required')}"
             name="password"
             @keydown.space.prevent
-          >
+          />
         </div>
         <p
           v-if="errors.has('password')"
@@ -161,7 +164,7 @@
             v-validate="'required|confirmed:password'"
             :class="{'has-error': errors.has('pass_confirmed')}"
             name="password_conf"
-          >
+          />
         </div>
         <p
           v-if="errors.has('password_conf')"
@@ -179,7 +182,7 @@
             v-validate="'max_value:125|required|min_value:18|numeric'"
             :class="{'has-error': errors.has('age_invalid')}"
             name="age"
-          >
+          />
         </div>
         <p
           v-if="errors.has('age')"
@@ -212,7 +215,7 @@
             v-validate="{required: true, regex: /^([+]?)[0-9]{1,15}$/mi}"
             :class="{'has-error': errors.has('phone_invalid')}"
             name="phone"
-          >
+          />
         </div>
         <p
           v-if="errors.has('phone')"
@@ -242,7 +245,7 @@
           class="ex"
         >Sólo tienes que elegir el barrio en el que vives, del resto nos encargamos nosotros.</p>
         <div class="input-group">
-          <input type="text" class="form-control inputStyles" disabled v-model="locationAuto">
+          <input type="text" class="form-control inputStyles" disabled v-model="locationAuto" />
         </div>
         <b-form-checkbox
           id="checkbox-1"
@@ -250,12 +253,22 @@
           name="terms"
           value="accepted"
           unchecked-value="not_accepted"
-        >Acepto los <a href="/#/terms" target="_blank">términos y condiciones</a></b-form-checkbox>
+        >
+          Acepto los
+          <a href="/#/terms" target="_blank">términos y condiciones</a>
+        </b-form-checkbox>
+
+        <vue-recaptcha
+          sitekey="6LdmOLkUAAAAAIM2qAkZpMgC0_HxIU6Eoa5IR9kX"
+          ref="recaptcha"
+          @verify="onCaptchaVerified"
+          @expired="onCaptchaExpired"
+        ></vue-recaptcha>
 
         <b-button
           class="btn btn-primary btn-lg btn-block col"
           id="btnRegisterStyle"
-          :disabled="!registerCheckFormData()"
+          :disabled="!registerCheckFormData() || !verified"
           v-on:click.prevent="userRegister()"
         >Registrar</b-button>
         <router-link
@@ -274,6 +287,7 @@ import api from "../requests.js";
 import auth from "../authentication.js";
 import Alert from "./Alert.vue";
 import { setTimeout } from "timers";
+import VueRecaptcha from "vue-recaptcha";
 export default {
   data() {
     return {
@@ -284,13 +298,21 @@ export default {
       locationAuto: "",
       indexChosedChallenge: "",
       userCredentials: {},
-      active: true
+      active: true,
+      verified: false
     };
   },
   components: {
-    Alert
+    Alert,
+    VueRecaptcha
   },
   methods: {
+    onCaptchaVerified: function () {
+      this.verified = true
+    },
+    onCaptchaExpired: function () {
+      this.$refs.recaptcha.reset();
+    },
     clearImage() {
       this.userData.image = null;
     },
@@ -327,7 +349,7 @@ export default {
         location == null ||
         !this.active ||
         this.errors.items.length != 0 ||
-        this.userData.terms != 'accepted'
+        this.userData.terms != "accepted"
       ) {
         return false;
       } else {
@@ -364,31 +386,34 @@ export default {
               auth.session.stage().then(response => {
                 auth.storage.set_stage(response.data.number);
               });
-              if (localStorage.getItem('lastPath') === null) {
+              if (localStorage.getItem("lastPath") === null) {
                 this.$router.push("/");
               } else {
-                var lastPath = localStorage.getItem('lastPath');
-                localStorage.removeItem('lastPath');
+                var lastPath = localStorage.getItem("lastPath");
+                localStorage.removeItem("lastPath");
                 this.$router.push(lastPath);
               }
             });
         })
-        .catch((err) => {
+        .catch(err => {
           setTimeout(() => {
             this.active = true;
           }, 1000);
-          let errs = err.response.data
+          let errs = err.response.data;
           Object.entries(errs).map(([key, value]) => {
-            if (key == 'cc' && value == 'has already been taken') this.$refs.alert.error(
-            "Lo sentimos ya existe un usuario con tu cedula"
-          );
-            else if (key == 'email' && value == 'has already been taken') this.$refs.alert.error(
-            "Lo sentimos ya existe un usuario con tu correo electronico"
-          );
-            else this.$refs.alert.error(
-            "Hubo un error creando tu cuenta, intenta de nuevo más tarde"
-          );
-          })
+            if (key == "cc" && value == "has already been taken")
+              this.$refs.alert.error(
+                "Lo sentimos ya existe un usuario con tu cedula"
+              );
+            else if (key == "email" && value == "has already been taken")
+              this.$refs.alert.error(
+                "Lo sentimos ya existe un usuario con tu correo electronico"
+              );
+            else
+              this.$refs.alert.error(
+                "Hubo un error creando tu cuenta, intenta de nuevo más tarde"
+              );
+          });
         });
     },
     getLocations() {
