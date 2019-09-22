@@ -3,9 +3,9 @@
 // servicio para el manejo de variables como se muestra en este ejemplo
 const r = require('axios');
 // const SERVER_URL = 'https://prod.jfarellano.xyz'
-const SERVER_URL = 'https://dev-api.imaginatuciuda.org'
+// const SERVER_URL = 'https://dev-api.imaginatuciuda.org'
 
-// const SERVER_URL = 'https://api.imaginatuciuda.org'
+const SERVER_URL = 'https://api.imaginatuciuda.org'
 const WEB_URL = 'http://www.imaginatuciuda.org'
 
 import auth from './authentication.js'
