@@ -284,7 +284,6 @@
 
 <script>
 import api from "../requests.js";
-import auth from "../authentication.js";
 import Alert from "./Alert.vue";
 import { setTimeout } from "timers";
 import VueRecaptcha from "vue-recaptcha";
@@ -372,33 +371,28 @@ export default {
       api.user
         .create(fd)
         .then(() => {
-          auth.session
-            .login({
-              email: this.userData.email,
-              password: this.userData.password
-            })
-            .then(response => {
-              auth.storage.set(
-                response.data.user.id,
-                response.data.secret,
-                response.data.expire_at
-              );
-              auth.session.stage().then(response => {
-                auth.storage.set_stage(response.data.number);
-              });
-              if (localStorage.getItem("lastPath") === null) {
-                this.$router.push("/");
-              } else {
-                var lastPath = localStorage.getItem("lastPath");
-                localStorage.removeItem("lastPath");
-                this.$router.push(lastPath);
-              }
-            });
+          this.$router.push("/confirm-email-sent");
+          // auth.session
+          //   .login({
+          //     email: this.userData.email,
+          //     password: this.userData.password
+          //   })
+          //   .then(response => {
+          //     auth.storage.set(
+          //       response.data.user.id,
+          //       response.data.secret,
+          //       response.data.expire_at
+          //     );
+          //     auth.session.stage().then(response => {
+          //       auth.storage.set_stage(response.data.number);
+          //     });
+          //   });
         })
         .catch(err => {
           setTimeout(() => {
             this.active = true;
           }, 1000);
+          // MANEJO DE ERRORES
           let errs = err.response.data;
           Object.entries(errs).map(([key, value]) => {
             if (key == "cc" && value == "has already been taken")
@@ -528,7 +522,6 @@ export default {
     border-radius: 5px;
     box-shadow: 0 0 2px 0 #ffffff;
     background-color: transparent;
-    // width: 27.85%;
     width: 100%;
     height: 50px;
     font-size: 17px;
@@ -622,7 +615,6 @@ export default {
     border: 1px solid #0e2469;
     border-radius: 5px;
     box-shadow: 0 0 2px 0 #ffffff;
-    // width: 27.85%;
     height: 50px;
     font-size: 17px;
     color: #0e2469;

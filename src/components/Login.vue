@@ -74,6 +74,7 @@
 import auth from "../authentication.js";
 import Alert from "./Alert.vue";
 import { setTimeout } from "timers";
+import api from "../requests.js";
 
 export default {
   data() {
@@ -82,7 +83,8 @@ export default {
       active: true,
       blocked: false,
       time: 0,
-      lastIdeaID: ''
+      lastIdeaID: '',
+      token: ''
     };
   },
   components: {
@@ -109,13 +111,31 @@ export default {
           }
         }, 1000);
     },
-    userLogin() {
-      this.active = false;
-      auth.session
-        .login({
+    loginHash(){
+      var loginHash = {}
+      if (this.token != '') {
+        loginHash = {
+          email: this.userCredentials.email,
+          password: this.userCredentials.password,
+          verify_email_token: this.token
+        }
+      } else {
+        loginHash = {
           email: this.userCredentials.email,
           password: this.userCredentials.password
-        })
+        }
+      }
+      return loginHash
+    },
+    userLogin() {
+      this.active = false;
+      this.$refs.alert.clear();
+      auth.session
+        .login(
+          this.loginHash()
+          // email: this.userCredentials.email,
+          // password: this.userCredentials.password
+        )
         .then(response => {
           auth.storage.set(
             response.data.user.id,
@@ -157,13 +177,49 @@ export default {
               this.userCredentials.username = "";
               this.userCredentials.password = "";
             } else {
-              this.$refs.alert.network_error();
+              if (err.response.data.single_authentication == 'user is not verified') {
+                this.$refs.alert.warning_resend_link(
+                  'Confirmación', 
+                  'La cuenta aún no se ha confirmado. Obtén un enlace para confirmarla.', 
+                  //ACCEPT BUTTON ACTION
+                  () => {this.resendConfirmationEmail()},
+                  //DENY BUTTON ACTION
+                  () => {},
+                  'Obtener', 'Cancelar'
+                );
+              } else if (err.response.data.authentication == 'token has expired' || 
+              err.response.data.message == 'email verification token not found') {
+                this.$refs.alert.warning_resend_link(
+                  'Enlace caducado', 
+                  'El enlace ha caducado. Obtén un nuevo enlace para confirmar tu cuenta.', 
+                  //ACCEPT BUTTON ACTION
+                  () => {this.resendConfirmationEmail()},
+                  //DENY BUTTON ACTION
+                  () => {},
+                  'Reenviar', 'Cancelar'
+                );
+              } else {
+                this.$refs.alert.network_error();
+              }
             }
           }
         });
     },
+    resendConfirmationEmail(){
+      api.user
+        .confirm({
+          email: this.userCredentials.email
+        })
+        .then(() => {
+          this.$router.push("/confirm-email-sent");
+        })
+        .catch(() => {
+          this.$refs.alert.network_error();
+        })
+    }
   },
   created() {
+    this.token = this.$route.params.token
     this.userCredentials = {}
     if (auth.storage.logged()) this.$router.push("/");
     this.blocked = auth.session.blocked();
@@ -173,7 +229,9 @@ export default {
       this.blockedTime()
     }
   },
-  mounted() {}
+  mounted() {
+    if (this.token != '' && this.token != null) this.$refs.alert.confirm_account();
+  }
 };
 </script>
 

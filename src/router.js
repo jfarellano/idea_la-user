@@ -10,6 +10,10 @@ import Idea from './components/Idea.vue'
 import CreateEditIdea from './components/CreateEditIdea.vue'
 import RecoverPassword from './components/RecoverPassword.vue'
 import RecoverPasswordRequest from './components/RecoverPasswordRequest.vue'
+
+import ConfirmEmail from './components/ConfirmEmail.vue'
+import ConfirmEmailSent from './components/ConfirmEmailSent.vue'
+
 import Profile from './components/Profile.vue'
 import MyIdeas from './components/MyIdeas.vue'
 import Terms from './components/terms.vue'
@@ -26,6 +30,11 @@ export default new Router ({
         {
             path: '/login',
             name: 'Login',
+            component: Login
+        },
+        {
+            path: '/login/:token',
+            name: 'LoginToken',
             component: Login
         },
         {
@@ -62,6 +71,16 @@ export default new Router ({
             path: '/recover-password/:token',
             name: 'RecoverPassword',
             component: RecoverPassword
+        },
+        {
+            path: '/confirm-email',
+            name: 'ConfirmEmail',
+            component: ConfirmEmail
+        },
+        {
+            path: '/confirm-email-sent',
+            name: 'ConfirmEmailSent',
+            component: ConfirmEmailSent
         },
         {
             path: '/perfil',
