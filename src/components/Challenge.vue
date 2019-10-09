@@ -6,6 +6,7 @@
           data-aos-duration="1000"
           data-aos-delay="100" class="main-container container-fluid">
       <div
+        v-if="challengeReceived"
         :style="'background-image: url(' + challenge.challenge_pictures[0].url + ')'"
         class="row first"
       >
@@ -26,7 +27,7 @@
           <p class="jump">{{challenge.description}}</p>
         </div>
       </div>
-      <div class="row search justify-content-center" v-if="ideas != ''">
+      <div class="row search justify-content-center" v-if="ideas != '' && stage != 4 && stage != 3">
         <div class="input-group col-md-8">
           <input
             type="text"
@@ -37,29 +38,34 @@
         </div>
       </div>
       <div class="row second justify-content-center" v-if="ideas != '' && ideasReceived">
-        <router-link
-          :class="ideaClass('idea container-fluid')"
-          v-for="(idea, index) in filter()"
-          data-aos="zoom-in"
-          data-aos-duration="500"
-          data-aos-delay="100"
-          tag="div"
-          :key="index"
-          :to="{name: 'Idea', params: { iId: idea.id } }"
-        >
-          <font-awesome-icon class="icon" icon='star'></font-awesome-icon>
-          <div class="row image">
-            <img v-bind:src="idea.idea_pictures[0].url">
-          </div>
-          <div class="row data">
-            <h3>{{idea.title}}</h3>
-            <h6 v-if="stage == 3">Votos: {{idea.votes}}</h6>
-            <p class="parag">{{getDescription(idea.description)}}</p>
-          </div>
-          <div class="row show-more">
-            <b-button>Ver más</b-button>
-          </div>
-        </router-link>
+        
+        <div v-for="(idea, index) in filter()" :key="index">
+
+          <router-link
+            :class="ideaClass('idea container-fluid', idea)"
+            data-aos="zoom-in"
+            data-aos-duration="500"
+            data-aos-delay="100"
+            tag="div"
+            :to="{name: 'Idea', params: { iId: idea.id } }"
+          >
+            <font-awesome-icon class="icon" icon='star'></font-awesome-icon>
+            <div class="row image">
+              <img v-bind:src="idea.idea_pictures[0].url">
+            </div>
+            <div class="row data">
+              <h3>{{idea.title}}</h3>
+              <h6 v-if="stage == 3">Votos: {{idea.votes}}</h6>
+              <p class="parag">{{getDescription(idea.description)}}</p>
+            </div>
+            <div class="row show-more">
+              <b-button>Ver más</b-button>
+            </div>
+          </router-link>
+
+        </div>
+
+
         <div v-if="filter().length == 0">
           <h2>Ups no hay ideas que coincidan con tu búsqueda</h2>
         </div>
@@ -99,7 +105,8 @@ export default {
       page: 1,
       size: 10,
       stage: 0,
-      ideasReceived: false
+      ideasReceived: false,
+      challengeReceived: false
     };
   },
   methods: {
@@ -113,13 +120,14 @@ export default {
         .getInfo(challengeID)
         .then(response => {
           this.challenge = response.data;
+          this.challengeReceived = true;
         })
         .catch(() => {
           this.$refs.alert.network_error();
         });
     },
-    ideaClass(cls) {
-      if (this.stage == "4") return cls + " win";
+    ideaClass(cls, idea) {
+      if (this.stage == "4" && idea.winner) return cls + " win";
       else return cls;
     },
     filter() {
@@ -135,7 +143,6 @@ export default {
       } else {
         list = this.ideas;
       }
-      // return list.slice(0, this.page * this.size)
       return list;
     },
     getDescription(desc) {
@@ -158,19 +165,9 @@ export default {
             });
           break;
         case "3":
-          api.idea
-            .picked(challengeID)
-            .then(response => {
-              this.ideas = response.data;
-              this.ideasReceived = true
-            })
-            .catch(() => {
-              this.$refs.alert.network_error();
-            });
-          break;
         case "4":
           api.idea
-            .winers(challengeID)
+            .picked(challengeID)
             .then(response => {
               this.ideas = response.data;
               this.ideasReceived = true
@@ -275,6 +272,7 @@ export default {
       margin: 10px;
       background-color: white;
       border: 1px solid #ededed;
+      box-shadow: 0 0 15px 0 rgba(232, 232, 232, 0.4);
       color: #6d6d6d;
       border-radius: 5px;
       width: 300px;
