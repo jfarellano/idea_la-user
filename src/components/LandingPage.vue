@@ -18,7 +18,7 @@
           to="/retos"
         >¡Vota ya por tu idea favorita!</router-link>
       </div>
-      <div v-if="stage == '4'" class="row blue">
+      <div v-if="stage == '4' && winners != ''" class="row blue">
         <div class="winners container-fluid">
           <div class="row justify-content-center align-items-center">
             <div class="col-md-12 align-self-center">
